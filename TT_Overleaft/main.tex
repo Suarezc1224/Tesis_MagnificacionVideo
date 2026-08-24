@@ -1,0 +1,252 @@
+\documentclass[11pt]{report}
+
+% =========================================================
+% Idioma y fuentes
+% =========================================================
+% Compilar con XeLaTeX o LuaLaTeX.
+% !TeX program = xelatex
+
+\usepackage[spanish,es-tabla,es-noquoting]{babel}
+\usepackage{silence}
+\WarningFilter{tracklang}{No `datatool' support for dialect `spanish'}
+\WarningFilter{latex}{Float too large for page}
+\AtBeginDocument{\hfuzz=1000pt\hbadness=10000\vfuzz=1000pt\vbadness=10000}
+\usepackage{fontspec}
+
+\setmainfont{Arial}[Ligatures=TeX]
+\setsansfont{Arial}[Ligatures=TeX]
+
+% Fuente monoespaciada base del documento.
+% No cambia la fuente principal del documento.
+\setmonofont{Latin Modern Mono}[Scale=0.88]
+
+% Fuente tipo consola usada específicamente por \texttt{...}
+\IfFontExistsTF{Cascadia Code}
+{
+    \newfontfamily\consolefont{Cascadia Code}[Scale=0.88]
+}
+{
+    \IfFontExistsTF{DejaVu Sans Mono}
+    {
+        \newfontfamily\consolefont{DejaVu Sans Mono}[Scale=0.88]
+    }
+    {
+        \newfontfamily\consolefont{Latin Modern Mono}[Scale=0.90]
+    }
+}
+
+% Redefinición de \texttt para IPs, interfaces, rutas y comandos cortos.
+% Permite seguir usando \texttt{10.8.0.1}, \texttt{tun0}, etc.
+\let\oldtexttt\texttt
+\RenewDocumentCommand{\texttt}{m}{{\consolefont\footnotesize #1}}
+
+% Macro opcional para comandos o rutas en texto normal.
+\providecommand{\code}[1]{\texttt{#1}}
+
+% Macro opcional para IPs, interfaces y nombres técnicos en figuras TikZ.
+% Usa la misma línea gráfica que \texttt.
+\providecommand{\netid}[1]{{\consolefont\footnotesize #1}}
+
+% Macro opcional para IPs, interfaces y nombres técnicos en texto normal.
+\providecommand{\nettxt}[1]{{\consolefont\footnotesize #1}}
+
+\setlength{\marginparwidth}{2.54cm} 
+\setlength\headheight{48pt}
+\usepackage{longtable} % Permite uso del entrono longtable
+\usepackage{booktabs} % Permite el uso de \toprule, \midrule y \bottonrule para realzar el acabado de las tablas
+%\usepackage{setspace}
+\usepackage{pdfpages}
+\usepackage{appendix}
+
+\renewcommand{\appendixname}{Anexos}
+\renewcommand{\appendixtocname}{Anexos}
+\renewcommand{\appendixpagename}{Anexos}
+
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{glossaries}
+\usepackage{listings}
+\usepackage{makecell}
+\usepackage{comment}
+
+%%%%%%%%% Tablas largas y adaptables al ancho
+\usepackage{xltabular}
+\usepackage{ragged2e}
+%%%%%%%%
+
+\usepackage{xcolor}
+\usepackage{tabularx} 
+
+\usepackage{ragged2e}             % Para justificar texto a la izquierda
+
+\usepackage{pdflscape}
+
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{notoccite}
+\WarningsOff[tocloft]
+\usepackage{tocloft}
+\WarningsOn[tocloft]
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, fit, backgrounds, calc, shapes.geometric}
+
+% Personalizar el formato del pseudocódigo
+\SetAlgoNlRelativeSize{-2}
+\SetAlgoSkip{small}
+\setlength{\AlCapHSkip}{2pt}
+\setlength{\interspacetitleruled}{5pt}
+\SetInd{0.5em}{1em}
+
+% Personalización de palabras clave para pseudocódigo en español
+\renewcommand{\algorithmcfname}{Algoritmo} 
+\SetKwIF{Si}{SinoSi}{Sino}{Si}{Entonces}{Sino si}{Sino}{Fin si}
+\SetKwFor{Para}{Para}{hacer}{fin para}
+\SetKwFor{PorCada}{Por cada}{hacer}{Fin cada}
+\SetKwFor{Mientras}{Mientras}{hacer}{Fin mientras}
+\SetKwInput{KwData}{Entradas}  % Cambia "Input" a "Entradas"
+\SetKwInput{KwResult}{Salida}  % Cambia "Output" a "Salida"
+\SetKwComment{Comment}{//}{}
+
+\lstset{
+    basicstyle=\ttfamily\scriptsize,  
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=10pt,
+    backgroundcolor=\color{white},
+    frame=single,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green}
+}
+
+% ---------------------------------------------------------
+% Entorno para comandos de terminal
+% ---------------------------------------------------------
+\lstdefinestyle{terminalstyle}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{gray!6},
+    frame=single,
+    rulecolor=\color{gray!55},
+    framerule=0.4pt,
+    framesep=6pt,
+    xleftmargin=1.6em,
+    xrightmargin=0.8em,
+    aboveskip=0.8em,
+    belowskip=0.8em,
+    breaklines=true,
+    breakatwhitespace=false,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    numbers=none,
+    stepnumber=1,
+    captionpos=b
+}
+
+\lstnewenvironment{terminal}
+{%
+    \lstset{style=terminalstyle}%
+}
+{}
+
+% Paquetes LaTeX y estilos globales
+% Importante: no cargar hyperref en este archivo principal.
+% La plantilla ya lo carga dentro de etc/pkgs.tex.
+\input{etc/pkgs}
+\input{etc/style}
+%\input{etc/acro}
+
+%Inicio del documento
+\input{sections/00_Glosario}
+\pdfstringdefDisableCommands{\def\gls#1{#1}\def\Gls#1{#1}\def\acrshort#1{#1}}
+\providecommand{\fig}[1]{\figurename~\ref{#1}}
+\providecommand{\tab}[1]{\tablename~\ref{#1}}
+
+\begin{document}
+\definecolor{orcidlogocol}{HTML}{A6CE39}
+ %\makeflyleaf
+    \setlength{\cftbeforetoctitleskip}{0pt} % Para "Índice de contenido"
+    \setlength{\cftaftertoctitleskip}{0pt}
+    
+    \setlength{\cftbeforeloftitleskip}{0pt} % Para "Índice de figuras"
+    \setlength{\cftafterloftitleskip}{0pt}
+    
+    \setlength{\cftbeforelottitleskip}{0pt} % Para "Índice de tablas"
+    \setlength{\cftafterlottitleskip}{0pt}
+    \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % Para capítulos
+    \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}  % Para secciones
+    \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}} % Para subsecciones
+    %\renewcommand{\cfttoctitlefont}{\small\bfseries}
+    \renewcommand{\contentsname}{Índice de contenido}
+    \renewcommand{\bibname}{Referencias}
+    \renewcommand{\appendixname}{Anexos}
+    \renewcommand{\tablename}{Tabla}
+    \renewcommand{\listtablename}{Índice de tablas}
+    
+    % Portada y secciones no numeradas
+    \input{sections/00_Portada}
+    \clearpage
+\pagenumbering{arabic}
+\setcounter{page}{2}
+    \input{sections/00_Resumen}
+    \input{sections/00_Abstract}
+    
+\begingroup 
+    % Los enlaces son normalmente azules, pero en los índices se configuran a negro
+    % para que no aparezca todo azul
+    \hypersetup{linkcolor=black}
+    \renewcommand{\cfttoctitlefont}{\hfill\bfseries}
+    \renewcommand{\cftaftertoctitle}{\hfill}
+    \renewcommand{\cftloftitlefont}{\hfill\bfseries}
+    \renewcommand{\cftafterloftitle}{\hfill}
+    \renewcommand{\cftlottitlefont}{\hfill\bfseries}
+    \renewcommand{\cftafterlottitle}{\hfill}
+
+    \tableofcontents
+    
+    \cleardoublepage
+    \renewcommand{\cftloftitlefont}{\hfill\bfseries} 
+    \renewcommand{\cftafterloftitle}{\hfill} 
+    \renewcommand{\cftlottitlefont}{\hfill\bfseries}
+    \renewcommand{\cftafterlottitle}{\hfill}
+
+    \renewcommand{\cftfigpresnum}{\textbf{Figura~}} % <-- Añadir esta configuración
+    \setlength{\cftfignumwidth}{6em} 
+
+    \listoffigures
+        
+    \cleardoublepage
+
+    \renewcommand{\cfttabpresnum}{\textbf{Tabla~}} % <-- Añadir esta configuración
+    \renewcommand{\cfttabaftersnum}{\hspace{0.8em}}
+    \setlength{\cfttabnumwidth}{7.2em}
+    
+    \listoftables
+\endgroup
+
+    \input{sections/00_Agradecimientos}
+    \input{sections/00_Dedicatoria}
+     %\printglossary
+     \input{sections/01_Capitulo1_Generalidades}
+     \input{sections/02_Capitulo2_MarcoTeorico}
+     \input{sections/03_Capitulo3_Metodologia}
+     \input{sections/04_Capitulo4_Resultados}
+     \input{sections/05_Capitulo5_Conclusiones}
+     
+    % Bibliografía
+    
+    \cleardoublepage
+    %\bibliographystyle{acm} % estilo de la bibliografía.
+    
+    \bibliographystyle{etc/IEEEtranEC}
+    \bibliography{Bibliografia}
+    
+    % \input{sections/Apendices}
+\end{document}

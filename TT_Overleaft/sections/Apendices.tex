@@ -1,0 +1,467 @@
+\clearpage
+\appendix
+
+\chapter*{Anexos}
+\addcontentsline{toc}{chapter}{\appendixname}
+
+\section*{Anexo A: Distribución de pines de placa de desarrollo SoC ESP32}
+% \phantomsection % <--- Agrega esto aquí también
+\addcontentsline{toc}{section}{Anexo A: Distribución de pines de placa de desarrollo SoC ESP32}
+\label{anexo-a} 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Alex/soc-esp32.png}
+    \caption{Placa de desarrollo ESP32 WROOM-32UE DevKitC. Distribución de pines \cite{esp32pines}}
+    \label{foto-anexo-a}
+\end{figure}
+
+
+\section*{Anexo B: Especificaciones técnicas SoC ESP32}
+\addcontentsline{toc}{section}{Anexo B: Especificaciones técnicas SoC ESP32}
+\label{anexo-b} 
+
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{xltabular}{0.80\textwidth}{%
+>{\RaggedRight\arraybackslash}p{4.2cm}
+>{\RaggedRight\arraybackslash}X}
+
+\caption{Características del ESP32-S3-WROOM-1 \cite{espressif_esp32_devkitc_guide}}
+\label{tabla-anexo-b}\\
+
+\toprule
+\textbf{Características} & \textbf{ESP32-S3-WROOM-1} \\
+\midrule
+\endfirsthead
+
+\caption[]{Características del ESP32-S3-WROOM-1 (continuación).}\\
+\toprule
+\textbf{Características} & \textbf{ESP32-S3-WROOM-1} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{2}{r}{\footnotesize Continúa en la siguiente página.}\\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+Central Processing Unit (CPU) & Xtensa dual-core 32-bit LX6 \\
+WIFI & IEEE 802.11 b/g/n, /n hasta 150 Mbps \\
+Bluetooth & Bluetooth 4.2, BR/EDR y BLE \\
+Frecuencia de operación & Hasta 240 MHz \\
+Static Random-Access Memory (SRAM) & 520 KB \\
+Read-Only Memory (ROM) & 448 KB \\
+FLASH & 4 MB \\
+General Purpose Input/Output (GPIO) & 32 \\
+Serial Peripheral Interface (SPI) & 4 \\
+Inter-Integrated Circuit (I2C) & 2 \\
+Integrated Interchip Sound (I2S) & 2 \\
+UART & 3 \\
+Analog-to-Digital Converter (ADC) & 12 Bits \\
+Interfaz MAC Ethernet & Sí \\
+
+\end{xltabular}
+\endgroup
+
+
+\clearpage
+
+\begin{landscape}
+
+\section*{Anexo C: Esquemático de dispositivo IoT para la digitalización de máquina dosificadora}
+\label{anexo-c} 
+
+\addcontentsline{toc}{section}{Anexo C: Esquemático de dispositivo IoT para la digitalización de máquina dosificadora}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.8\linewidth]{Alex/esquematico-tesis.PDF}
+  \caption{Esquemático del Dispositivo IoT}
+  \label{foto-anexo-c}
+\end{figure}
+\end{landscape}
+
+
+\section*{Anexo D: Analizador de energía preciso Joulescope JS220}
+\label{anexo-d} 
+
+\addcontentsline{toc}{section}{Anexo D: Equipo para medir corriente de dispositivos IoT. Joulescope JS220}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Alex/joulescope.png}
+    \caption{Analizador de energía preciso Joulescope JS220. \cite{joulescopefoto}}
+    \label{foto-anexo-d}
+\end{figure}
+
+
+
+
+
+%%%%%%%%%%%%%% parte plantilla tesis original
+
+% \gls{GLPI} permite la instalación de extensiones que facilitan a los administradores la gestión de activos de una organización. En este caso, se procederá a instalar \gls{GLPI} \textit{Inventory}, que permite llevar un registro detallado y actualizado de los activos, se puede acceder directamente a través de la tienda de extensiones de \gls{GLPI}. El enlace para descargar la extensión es: \url{https://plugins.glpi-project.org/#/plugin/glpiinventory}. Dado que el \gls{GLPI} corre sobre Ubuntu Server 22.04, el primer paso es descargar el paquete utilizando el comando del Extracto de código \ref{an:DescargarGLPIINventory}.
+
+% \begin{lstlisting}[language=bash, caption=Descarga de paquete GLPI \textit{Inventory}, label=an:DescargarGLPIINventory]
+% wget https://github.com/glpi-project/glpi-inventory-plugin/releases/download/1.3.5/glpi-glpiinventory-1.3.5.tar.bz2
+% \end{lstlisting}
+% Una vez descargado el archivo en el servidor, es necesario descomprimirlo con el comando que se muestra en el Extracto de código \ref{an:DescomprimirGLPIINventory}.
+% \begin{lstlisting}[language=bash, caption=Descomprimir paquete GLPI \textit{Inventory}, label=an:DescomprimirGLPIINventory] 
+% tar -xjf glpi-glpiinventory-1.3.5.tar.bz2
+% \end{lstlisting}
+% El siguiente paso es mover el directorio glpiinventory \ al directorio de plugins de \gls{GLPI}. Este proceso también incluye otorgar los permisos necesarios para que \gls{GLPI} pueda ejecutar la extensión, los comandos se pueden observar en el Extracto de código \ref{an:PermisosGLPIINventory}.
+% \begin{lstlisting}[language=bash, caption=Configuración de paquete GLPI \textit{Inventory}, label=an:PermisosGLPIINventory] 
+% sudo mv glpiinventory /pathGLPI/var/www/html/glpi/plugins/
+% sudo chmod +x /pathGLPI/var/www/html/glpi/plugins/glpiinventory
+% \end{lstlisting}
+% Finalmente, para instalar el plugin \gls{GLPI} Inventory, ingrese a la página web de \gls{GLPI} y diríjase a la pestaña de Configuración en el menú principal, identificado como (1). A continuación, seleccione la pestaña Plugins (2), donde se mostrará la lista de extensiones disponibles. Localice \textit{Inventory} en esta lista y proceda a instalarlo haciendo clic en la pestaña correspondiente, ilustrado con el indicador (3) en la Figura \ref{fig:IntGLPIInventory}.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.6\linewidth]{Diego/Instalacion GLPIinventory.png}
+%     \caption{Instalación de GLPI \textit{Inventory} desde interfaz web.}
+%     \label{fig:IntGLPIInventory}
+% \end{figure}
+
+% \section*{Anexo B: Instalación de Agentes GLPI}
+% \addcontentsline{toc}{section}{Anexo B: Instalación de Agentes GLPI}
+% \label{InstalacionAgenteGLPI}
+% Los agentes \gls{GLPI} tienen como objetivo recopilar información detallada de cada uno de los dispositivos que se encuentran dentro de la red, tanto de hardware como de software, para posteriormente enviarla al servidor \gls{GLPI}. Estos agentes son compatibles con varios sistemas operativos y pueden descargarse desde su repositorio en GitHub \url{https://github.com/glpi-project/glpi-agent/releases/tag/1.7.1}. 
+% \subsection*{Windows}
+% \addcontentsline{toc}{subsection}{Windows}
+% Para el sistema operativo Windows, disponemos de dos versiones, cada una dedicada a computadoras con arquitectura de 64 y 32 bits. El archivo tiene una extensión .msi y, al ejecutarlo, se desplegará una ventana como se muestra en la Figura \ref{fig:GLPIAgente1}.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Diego/GLPIAgente1.png}
+%     \caption{Interfaz de instalación, agente GLPI en Windows.}
+%     \label{fig:GLPIAgente1}
+% \end{figure}
+
+% Lo siguiente será presionar el botón \textit{Next} para que se muestren los acuerdos de licencia y la ubicación donde se instalará el agente. En la interfaz se mostrará el modo de instalación; en este paso específico, se seleccionará el modo \textit{Custom}. Esto nos dará como resultado las utilidades del agente que estarán implementadas, por lo que se recomienda habilitar todas las herramientas, como se muestra en la Figura \ref{fig:GLPIAgente2}.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Diego/GLPIAgente2.png}
+%     \caption{Interfaz con características a instalar, agente GLPI en Windows.}
+%     \label{fig:GLPIAgente2}
+% \end{figure}
+% Ahora se debe configurar el servidor \gls{GLPI} al que llegará la información de los dispositivos. Para esto, ingresaremos la URL del servidor en el recuadro que se muestra en la Figura \ref{fig:GLPIAgente3}.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Diego/GLPIAgente3.png}
+%     \caption{Definir URL del Servidor, agente GLPI en Windows.}
+%     \label{fig:GLPIAgente3}
+% \end{figure}
+% Finalmente, haremos clic en \textit{Next}, y se desplegará la interfaz que se muestra en la Figura \ref{fig:GLPIAgente4}, donde se debe hacer clic en \textit{Install}. Luego, concederemos los permisos de administrador y esperaremos a que se instale el agente. Una vez instalado, el agente trabajará en segundo plano, esperará un tiempo para obtener la información del dispositivo y la enviará al servidor.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{Diego/GLPIAgente4.png}
+%     \caption{Instalar agente GLPI en Windows.}
+%     \label{fig:GLPIAgente4}
+% \end{figure}
+% \subsection*{Linux}
+% \addcontentsline{toc}{subsection}{Linux}
+% Para instalar en sistemas Linux, debemos hacerlo mediante la línea de comando. El primer paso es descargar los paquetes desde su repositorio en GitHub, por lo que se usa los comandos que se encuentra en Extracto de código \ref{an:AgenteGLPILinux1}.
+% \begin{lstlisting}[language=bash, caption=Descarga de paquetes agente GLPI., label=an:AgenteGLPILinux1] 
+% wget https://github.com/glpi-project/glpi-agent/releases/download/1.7.1/glpi-agent-1.7.1-linux-installer.pl
+% \end{lstlisting}
+% Una vez obtenidos los paquetes del agente, se pueden instalar mediante Perl con el comando que se muestra en el Extracto de código \ref{an:AgenteGLPILinux2}.
+% \begin{lstlisting}[language=bash, caption=Instalación de paquetes agente GLPI., label=an:AgenteGLPILinux2] 
+% sudo perl glpi-agent-1.7.1-linux-installer.pl
+% \end{lstlisting}
+% Durante el proceso de instalación de Perl, para configurar la URL del servidor de \gls{GLPI}, se mostrará el mensaje que aparece en el Extracto de código \ref{an:AgenteGLPILinux3}.
+% \begin{lstlisting}[language=bash, caption=Definir URL del Servidor GLPI., label=an:AgenteGLPILinux3] 
+% Provide an url to configure GLPI server:
+% > http://192.xx.xx.xx:80
+% \end{lstlisting}
+% Una vez que los agentes hayan recolectado la información de los dispositivos, enviarán al servidor \gls{GLPI} los datos de hardware y software. Para verificar los agentes, primero hay que dirigirse a la pestaña Administración en el menú de GLPI (1), y posteriormente ir a Inventario (2). En el icono Número de agentes, se mostrará cuántos dispositivos tienen instalado el agente, como se puede ver en la Figura \ref{fig:GLPIAgente5}. Al ingresar, observaremos el listado de los dispositivos con cada una de sus especificaciones.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.7\linewidth]{Diego/GLPIAgente5.png}
+%     \caption{Dispositivos conectados al servidor por medio de agente GLPI.}
+%     \label{fig:GLPIAgente5}
+% \end{figure}
+
+% %\section{Anexo C: }
+
+% \section*{Anexo C: Instalación de Daniz-Red \textit{Framework}}
+% \label{InstDaniz}
+% \addcontentsline{toc}{section}{Anexo C: Instalación de Daniz-Red \textit{Framework}}
+% El primer paso para instalar el framework Daniz-Red es instalar las herramientas Git, Docker y \lstinline{docker-compose}. Esto se realiza ejecutando el comando del Extracto de código \ref{an:docker} .
+
+% \begin{lstlisting}[language=bash, caption=Instalación de Docker y Docker-compose en Ubuntu, label=an:docker] 
+% sudo apt-get install git docker.io docker-compose
+% \end{lstlisting}
+
+% Con esta configuración, Docker correrá bajo los privilegios de superusuario. Para cubrir esto y evitar posibles fallos en la administración de los contenedores, es necesario agregar al usuario del sistema operativo al grupo Docker. Esto se realiza mediante el comando mostrado en el Extracto de código \ref{an:grupodocker}.
+
+% \begin{lstlisting}[language=bash, caption=Agregar permisos de grupo Docker a usuario del sistema., label=an:grupodocker] 
+% sudo usermod -aG docker $(whoami)
+% \end{lstlisting}
+
+% Para el siguiente paso necesitamos descargar los repositorios del \textit{framework} Daniz-Red desde los repositorio de Github, esto lo podremos realizar mediante el enlace \url{https://github.com/fabianastudillo/daniz-red.git}, pero para nuestra implementación se necesita descargar desde la rama \gls{SCADA}, estos comandos se pueden ver en el Extracto de código \ref{an:descDocker}.
+
+% \begin{lstlisting}[language=bash, caption=Descarga de Daniz-Red versión SCADA, label=an:descDocker] 
+% git clone https://github.com/fabianastudillo/daniz-red.git
+% cd daniz-red
+% git checkout SCADA
+% \end{lstlisting}
+
+% Una vez descargado el repositorio y dentro del directorio del \textit{framework}, es necesario ejecutar el comando del Extracto de código \ref{an:LevantarDaniz} para montar los contenedores de Daniz y OpenVAS, una vez levantado el servicio nos mostrara la Figura \ref{fig:danizup}.
+
+% \begin{lstlisting}[language=bash, caption=Levantar servicios Daniz-Red y OpenVAS, label=an:LevantarDaniz] 
+% docker-compose -p danizred up -d
+% \end{lstlisting}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{Diego/montarDaniz.png}
+%     \caption{Contenedores Daniz-Red y OpenVAS levantados.}
+%     \label{fig:danizup}
+% \end{figure}
+
+% Una vez levantados los servicios de Kali Linux y OpenVAS, podemos ingresar al contenedor de kali para ejecutar el \textit{framework} Daniz-Red. Para esto, ejecutamos los comandos del extracto de código \ref{an:ejecutarDaniz-Red}, lo que nos dará como resultado la figura \ref{fig:danizrun}
+
+% \begin{lstlisting}[language=bash, caption=Levantar servicios Daniz-Red y OpenVAS, label=an:ejecutarDaniz-Red] 
+% docker exec -it kali bash
+% python3 daniz-run.py -c config.json
+% \end{lstlisting}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{Diego/danizrun.png}
+%     \caption{Ejecución de Daniz-Red desde contenedor}
+%     \label{fig:danizrun}
+% \end{figure}
+
+% Además, para acceder al servicio OpenVAS, es necesario ingresar desde el navegador web a la dirección, lo que dará como resultado una interfaz como la que se muestra en la Figura \ref{fig:openVASLevantado}. Si los \textit{dashboards} no se cargan, se debe esperar un momento hasta que se actualicen los formularios \gls{CVE}, \gls{NVT}, escáneres de vulnerabilidades, entre otros.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\linewidth]{Diego/openVasLevantado.png}
+%     \caption{Dashboard de OpenVas}
+%     \label{fig:openVASLevantado}
+% \end{figure}
+
+
+
+% \section*{Anexo D: Explotación de vulnerabilidades en Apache Guacamole}
+% \label{AnexoAG}
+% \addcontentsline{toc}{section}{Anexo D: Explotación de vulnerabilidades en Apache Guacamole}
+%  Para realizar la explotación en el servicio Apache Guacamole, mediante un navegador web en la barra de direcciones se introdujo la dirección IP\textbf{192.168.XXX.XXX} con el puerto \textbf{8443}, para así ingresar a la interfaz del servicio, esto se puede observar en la Figura \ref{fig2AC}.
+%     \begin{figure}[H]
+%         \centering
+%         \includegraphics[width=0.5\linewidth]{Fabri/guacamole IP.png}
+%         \caption{Ingreso a la interfaz web de Guacamole.}
+%         \label{fig2AC}
+%     \end{figure}
+
+%     Una vez dentro de la interfaz se ingresaron los credenciales por defecto, (admin: guacadmin y password: guacadmin), tal y como se observa en las figuras \ref{fig3AC} y \ref{fig4AC}.
+
+%        \begin{figure}[H]
+%         \centering
+%         \includegraphics[width=0.5\linewidth]{Fabri/guaca copiar.png}
+%         \caption{Se copia la contraseña por defecto.}
+%         \label{fig3AC}
+%     \end{figure}
+
+%            \begin{figure}[H]
+%         \centering
+%         \includegraphics[width=0.5\linewidth]{Fabri/guaca pegar.png}
+%         \caption{Ingreso de la contraseña por defecto.}
+%         \label{fig4AC}
+%     \end{figure}
+
+%         Ya con las credenciales ingresadas se puede observar en la figura \ref{fig5AC} como se accedió al servicio Apache Guacamole el cual permite tener el control remoto del sistema \gls{SCADA}, tal y como se aprecia en la figura \ref{fig:ExAG} de la subsección \ref{EAG}.
+    
+%            \begin{figure}[H]
+%         \centering
+%         \includegraphics[width=0.5\linewidth]{Fabri/guaca inter.png}
+%         \caption{Acceso a la interfaz de Apache Guacamole.}
+%         \label{fig5AC}
+%     \end{figure}
+
+
+% \section*{Anexo E: Generación y Cambio de Contraseña en Apache Guacamole}
+% \label{AnexoK}
+% \addcontentsline{toc}{section}{Anexo E: Generación y Cambio de Contraseña en Apache Guacamole}
+% Como primer paso para la actualización de la contraseña es generar una nueva que cumpla con los estándares de seguridad, Para esto se hizo uso del programa \textit{KeePass 2}, previamente configurado. Como se muestra en la Figura \ref{fig1AG}, para ingresar a \textit{KeePass 2} es necesario utilizar credenciales personalizadas por el usuario.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Fabri/Ini Kepp.png}
+% \caption{Acceso al programa \textit{KeePass 2}.}
+% \label{fig1AG}
+% \end{figure}
+
+% Una vez dentro del programa, el siguiente paso es crear una nueva entrada, como se observa en la Figura \ref{fig2AG}. Antes de crear la entrada, es crucial configurarla adecuadamente. El aspecto más importante es la selección de la opción ``Password Generator'', donde se configura el nivel de seguridad de la contraseña. Para este caso específico, se eligió una configuración que incluye una combinación de letras mayúsculas, minúsculas y números, como se muestra en la Figura \ref{fig3AG}.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Fabri/Cat kepp.png}
+% \caption{Creación de una nueva entrada en \textit{KeePass 2}.}
+% \label{fig2AG}
+% \end{figure}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Fabri/pass keep.png}
+% \caption{Configuración del nivel de seguridad de la contraseña a generar.}
+% \label{fig3AG}
+% \end{figure}
+
+% El siguiente paso consiste en actualizar la contraseña por defecto del servicio Apache Guacamole con la nueva contraseña generada. Dentro de la interfaz del servicio, se accede a la opción de configuración en la sección de usuarios, como se ilustra en la Figura \ref{fig4AG}.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.7\linewidth]{Fabri/guaca conf.png}
+% \caption{Ingreso a las configuraciones de Apache Guacamole, sección usuarios.}
+% \label{fig4AG}
+% \end{figure}
+
+% Finalmente, se selecciona el usuario a modificar, en este caso 'guacadmin'. Dentro de la configuración del usuario, se introduce y valida la nueva contraseña, se guardan las configuraciones y con esto se completa el cambio de contraseña.
+        
+
+% \section*{Anexo F: Proceso de actualización del \textit{Firmware} al Dispositivo MikroTik RouterOS}
+% \label{AnexoMT}
+% \addcontentsline{toc}{section}{Anexo F: Proceso de actualización del \textit{Firmware} al Dispositivo MikroTik RouterOS}
+% Para actualizar el \textit{firmware} del dispositivo MikroTik RouterOS, el primer paso es acceder a su interfaz a través de un navegador web. La Figura \ref{fig1AM} muestra la pantalla de inicio de sesión, donde se deben introducir las credenciales para acceder a las configuraciones del equipo.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Fabri/mikro inter.png}
+% \caption{Interfaz de acceso de MikroTik RouterOS.}
+% \label{fig1AM}
+% \end{figure}
+
+% Una vez dentro de la interfaz, navegue hasta la pestaña ``Quick Set''. En la parte inferior de esta pantalla, haga clic en el botón ``Check For Updates'', como se ilustra en las Figuras \ref{fig2AM} y \ref{fig3AM}.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Fabri/mikro quick.png}
+% \caption{Pestaña ``Quick Set'' en MikroTik RouterOS.}
+% \label{fig2AM}
+% \end{figure}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Fabri/mikro up.png}
+% \caption{Botón ``Check For Updates'' en MikroTik RouterOS.}
+% \label{fig3AM}
+% \end{figure}
+
+% En la ventana que aparece tras seleccionar ``Check For Updates", presione el botón ``Download\&Upgrade'', como se aprecia en la Figura \ref{fig4AM}. El equipo iniciará automáticamente el proceso de actualización del firmware. Este proceso puede tardar varios minutos durante los cuales el dispositivo puede reiniciarse.
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.5\linewidth]{Fabri/update.png}
+% \caption{Botón ``Download\&Upgrade'' en MikroTik RouterOS.}
+% \label{fig4AM}
+% \end{figure}
+
+% Asegúrese de no interrumpir la alimentación del dispositivo durante la actualización para evitar daños al dispositivo.
+
+% \section*{Anexo G: CVE mediante de implementación de GLPI y OpenCVE}
+% \label{anex: CVEGLPI}
+% \addcontentsline{toc}{section}{Anexo G: CVE mediante de implementación de GLPI y OpenCVE}
+% Al implementar el sistema descrito en la Sección \ref{sec:gestionActivos}, basado en la información almacenada en \gls{GLPI}, se han podido obtener \glspl{CVE} de ocho modelos de activos del laboratorio, los cuales se presentan a continuación:
+
+% \begin{itemize}
+%     \item \textbf{Lenovo System X:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2020-8340 (6.1, Media), CVE-2019-6157 (7.5, Alta), CVE-2018-9068 (7.5, Alta), CVE-2017-3775 (6.4, Media), CVE-2017-3768 (7.5, Alta), CVE-2017-3744 (6.5, Media), CVE-2016-8226 (6.8, Media)
+
+%         \item \textbf{Activos afectados:}
+
+%         Servidor 1 IMM, Servidor 2 IMM
+
+%     \end{itemize}
+%     \item \textbf{Windows 7:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2012-5380 (6.0, Media), CVE-2012-5383 (6.2, Media), CVE-2012-5382 (6.0, Media), CVE-2012-5381 (6.0, Media), CVE-2012-5379 (6.0, Media), CVE-2011-1652 (5.0, Media), CVE-2024-23594 (6.4, Media), CVE-2024-23593 (6.7, Media), CVE-2010-0249 (8.8, Alta), CVE-2018-0749 (7.8, Alta), CVE-2018-0748 (7.8, Alta), CVE-2023-41840 (7.8, Alta), CVE-2023-33304 (5.5, Media), CVE-2023-37939 (3.3, Baja), CVE-2023-34367 (6.5, Media), CVE-2023-21899 (5.5, Media), CVE-2022-42970 (9.8, Critico), CVE-2022-42973 (7.8, Alta) CVE-2023-21898 (5.5, Media), CVE-2022-42971 (9.8, Critico)
+
+%         \item \textbf{Activos afectados:}
+
+%         Torre Micro-Red
+
+%     \end{itemize}
+%     \item \textbf{Raspberry Pi:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2024-35932, CVE-2021-38759 (9.8, Critico), CVE-2021-38545 (5.9, Media), CVE-2019-20354 (4.3, Media), CVE-2018-18068, CVE-2018-18068 (9.8, Critico), CVE-2018-19860 (8.8, Alta), CVE-2017-15638 (6.5, Media)
+
+%         \item \textbf{Activos afectados:}
+
+%          RP.1
+
+%     \end{itemize}
+%     \item \textbf{Lynksys  E900:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2021-46951	(5.5, Media), CVE-2021-47146, CVE-2021-47015, CVE-2023-38433	(7.5, Alta), CVE-2022-42455	(7.8, Alta), CVE-2019-5169	(7.8, Alta), CVE-2018-20404	(7.5, Alta), CVE-2014-9696 (8.8, Alta), CVE-2014-9695 (8.8, Alta), CVE-2016-6898 (6.6, Media)
+
+
+%         \item \textbf{Activos afectados:}
+
+%           AP1 MicroredAccess
+
+%     \end{itemize}
+%     \item \textbf{SIMATIC S7-1500:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2022-25622 (7.5, Alta), CVE-2019-19300 (7.5, Alta), CVE-2022-38465 (7.8, Alta), CVE-2021-37204 (7.5, Alta), CVE-2021-37185 (7.5, Alta), CVE-2021-37205 (7.5, Alta), CVE-2020-28397 (5.3, Media), CVE-2020-15782 (9.8, Critico), CVE-2020-15796 (7.5, Alta), CVE-2020-7580 (6.7, Media), CVE-2019-10936 (7.5, Alta), CVE-2019-19281 (7.5, Alta), CVE-2018-16559 (7.5, Alta), CVE-2018-16558 (7.5, Alta), CVE-2019-10929 (5.9, Media), CVE-2019-6575 (7.5, Alta), CVE-2019-10943 (7.5, Alta), CVE-2018-13805 (7.5, Alta), CVE-2018-13815 (7.5, Alta), CVE-2018-4843 (6.5, Media)
+
+
+
+%         \item \textbf{Activos afectados:}
+
+%         PPC
+
+%     \end{itemize}
+%     \item \textbf{SIMATIC S7-1500:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2022-25622 (7.5, Alta), CVE-2019-19300 (7.5, Alta), CVE-2022-38465 (7.8, Alta), CVE-2021-37204 (7.5, Alta), CVE-2021-37185 (7.5, Alta), CVE-2021-37205 (7.5, Alta), CVE-2020-28397 (5.3, Media), CVE-2020-15782 (9.8, Critico), CVE-2020-15796 (7.5, Alta), CVE-2020-7580 (6.7, Media), CVE-2019-10936 (7.5, Alta), CVE-2019-19281 (7.5, Alta), CVE-2018-16559 (7.5, Alta), CVE-2018-16558 (7.5, Alta), CVE-2019-10929 (5.9, Media), CVE-2019-6575 (7.5, Alta), CVE-2019-10943 (7.5, Alta), CVE-2018-13805 (7.5, Alta), CVE-2018-13815 (7.5, Alta), CVE-2018-4843 (6.5, Media)
+
+
+
+%         \item \textbf{Activos afectados:}
+
+%         PPC
+
+%     \end{itemize}
+%     \item \textbf{Magelis HMI:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2019-6833 (6.5, Media), CVE-2016-8374 (7.5, Alta), CVE-2016-8367 (5.3, Media)
+
+%         \item \textbf{Activos afectados:}
+
+%         APIS5\_SH\_Magelis,  APIS1\_FV\_Magelis, APIS2\_ALM\_Magelis, APIS3\_GE\_Magelis
+
+%     \end{itemize}
+%     \item \textbf{Modicom M251:}
+%     \begin{itemize}
+%         \item \textbf{\gls{CVE} (severidad):} 
+
+%         CVE-2019-6820 (8.2, Alta), CVE-2017-6026 (9.1, Critico), CVE-2017-6028 (9.8, Critico), CVE-2017-6030 (6.5, Media)
+
+%         \item \textbf{Activos afectados:}
+
+%         PLC Apis1, PLC1 Apis2, PLC2 Apis2, PLC3 Apis2, PLC4 Apis2, PLC Apis3
+
+%     \end{itemize}
+% \end{itemize}

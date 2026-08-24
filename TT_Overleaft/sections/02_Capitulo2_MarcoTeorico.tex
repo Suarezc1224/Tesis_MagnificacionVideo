@@ -1,0 +1,66 @@
+\chapter{Marco teórico}
+\glsresetall
+\label{cap:MarcoTeorico}
+
+En este capítulo se presentan los conceptos técnicos necesarios para comprender el diseño e implementación de un canal seguro transparente para la comunicación entre el controlador de estación \gls{API} y el servidor \gls{SCADA} de la Micro-Red de la Universidad de Cuenca. Se abordan los fundamentos de los sistemas de control industrial, las comunicaciones industriales basadas en \gls{MODBUS}, las amenazas asociadas al tráfico en texto claro, los mecanismos criptográficos aplicables, las tecnologías de encapsulación segura y las métricas de evaluación utilizadas para validar la solución propuesta.
+
+La estructura del capítulo sigue una lógica progresiva. Primero se define el contexto de los \gls{ICS}, la arquitectura \gls{SCADA} y la convergencia entre \gls{IT} y \gls{OT}. Luego se describe la comunicación industrial sobre \gls{TCP}/\gls{IP} y el protocolo \gls{MODBUS}, que constituye la base del enlace operativo que se busca proteger. Posteriormente, se analizan las amenazas que afectan a una comunicación industrial sin cifrado ni autenticación nativa. Finalmente, se presentan los principios de seguridad, los mecanismos criptográficos, las tecnologías de canal seguro, los lineamientos normativos y los trabajos relacionados que sustentan la propuesta.
+
+\section{Sistemas de Control Industrial e infraestructuras críticas}
+
+\label{sec:Marco_SistemasInfra}
+
+Los sistemas de control industrial constituyen el contexto técnico en el que se ubica la comunicación entre el servidor \gls{SCADA} y el controlador de estación \gls{API}. Antes de analizar el canal protegido propuesto, es necesario delimitar qué caracteriza a estos entornos, cómo difieren de los sistemas informáticos convencionales y por qué la continuidad, integridad y confiabilidad de la comunicación tienen un papel central en infraestructuras de supervisión y control.
+
+\subsection{Sistemas de Control Industrial}
+\label{subsec:Marco_SistemasControlIndustrial}
+
+
+Un \gls{ICS} integra dispositivos, redes, aplicaciones y procedimientos orientados al monitoreo y control de procesos físicos. En esta categoría se incluyen sistemas \gls{SCADA}, controladores, dispositivos de campo, estaciones \gls{HMI}, servidores de supervisión y redes industriales. A diferencia de los sistemas informáticos convencionales, su operación está vinculada con variables físicas y con la continuidad de procesos reales \cite{nist80082}.
+
+En entornos de control industrial, la disponibilidad, la integridad y la estabilidad de la comunicación tienen un peso especialmente alto. Una interrupción del enlace, una lectura incorrecta o una modificación no autorizada de datos puede afectar la supervisión del proceso y alterar la percepción del operador sobre el estado real del sistema \cite{nist80082,alcaraz2015}.
+
+Desde esta perspectiva, la Micro-Red de la Universidad de Cuenca se analiza como un entorno académico de supervisión y control con características propias de un sistema \gls{OT}. Por ello, la protección del canal entre el servidor \gls{SCADA} y el controlador de estación \gls{API} se considera una medida orientada a preservar la confiabilidad de la comunicación operativa del laboratorio.
+
+\subsection{Convergencia entre tecnologías de información y tecnologías de operación}
+\label{subsec:Marco_ConvergenciaITOT}
+
+
+La convergencia entre \gls{IT} y \gls{OT} ha permitido integrar redes \gls{ethernet}, servicios de administración, almacenamiento histórico y plataformas de supervisión dentro de entornos industriales. Esta integración facilita la interoperabilidad y el análisis de datos, pero también incrementa la exposición de sistemas que originalmente fueron diseñados para operar con menor conectividad externa \cite{nist80082}.
+
+La Tabla~\ref{tab:it_ot_tesis} resume las diferencias más relevantes para el diseño del canal seguro propuesto.
+
+\begin{table}[!htbp]
+\centering
+\caption{Diferencias relevantes entre entornos \gls{IT} y \gls{OT} para el diseño del canal seguro.}
+\label{tab:it_ot_tesis}
+\begin{tabularx}{\textwidth}{%
+>{\RaggedRight\arraybackslash}p{3.2cm}
+>{\RaggedRight\arraybackslash}p{4.7cm}
+X}
+\toprule
+\textbf{Aspecto} & \textbf{Enfoque en \gls{IT}} & \textbf{Implicación en \gls{OT} para esta tesis} \\
+\midrule
+Prioridad de seguridad & Protección de información, usuarios y servicios digitales. & Se debe proteger la comunicación sin afectar la continuidad ni la estabilidad del proceso supervisado. \\
+
+Cambios de configuración & Pueden aplicarse con mayor frecuencia mediante actualizaciones o reinicios controlados. & Los cambios deben ser mínimos, previsibles y compatibles con la operación del laboratorio. \\
+
+Protección del tráfico & Puede implementarse mediante servicios, agentes o modificaciones de aplicación. & La protección debe ser transparente para el servidor \gls{SCADA} y el controlador \gls{API}, evitando modificar los extremos industriales. \\
+
+Criterio operativo & Flexibilidad, escalabilidad y gestión centralizada. & Compatibilidad con protocolos heredados, baja interferencia operativa y preservación del canal existente. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Esta diferencia condiciona el alcance de la solución. El canal seguro no se plantea como un reemplazo del sistema de supervisión, sino como una capa externa de protección que reduzca la exposición del tráfico y mantenga la lógica operativa existente.
+
+\subsection{Infraestructuras críticas y sistemas eléctricos experimentales}
+\label{subsec:Marco_InfraCriticasSistemasExperimentales}
+
+
+Las infraestructuras críticas son sistemas cuya degradación puede afectar servicios esenciales, continuidad institucional o seguridad pública. Los \gls{ICS} forman parte de muchas de estas infraestructuras porque permiten supervisar y controlar procesos físicos en sectores como energía, agua, transporte y telecomunicaciones \cite{alcaraz2015}.
+
+La Micro-Red de la Universidad de Cuenca no se describe en esta tesis como una infraestructura crítica nacional. Su relevancia se interpreta de forma proporcional: es una infraestructura experimental sensible dentro del contexto académico, utilizada para investigación, formación y validación de estrategias asociadas a sistemas eléctricos modernos.
+
+Por tanto, la motivación del trabajo no es sobredimensionar el impacto del laboratorio, sino reconocer que el enlace \gls{SCADA}-\gls{API} transporta información operativa que debe protegerse frente a observación, modificación o suplantación dentro de la red local.
+
