@@ -3,41 +3,37 @@
 \chapter{Introducción}
 \glsresetall
 \label{cap:Introduccion}
+%gls{API}
 
-Este capítulo presenta el contexto general, la problemática, la justificación, el alcance y los objetivos del presente trabajo de titulación, el cual se orienta al diseño e implementación de un mecanismo de cifrado y autenticación transparente para proteger la comunicación entre el controlador de estación \gls{API} y el servidor \gls{SCADA} de la Micro-Red de la Universidad de Cuenca.
+%Este capítulo presenta el contexto general, la problemática, la justificación, el alcance y los objetivos del presente trabajo de titulación, el cual se orienta al diseño e implementación de un mecanismo de cifrado y autenticación transparente para proteger la comunicación entre el controlador de estación \gls{API} y el servidor \gls{SCADA} de la Micro-Red de la Universidad de Cuenca.
+En este capítulo se presenta el contexto general del trabajo de titulación, orientado al diseño y análisis comparativo de métodos de magnificación de video para la detección de movimientos y vibraciones sutiles. Inicialmente, en la Sección~\ref{sec:Antecedentes} se desarrolla un recorrido crítico por la evolución doctrinal y tecnológica de las técnicas de magnificación de video; se repasan los enfoques pioneros y metodologías diseñadas para abordar mejoras en el procesamiento visual, analizando la transición hacia aproximaciones en fase y estrategias para la compensación de movimientos globales o reducción de ruido. A continuación, en la Sección~\ref{sec:IdentificacionProblema} se articula la identificación del problema de investigación a partir de las limitaciones del estado del arte. Posteriormente, en la Sección~\ref{sec:Justificacion} se expone la justificación del proyecto, resaltando su valor técnico en inspección no destructiva y la creación de un repositorio de datos libre para la comunidad académica. Luego, en la Sección~\ref{sec:Alcance} se delimitan las fronteras del trabajo, especificando los escenarios de prueba sintéticos y reales, los métodos evaluados y las condiciones de experimentación. Finalmente, en la Sección~\ref{sec:Objetivos} se formalizan el objetivo general y los objetivos específicos que dirigen la ejecución metodológica del estudio.
 
 \section{Antecedentes}
-\label{sec:antecedentes}
+\label{sec:Antecedentes}
 
-La protección de infraestructuras críticas se ha convertido en una prioridad debido a la creciente dependencia tecnológica de sectores como la energía, la industria, la salud y los servicios esenciales. En estos entornos, los \gls{ICS} cumplen un papel central en la supervisión y operación de procesos físicos. Por esta razón, una vulnerabilidad en sus mecanismos de comunicación puede comprometer no solo la información transmitida, sino también la continuidad operativa y la seguridad física de los sistemas controlados \cite{alcaraz2015}.
-
-
-\section{Identificación del problema}
-\label{sec:problema}
-
-La arquitectura de supervisión y control de la Micro-Red de la Universidad de Cuenca depende de la comunicación entre el servidor \gls{SCADA} y el controlador de estación \gls{API}. Este enlace permite el intercambio de información operativa, incluyendo mediciones eléctricas, señales de estado, alarmas y datos asociados al funcionamiento de la infraestructura experimental.
+\section{Identificación del Problema}
+\label{sec:IdentificacionProblema}
 
 
 \section{Justificación}
-\label{sec:justificacion}
+\label{sec:Justificacion}
 
-La implementación de un canal seguro transparente se justifica por la necesidad de proteger la información operativa que circula entre el servidor \gls{SCADA} y el controlador de estación \gls{API}. Aunque la red del laboratorio cuenta con mecanismos de segmentación y controles de seguridad perimetral, estos no protegen directamente el contenido de los datos una vez que transitan por la red interna.
 
 
 \section{Alcance}
-\label{sec:alcance}
-
-El presente trabajo se enfoca en el diseño, implementación y validación de un mecanismo de cifrado y autenticación transparente para proteger la comunicación entre el servidor \gls{SCADA} y el controlador de estación \gls{API} de la Micro-Red de la Universidad de Cuenca.
+\label{sec:Alcance}
 
 
 \section{Objetivos}
-\label{sec:objetivos}
+\label{sec:Objetivos}
 
 \subsection{Objetivo general}
-Implementar un mecanismo de cifrado y autenticación transparente en el canal de comunicación entre el controlador de estación (\gls{API}) y el servidor \gls{SCADA} de la Micro-Red de la Universidad de Cuenca, para garantizar la confidencialidad e integridad de la telemetría operativa frente a amenazas internas, validando su impacto en el rendimiento y disponibilidad del sistema.
+Diseñar y comparar métodos de magnificación de video basados en enfoques Eulerianos, de fase y técnicas avanzadas mediante su implementación en un sistema de procesamiento de video con el fin de identificar sus ventajas y limitaciones de su operación en la detección de movimientos y vibraciones sutiles en entornos controlados.
 
 \subsection{Objetivos específicos}
 \begin{itemize}
-    \item Analizar las tecnologías de cifrado y protocolos de túneles seguros disponibles en el estado del arte, seleccionando la solución que ofrezca el mejor equilibrio entre robustez criptográfica y baja latencia para el protocolo \gls{MODBUSTCP} en el entorno de la Micro-Red.
-
+    \item Analizar métodos de magnificación de video basados en enfoques Eulerianos, basados en fase y pirámides de Riesz, identificando sus principios de funcionamiento, parámetros de configuración y condiciones de aplicación para sustentar su evaluación comparativa.
+		\item Desarrollar en MATLAB la arquitectura funcional de un sistema de procesamiento de video que integre las etapas de adquisición, preprocesamiento, descomposición, amplificación y reconstrucción para el análisis de variaciones sutiles en secuencias de video.
+		\item Establecer escenarios de prueba en entornos controlados, integrando el uso de una cámara de alta velocidad, orientados a la captura y análisis de secuencias de video con variaciones sutiles bajo condiciones experimentales representativas para la validación empírica del sistema de procesamiento y la consolidación de un repositorio de datos de libre acceso para el ámbito académico.
+		\item Caracterizar el desempeño de los algoritmos de magnificación de video mediante secuencias sintéticas y reales, empleado métricas cuantitativas y cualitativas para la identificación de ventajas, limitaciones y condiciones de operación considerando su rendimiento computacional, así como su factibilidad en escenarios offline, cuasi-real y tiempo real.
 \end{itemize}

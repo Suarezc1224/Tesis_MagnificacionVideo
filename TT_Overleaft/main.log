@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.5) (preloaded format=xelatex 2026.8.17)  24 AUG 2026 15:13
+This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.5) (preloaded format=xelatex 2026.8.17)  8 SEP 2026 01:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1872,18 +1872,46 @@ File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
  [13]
 Capítulo 2.
+
+Package natbib Warning: Citation `nist80082' on page 14 undefined on input line
+ 19.
+
+
+Package natbib Warning: Citation `nist80082' on page 14 undefined on input line
+ 21.
+
+
+Package natbib Warning: Citation `alcaraz2015' on page 14 undefined on input li
+ne 21.
+
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
 [14
 
 ]
+
+Package natbib Warning: Citation `nist80082' on page 15 undefined on input line
+ 29.
+
+
+Package natbib Warning: Citation `alcaraz2015' on page 15 undefined on input li
+ne 61.
+
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
- [15]) (sections/03_Capitulo3_Metodologia.tex
+[15]) (sections/03_Capitulo3_Metodologia.tex
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
  [16]
 Capítulo 3.
+
+Package natbib Warning: Citation `peffers2007dsrm' on page 17 undefined on inpu
+t line 7.
+
+
+Package natbib Warning: Citation `hevner2004designscience' on page 17 undefined
+ on input line 7.
+
 ) (sections/04_Capitulo4_Resultados.tex
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
@@ -1903,11 +1931,18 @@ File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
  [19
 
-] (main.bbl)
+] (main.bbl
+
+Package natbib Warning: Empty `thebibliography' environment on input line 24.
+
+)
 
 Package glossaries Warning: No \printglossary or \printglossaries found. 
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
+
+
+Package natbib Warning: There were undefined citations.
 
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
@@ -1923,13 +1958,13 @@ LaTeX2e <2026-06-01>
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 7DC5C31F9B5F8FC3A67D96A41483D75F;4365.
+(rerunfilecheck)             Checksum: 6C89FFF949CB9A24B0DBE7A3A6108EC5;4365.
  ) 
 Here is how much of TeX's memory you used:
- 44855 strings out of 402620
- 897646 string characters out of 5437641
- 1504270 words of memory out of 5000000
- 73284 multiletter control sequences out of 15000+600000
+ 44830 strings out of 402620
+ 897200 string characters out of 5437641
+ 1504269 words of memory out of 5000000
+ 73259 multiletter control sequences out of 15000+600000
  635199 words of font info for 103 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  92i,13n,120p,2495b,959s stack positions out of 10000i,1000n,20000p,200000b,200000s
