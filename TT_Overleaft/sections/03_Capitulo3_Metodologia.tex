@@ -34,145 +34,22 @@ El tercer grupo incluye métodos que utilizan información de aceleración tempo
 
 Los artículos \textit{Performance Analysis of Video Magnification} y \textit{An overview of Eulerian video motion magnification methods} no se consideran algoritmos adicionales en la implementación experimental. Sirven como referencias complementarias para clasificar las técnicas, identificar sus características y seleccionar aspectos para la comparación. En particular, el artículo de revisión compara los mecanismos temporales utilizados por diferentes métodos eulerianos y permite observar la evolución desde el filtrado temporal convencional hasta los métodos basados en la aceleración y las variaciones en la tasa de aceleración \cite{Ahmed2023,Yadav2020}.\\
 
-\section{Representación temporal de la señal}
-
-Un vídeo digital puede representarse como una secuencia discreta de imágenes, donde cada fotograma corresponde a un instante en el tiempo. Sea $I(\mathbf{x},n)$ la intensidad de un píxel en la posición espacial $\mathbf{x}=(x,y)$ del fotograma  $n$. La relación entre el índice del fotograma y el tiempo puede expresarse de la siguiente manera:
-
-\begin{equation}
-    [
-t_n=nT_s,
-]
-\end{equation}
-
-donde $T_s$ representa el intervalo de muestreo y está determinado por la frecuencia de fotogramas del video mediante
-
-\begin{equation}
-[
-T_s=\frac{1}{f_s}.
-]
-\end{equation}
-
-De esta manera, una secuencia de video puede analizarse como una señal temporal discreta en cada posición espacial.
 
 
-La señal temporal que utiliza cada algoritmo depende de la representación aplicada para caracterizar el movimiento. En los métodos Eulerianos lineales, esta señal corresponde principalmente a las variaciones de intensidad de las bandas espaciales resultantes obtenidas de la descomposición del vídeo. En los métodos basados en fase, la señal temporal está asociada a la variación de fase local de los coeficientes de la representación espacial. El uso de la fase permite correlacionar las variaciones temporales asociadas a pequeños desplazamientos sin necesidad de estimar claramente el flujo óptico \cite{Wu2012,Wadhwa2013,Wadhwa2014}.\\
+%\section{Formulación de Derivadas}
+%PENDIENTE
 
 
-En los métodos de aceleración, la señal temporal puede corresponder a una representación de intensidad o fase, a la cual se aplica un operador para extraer componentes de segundo orden. En el método de jerk-aware, la señal resultante se utiliza para caracterizar la tasa de cambio de la aceleración y distinguir trayectorias suaves de movimientos rápidos \cite{Zhang2017,Takeda2018}.\\
+%\section{Discretización de los operadores}
 
 
-Para permitir una comparación justa, la metodología trata cada representación como una señal discreta $s[n]$. Esta señal puede corresponder a la intensidad, la fase u otra variable de la representación utilizada por cada algoritmo. Se aplica el operador de tiempo apropiado a $s[n]$, preservando así las propiedades específicas de cada método.\\
-
-\section{Formulación de la derivada temporal}
+%\section{Implementación de las aproximaciones temporales}
 
 
-La variación temporal puede describirse matemáticamente mediante derivadas de diferente orden. La primera derivada de una señal $s(t)$ representa su tasa de cambio en el tiempo por
-$\frac{ds(t)}{dt}$, mientras que la segunda derivada, $\frac{d^2s(t)}{dt^2}$, representa aceleración temporal. La tercera derivada es representada por $\frac{d^3s(t)}{dt^3}$, corresponde al jerk y plasma la variación de la aceleración con respecto al tiempo.\\
-
-
-No todos los algoritmos analizados utilizan una derivada temporal explícita. Los primeros métodos eulerianos y basados en fase se centran principalmente en el uso de filtros temporales para seleccionar variaciones dentro de una banda de frecuencia específica. En estos casos, el operador temporal no se interpreta directamente como una derivada de un orden específico, sino como un filtro que selecciona los componentes relevantes de la señal temporal \cite{Wu2012,Wadhwa2013,Wadhwa2014}.\\
-
-La transición a operadores derivativos se demuestra de forma evidente en la amplificación de la aceleración de vídeo, donde la aceleración se define como la segunda derivada de la señal con respecto al tiempo. El método aprovecha esta propiedad para eliminar el movimiento cuasilineal y preservar las variaciones relacionadas con la aceleración \cite{Zhang2017}.\\
-
-Posteriormente, \textit{Jerk-Aware Video Acceleration Magnification} incorpora la tercera derivada temporal. El jerk se utiliza como una medida de la variación de la aceleración y permite distinguir cambios suaves de movimientos rápidos y de mayor amplitud \cite{Takeda2018}. La utilización de estas derivadas constituye una evolución del procesamiento temporal, ya que el operador deja de limitarse a seleccionar una banda de frecuencia y pasa a utilizar características asociadas con el comportamiento dinámico de la señal.\\
-
-Posteriormente, la amplificación de aceleración de vídeo uniforme incorpora la tercera derivada temporal. El cambio de aceleración (jerk) se utiliza para medir la variación de la aceleración y permite distinguir entre cambios graduales y movimientos rápidos de alta amplitud \cite{Takeda2018}. El uso de estas derivadas representa un avance en el procesamiento temporal, en el cual se aprovechan las características del comportamiento dinámico de la señal.\\
-
-
-\section{Discretización de los operadores temporales}
-
-Los algoritmos de procesamiento de vídeo trabajan con muestras discretas; por lo tanto, las derivadas continuas deben representarse mediante aproximaciones computacionales. Para una señal $s[n]$ con un período de muestreo $T_s$, la aproximación de la primera derivada mediante diferencias centrales se puede expresar de la siguiente manera:
-
-\begin{equation}
-    \frac{s[n+1]-s[n-1]}{2T_s}
-\end{equation}
-
-De manera similar, la segunda derivada puede aproximarse mediante
-
-\begin{equation}
-    \frac{s[n+1]-2s[n]+s[n-1]}{T_s^2}
-\end{equation}
-
-Esta expresión puede comprenderse como la convolución de la señal y un kernel cuyos coeficientes son proporcionales a $[1,-2,1].$\\
-
-Para la tercera derivada, se pueden utilizar aproximaciones centradas más largas. Una posible aproximación con cinco puntos de muestreo es:
-
-\begin{equation}
-\frac{
-s[n+2]-2s[n+1]+2s[n-1]-s[n-2]
-}
-{2T_s^3}
-\end{equation}
-
-Utilizando estas diferencias finitas, podemos establecer un marco computacional para el análisis de operadores de primer, segundo y tercer orden.\\
-
-Sin embargo, las expresiones anteriores no representan necesariamente la implementación de los algoritmos estudiados. En concreto, los métodos de amplificación basados en aceleración y jerk utilizan las derivadas de una función gaussiana, lo que permite combinar la operación de diferencia con el suavizado temporal. En la amplificación por aceleración de vídeo, la segunda derivada se obtiene mediante la convolución de la señal con la segunda derivada de una función gaussiana, mientras que el método jerk-aware utiliza la tercera derivada de esta misma función \cite{Zhang2017,Takeda2018}.\\
-
-
-Por lo tanto, la comparación computacional no se limita al orden de la derivada, sino que también considera el operador discreto utilizado para su aproximación. El kernel, su longitud, el factor de suavizado y la ventana temporal determinan el procesamiento de la señal.\\
-
-\section{Implementación de las aproximaciones temporales}
-Para realizar una comparación homogénea, cada operador temporal se implementa como una operación sobre una secuencia de muestras discretas. Si el algoritmo utiliza un filtro temporal, este se representa mediante un kernel $h[k]$, cuya aplicación puede expresarse como una convolución:
-
-\begin{equation}
-    \sum_{k=-K}^{K}h[k]s[n-k]
-\end{equation}
-
-En los métodos eulerianos lineales, el operador temporal corresponde a un filtro paso banda, que permite extraer componentes en la frecuencia de interés. El EVM original aplica este procesamiento a las representaciones espaciales del vídeo antes de amplificar la señal seleccionada \cite{Wu2012}. En la versión basada en una pirámide de Laplace adaptativa, se utilizan filtros IIR para construir el ancho de banda, lo que permite el procesamiento basado en estados temporales previos \cite{Yang2023}.\\
-
-
-Los métodos basados en fase implican la convolución de la señal de fase a lo largo del tiempo. En el procesamiento de vídeo en movimiento basado en fase, las variaciones de fase se procesan temporalmente y luego se amplifican antes de la reconstrucción del vídeo \cite{Wadhwa2013}. La transformada de Riesz conserva este principio temporal, pero modifica la determinación de la fase. Las diferencias finitas contenidas en la transformada de Riesz se aplican espacialmente; por lo tanto, no usan aproximación temporal de la derivada \cite{Wadhwa2014}.\\
-
-
-Para la magnificación de la aceleración, el operador temporal se construye a partir de la derivada de una función gaussiana. Esta función gaussiana se puede expresar de la siguiente manera:
-
-\begin{equation}
-   G_\sigma(t) = \frac{1}{\sqrt{2\pi}\sigma}
-e^{-\frac{t^2}{2\sigma^2}}
-\end{equation}
-%%%%revirsar esta formula
-y la segunda derivada como: 
-\begin{equation}
- G''_\sigma(t) = \left( \frac{t^2 - \sigma^2}{\sigma^4} \right) G_\sigma(t)
-\end{equation}
-
-El kernel discreto correspondiente puede obtenerse evaluando esta expresión en las posiciones temporales utilizadas por la ventana. La aceleración estimada se calcula posteriormente mediante la convolución.
-
-\begin{equation}
-    \sum_{k=-K}^{K}
-G_\sigma''(kT_s)s[n-k]
-\end{equation}
-
-
-Esta formulación corresponde al principio empleado por Zhang et al., quienes relacionan la segunda derivada temporal con el Laplaciano de una señal suavizada mediante una función Gaussiana \cite{Zhang2017}.
-
-En el método jerk-aware se extiende este procedimiento a la tercera derivada. La tercera derivada de la función Gaussiana puede expresarse como
-
-\begin{equation}
-\frac{t^3}{\sigma^6}
-\right)G_\sigma(t)
-\end{equation}
-
-
-y el jerk se obtiene mediante
-
-\begin{equation}
-   \sum_{k=-K}^{K}
-G_\sigma'''(kT_s)s[n-k] 
-\end{equation}
-
-
-
-El resultado no se utiliza directamente para magnificar la señal, sino para construir una medida relacionada con la suavidad temporal y obtener el filtro jerk-aware \cite{Takeda2018}.
-
-En el caso del \textit{Bilateral Video Magnification Filter}, el procesamiento se realiza mediante un operador compuesto por un kernel Laplaciano de Gauss en el dominio temporal y un kernel Gaussiano asociado con la magnitud de la variación. De esta manera, el primer componente selecciona la frecuencia objetivo y el segundo restringe las variaciones cuya magnitud se encuentra fuera del intervalo de interés \cite{TakedaBVMF}.
-
-Finalmente, los métodos basados en anisotropía fraccional no se representan mediante una diferencia temporal de orden definido. En este caso, se utiliza una ventana de muestras para estimar una matriz de covarianza y, posteriormente, la anisotropía fraccional. Por esta razón, este método se analizará como una estrategia estadística temporal y no como una aproximación de derivada \cite{Takeda2019}.
-
-\subsection{Configuración Experimental}
+\section{Configuración Experimental}
 Pendiente
 
-\subsection{Configuración de los operadores temporales}
+\section{Configuración de los operadores temporales}
 
 Para realizar una comparación consistente entre los algoritmos seleccionados, se establecerá una configuración temporal común que permita analizar la forma en que cada método procesa la información a lo largo de los cuadros del video. Debido a que los algoritmos no utilizan necesariamente el mismo operador temporal, estos se clasificarán de acuerdo con la operación empleada para obtener o resaltar las variaciones temporales.
 
@@ -244,13 +121,13 @@ Finalmente, los métodos que no emplean una derivada temporal explícita, sino u
 Para garantizar una comparación adecuada, todos los algoritmos serán evaluados utilizando las mismas secuencias de video, frecuencia de cuadros, resolución y condiciones generales de procesamiento. Los parámetros propios de cada método, como frecuencia de corte, orden de la derivada, ancho de la función gaussiana, longitud de la ventana temporal o parámetros de fase, se establecerán de acuerdo con la formulación propuesta originalmente por cada algoritmo. De esta manera, la comparación permitirá diferenciar entre el efecto producido por el operador temporal y las características particulares de cada método de magnificación.
 
 
-\subsection{Evaluación subjetiva de la magnificación de video}
+\section{Evaluación subjetiva de la magnificación de video}
 
 La evaluación de los resultados obtenidos mediante los diferentes algoritmos de magnificación de video se realizará principalmente mediante una metodología subjetiva. Esta elección se debe a que el objetivo del procesamiento no consiste únicamente en reproducir una señal de referencia, sino en hacer perceptibles movimientos o variaciones que inicialmente pueden ser difíciles de observar. Por esta razón, la valoración de aspectos como la visibilidad del movimiento magnificado, la presencia de artefactos y la naturalidad del resultado requiere considerar la percepción de los observadores.\\
 
 Para establecer un procedimiento de evaluación uniforme, se tomarán como referencia las recomendaciones descritas en la norma ITU-R BT.500, que establece metodologías para la evaluación subjetiva de la calidad de imágenes y video. De manera complementaria, se considerarán los lineamientos establecidos en ITU-T P.910 e ITU-T P.913 para la organización de las pruebas y la valoración subjetiva de contenido de video. Estas recomendaciones permiten definir diferentes formas de presentar los estímulos y recopilar las valoraciones de los observadores.\\
 
-\subsubsection{Metodología de evaluación subjetiva}
+\subsection{Metodología de evaluación subjetiva}
 
 La evaluación subjetiva se plantea con el propósito de comparar la percepción de los resultados obtenidos mediante los diferentes algoritmos de magnificación. Para ello, los videos procesados serán presentados a un grupo de observadores bajo condiciones controladas y siguiendo un procedimiento común para todos los métodos.\\
 
@@ -258,7 +135,7 @@ La evaluación considerará tres posibilidades de presentación de los estímulo
 
 En todos los casos se procurará mantener constantes las condiciones de visualización, duración de los estímulos y características de reproducción, de manera que las diferencias observadas en las valoraciones estén relacionadas principalmente con los resultados producidos por los algoritmos.\\
 
-\subsubsection{Selección de los estímulos de evaluación}
+\subsection{Selección de los estímulos de evaluación}
 
 Los estímulos utilizados durante la evaluación estarán constituidos por los videos obtenidos mediante la aplicación de los algoritmos seleccionados. Para garantizar una comparación equivalente, los diferentes métodos serán aplicados sobre las mismas secuencias de entrada y, cuando sea posible, bajo condiciones de procesamiento similares.\\
 
@@ -266,7 +143,7 @@ Los videos serán seleccionados de acuerdo con las características del movimien
 
 Para cada secuencia se generarán los resultados correspondientes a los métodos evaluados. Estos resultados constituirán los estímulos que serán presentados a los observadores durante las pruebas subjetivas.\\
 
-\subsubsection{Criterios de evaluación}
+\subsection{Criterios de evaluación}
 
 Los criterios de evaluación estarán orientados a las características que son relevantes para la magnificación de movimientos sutiles. En lugar de solicitar únicamente una valoración general de calidad, se buscará determinar qué tan adecuado es cada resultado para hacer perceptible el movimiento de interés sin introducir alteraciones visuales excesivas.\\
 
@@ -276,7 +153,7 @@ La naturalidad permitirá valorar si el video magnificado mantiene una aparienci
 
 Los criterios podrán utilizarse individualmente o de manera conjunta dependiendo de la modalidad de evaluación seleccionada.\\
 
-\subsubsection{Comparación por pares de los algoritmos}
+\subsection{Comparación por pares de los algoritmos}
 
 La comparación por pares se utilizará para determinar cuál de dos algoritmos produce un resultado preferible bajo un mismo escenario de prueba. En cada evaluación se presentarán dos resultados correspondientes a diferentes métodos aplicados sobre una misma secuencia de entrada.\\
 
@@ -284,7 +161,7 @@ El observador deberá seleccionar el resultado que considere superior de acuerdo
 
 La comparación por pares permitirá establecer una relación directa entre los algoritmos y facilitará la identificación del método que obtiene una mayor preferencia por parte de los observadores.\\
 
-\subsubsection{Evaluación de estímulo simple}
+\subsection{Evaluación de estímulo simple}
 
 La evaluación mediante estímulo simple permitirá analizar cada resultado de manera independiente. En este caso, el observador visualizará un único video procesado y asignará una valoración de acuerdo con los criterios definidos previamente.\\
 
@@ -292,13 +169,13 @@ Esta modalidad permitirá obtener una valoración individual de cada algoritmo, 
 
 Los resultados obtenidos mediante esta modalidad permitirán complementar la comparación por pares y determinar la percepción general de los resultados generados por cada algoritmo.\\
 
-\subsubsection{Selección de los observadores}
+\subsection{Selección de los observadores}
 
 Los observadores serán seleccionados considerando que la evaluación busca representar la percepción humana de los resultados de magnificación. Antes de iniciar la prueba se proporcionarán instrucciones sobre el procedimiento y sobre los criterios que deberán considerar durante la visualización.\\
 
 Los observadores no deberán conocer necesariamente el algoritmo utilizado para generar cada video, con el propósito de reducir posibles preferencias asociadas con el método empleado. Las instrucciones se centrarán en las características observables del resultado y no en la identificación del algoritmo.\\
 
-\subsubsection{Procedimiento de evaluación}
+\subsection{Procedimiento de evaluación}
 
 La prueba se realizará bajo condiciones de visualización controladas. Antes de comenzar la evaluación se explicará a los observadores el procedimiento y los criterios que deberán utilizar. Posteriormente, los estímulos serán presentados siguiendo un orden establecido.\\
 
@@ -306,7 +183,7 @@ Para evitar que el orden de presentación influya sobre las respuestas, los est�
 
 Cada observador registrará su valoración para los estímulos presentados. Las respuestas serán almacenadas para su posterior procesamiento y comparación entre los diferentes algoritmos.\\
 
-\subsubsection{Análisis de los resultados subjetivos}
+\subsection{Análisis de los resultados subjetivos}
 
 Los resultados obtenidos serán agrupados de acuerdo con el algoritmo, la secuencia de video y el criterio de evaluación. Para cada método se calcularán los valores representativos de las respuestas obtenidas por los observadores.\\
 
