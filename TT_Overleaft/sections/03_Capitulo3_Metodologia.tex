@@ -4,4 +4,150 @@
 
 \glsresetall
 
-El desarrollo metodológico se estructura bajo la metodología de investigación en ciencia del diseño, conocida como \gls{DSRM}. Este enfoque es adecuado para proyectos de ingeniería aplicada y desarrollo tecnológico, ya que orienta el proceso hacia la construcción, demostración y evaluación rigurosa de un artefacto diseñado para resolver un problema identificado en un entorno específico \cite{peffers2007dsrm,hevner2004designscience}. En este caso, el artefacto corresponde a un canal seguro transparente orientado a proteger la comunicación entre el servidor \gls{SCADA} y el entorno industrial \gls{MODBUS} asociado al controlador de estación \gls{API} de la Micro-Red.
+%El desarrollo metodológico se estructura bajo la metodología de investigación en ciencia del diseño, conocida como \gls{DSRM}. Este enfoque es adecuado para proyectos de ingeniería aplicada y desarrollo tecnológico, ya que orienta el proceso hacia la construcción, demostración y evaluación rigurosa de un artefacto diseñado para resolver un problema identificado en un entorno específico \cite{peffers2007dsrm,hevner2004designscience}. En este caso, el artefacto corresponde a un canal seguro transparente orientado a proteger la comunicación entre el servidor \gls{SCADA} y el entorno industrial \gls{MODBUS} asociado al controlador de estación \gls{API} de la Micro-Red.
+
+
+\section{Metodología para el análisis de los operadores temporales}
+
+Comparar algoritmos de magnificación de video requiere considerar la representación espacial y  las variaciones temporales utilizadas en cada método. Los algoritmos analizados emplean diferentes estrategias para seleccionar y amplificar los cambios más significativos. Mientras que los primeros métodos eulerianos utilizan filtros temporales para separar bandas de frecuencia específicas, los métodos más recientes integran operadores de aceleración y variación de la aceleración para distinguir entre movimientos sutiles con respecto a movimientos de gran amplitud.\cite{Wu2012,Wadhwa2013,Zhang2017,Takeda2019}.\\
+
+
+Desde el punto de vista computacional, estas operaciones deben aplicarse a una secuencia de imágenes discretas. Por lo tanto, esta metodología analiza la transformación entre la formulación temporal de cada algoritmo y su implementación con muestras discretas. Se tienen en cuenta el tipo de operador utilizado, el orden de la derivada (si la hay), la ventana temporal empleada y el kernel o filtro aplicado. Esto crea una base común para comparar diferentes aproximaciones temporales bajo condiciones experimentales equivalentes, evaluando la eficiencia de cada método.
+
+\section{Selección y clasificación de los algoritmos}
+
+Los algoritmos analizados en este estudio se seleccionaron fundamentalmente en base a su importancia en el desarrollo de métodos de magnificación de vídeo y las diferencias en sus mecanismos de procesamiento temporal. Para simplificar el análisis, los métodos se dividen en tres grupos principales: magnificación Euleriana lineal, magnificación basada en fase y magnificación mediante aceleración temporal. Además, se consideraron métodos que incorporan combinaciones de estas estrategias para mejorar el rendimiento en presencia de ruido y movimiento de gran amplitud.\\
+
+
+En el campo de la amplificación Euleriana lineal, se considera en primer lugar el método de magnificación de vídeo euleriana (EVM) propuesto por Wu et al., ya que constituye una de las bases principales de los métodos eulerianos posteriores. Este método descompone espacialmente el vídeo y luego aplica un procesamiento temporal para separar las variaciones relevantes antes de amplificarlas \cite{Wu2012}. Adicionalmente, se considera el método de la pirámide laplaciana adaptativa, que transforma el procesamiento espacial y temporal de la EVM para mejorar la amplificación y reducir los artefactos, y el método basado en PCA, que incluye un proceso de selección de componentes para separar las variaciones relevantes del ruido \cite{Yang2023,Wu2018}.\\
+
+
+
+El segundo grupo comprende métodos de magnificación basados en fase. Estos incluyen \textit{Phase-Based Video Motion Processing}, \textit{Riesz Pyramids for Fast Phase-Based Video Magnification}, el método basado en fase para cámaras de mano y el método orientado para medir oscilaciones de microamplitud. Estos métodos utilizan la fase local como representación del movimiento, pero se diferencian en su representación espacial, procesamiento temporal y estrategias para administrar el movimiento no deseado \cite{Wadhwa2013,Wadhwa2014,Zang2026,Yang2024}.\\
+
+
+
+
+El tercer grupo incluye métodos que utilizan información de aceleración temporal. Entre ellos se encuentran \textit{Video Acceleration Magnification}, \textit{Jerk-Aware Video Acceleration Magnification}, el método basado en anisotropía fraccional y el \textit{Bilateral Video Magnification Filter}. Estos métodos representan un mayor desarrollo del procesamiento temporal mediante la integración de operadores de segundo o tercer orden y mecanismos adicionales que permiten diferenciar entre pequeños movimientos y grandes cambios de amplitud \cite{Zhang2017,Takeda2018,Takeda2019,TakedaBVMF}.\\
+
+
+
+Los artículos \textit{Performance Analysis of Video Magnification} y \textit{An overview of Eulerian video motion magnification methods} no se consideran algoritmos adicionales en la implementación experimental. Sirven como referencias complementarias para clasificar las técnicas, identificar sus características y seleccionar aspectos para la comparación. En particular, el artículo de revisión compara los mecanismos temporales utilizados por diferentes métodos eulerianos y permite observar la evolución desde el filtrado temporal convencional hasta los métodos basados en la aceleración y las variaciones en la tasa de aceleración \cite{Ahmed2023,Yadav2020}.\\
+
+\section{Representación temporal de la señal}
+
+Un vídeo digital puede representarse como una secuencia discreta de imágenes, donde cada fotograma corresponde a un instante en el tiempo. Sea $I(\mathbf{x},n)$ la intensidad de un píxel en la posición espacial $\mathbf{x}=(x,y)$ del fotograma  $n$. La relación entre el índice del fotograma y el tiempo puede expresarse de la siguiente manera:
+
+\begin{equation}
+    [
+t_n=nT_s,
+]
+\end{equation}
+
+donde $T_s$ representa el intervalo de muestreo y está determinado por la frecuencia de fotogramas del video mediante
+
+\begin{equation}
+[
+T_s=\frac{1}{f_s}.
+]
+\end{equation}
+
+De esta manera, una secuencia de video puede analizarse como una señal temporal discreta en cada posición espacial.
+
+
+La señal temporal que utiliza cada algoritmo depende de la representación aplicada para caracterizar el movimiento. En los métodos Eulerianos lineales, esta señal corresponde principalmente a las variaciones de intensidad de las bandas espaciales resultantes obtenidas de la descomposición del vídeo. En los métodos basados en fase, la señal temporal está asociada a la variación de fase local de los coeficientes de la representación espacial. El uso de la fase permite correlacionar las variaciones temporales asociadas a pequeños desplazamientos sin necesidad de estimar claramente el flujo óptico \cite{Wu2012,Wadhwa2013,Wadhwa2014}.\\
+
+
+En los métodos de aceleración, la señal temporal puede corresponder a una representación de intensidad o fase, a la cual se aplica un operador para extraer componentes de segundo orden. En el método de jerk-aware, la señal resultante se utiliza para caracterizar la tasa de cambio de la aceleración y distinguir trayectorias suaves de movimientos rápidos \cite{Zhang2017,Takeda2018}.\\
+
+
+Para permitir una comparación justa, la metodología trata cada representación como una señal discreta $s[n]$. Esta señal puede corresponder a la intensidad, la fase u otra variable de la representación utilizada por cada algoritmo. Se aplica el operador de tiempo apropiado a $s[n]$, preservando así las propiedades específicas de cada método.\\
+
+\section{Formulación de la derivada temporal}
+
+
+La variación temporal puede describirse matemáticamente mediante derivadas de diferente orden. La primera derivada de una señal $s(t)$ representa su tasa de cambio en el tiempo por
+$\frac{ds(t)}{dt}$, mientras que la segunda derivada, $\frac{d^2s(t)}{dt^2}$, representa aceleración temporal. La tercera derivada es representada por $\frac{d^3s(t)}{dt^3}$, corresponde al jerk y plasma la variación de la aceleración con respecto al tiempo.\\
+
+
+No todos los algoritmos analizados utilizan una derivada temporal explícita. Los primeros métodos eulerianos y basados en fase se centran principalmente en el uso de filtros temporales para seleccionar variaciones dentro de una banda de frecuencia específica. En estos casos, el operador temporal no se interpreta directamente como una derivada de un orden específico, sino como un filtro que selecciona los componentes relevantes de la señal temporal \cite{Wu2012,Wadhwa2013,Wadhwa2014}.\\
+
+La transición a operadores derivativos se demuestra de forma evidente en la amplificación de la aceleración de vídeo, donde la aceleración se define como la segunda derivada de la señal con respecto al tiempo. El método aprovecha esta propiedad para eliminar el movimiento cuasilineal y preservar las variaciones relacionadas con la aceleración \cite{Zhang2017}.\\
+
+Posteriormente, \textit{Jerk-Aware Video Acceleration Magnification} incorpora la tercera derivada temporal. El jerk se utiliza como una medida de la variación de la aceleración y permite distinguir cambios suaves de movimientos rápidos y de mayor amplitud \cite{Takeda2018}. La utilización de estas derivadas constituye una evolución del procesamiento temporal, ya que el operador deja de limitarse a seleccionar una banda de frecuencia y pasa a utilizar características asociadas con el comportamiento dinámico de la señal.\\
+
+Posteriormente, la amplificación de aceleración de vídeo uniforme incorpora la tercera derivada temporal. El cambio de aceleración (jerk) se utiliza para medir la variación de la aceleración y permite distinguir entre cambios graduales y movimientos rápidos de alta amplitud \cite{Takeda2018}. El uso de estas derivadas representa un avance en el procesamiento temporal, en el cual se aprovechan las características del comportamiento dinámico de la señal.\\
+
+
+\section{Discretización de los operadores temporales}
+
+Los algoritmos de procesamiento de vídeo trabajan con muestras discretas; por lo tanto, las derivadas continuas deben representarse mediante aproximaciones computacionales. Para una señal $s[n]$ con un período de muestreo $T_s$, la aproximación de la primera derivada mediante diferencias centrales se puede expresar de la siguiente manera:
+
+\begin{equation}
+    \frac{s[n+1]-s[n-1]}{2T_s}
+\end{equation}
+
+De manera similar, la segunda derivada puede aproximarse mediante
+
+\begin{equation}
+    \frac{s[n+1]-2s[n]+s[n-1]}{T_s^2}
+\end{equation}
+
+Esta expresión puede comprenderse como la convolución de la señal y un kernel cuyos coeficientes son proporcionales a $[1,-2,1].$\\
+
+Para la tercera derivada, se pueden utilizar aproximaciones centradas más largas. Una posible aproximación con cinco puntos de muestreo es:
+
+\begin{equation}
+\frac{
+s[n+2]-2s[n+1]+2s[n-1]-s[n-2]
+}
+{2T_s^3}
+\end{equation}
+
+Utilizando estas diferencias finitas, podemos establecer un marco computacional para el análisis de operadores de primer, segundo y tercer orden.\\
+
+Sin embargo, las expresiones anteriores no representan necesariamente la implementación de los algoritmos estudiados. En concreto, los métodos de amplificación basados en aceleración y jerk utilizan las derivadas de una función gaussiana, lo que permite combinar la operación de diferencia con el suavizado temporal. En la amplificación por aceleración de vídeo, la segunda derivada se obtiene mediante la convolución de la señal con la segunda derivada de una función gaussiana, mientras que el método jerk-aware utiliza la tercera derivada de esta misma función \cite{Zhang2017,Takeda2018}.\\
+
+
+Por lo tanto, la comparación computacional no se limita al orden de la derivada, sino que también considera el operador discreto utilizado para su aproximación. El kernel, su longitud, el factor de suavizado y la ventana temporal determinan el procesamiento de la señal.\\
+
+\section{Implementación de las aproximaciones temporales}
+Para realizar una comparación homogénea, cada operador temporal se implementa como una operación sobre una secuencia de muestras discretas. Si el algoritmo utiliza un filtro temporal, este se representa mediante un kernel $h[k]$, cuya aplicación puede expresarse como una convolución:
+
+\begin{equation}
+    \sum_{k=-K}^{K}h[k]s[n-k]
+\end{equation}
+
+En los métodos eulerianos lineales, el operador temporal corresponde a un filtro paso banda, que permite extraer componentes en la frecuencia de interés. El EVM original aplica este procesamiento a las representaciones espaciales del vídeo antes de amplificar la señal seleccionada \cite{Wu2012}. En la versión basada en una pirámide de Laplace adaptativa, se utilizan filtros IIR para construir el ancho de banda, lo que permite el procesamiento basado en estados temporales previos \cite{Yang2023}.\\
+
+
+Los métodos basados en fase implican la convolución de la señal de fase a lo largo del tiempo. En el procesamiento de vídeo en movimiento basado en fase, las variaciones de fase se procesan temporalmente y luego se amplifican antes de la reconstrucción del vídeo \cite{Wadhwa2013}. La transformada de Riesz conserva este principio temporal, pero modifica la determinación de la fase. Las diferencias finitas contenidas en la transformada de Riesz se aplican espacialmente; por lo tanto, no usan aproximación temporal de la derivada \cite{Wadhwa2014}.\\
+
+
+Para la magnificación de la aceleración, el operador temporal se construye a partir de la derivada de una función gaussiana. Esta función gaussiana se puede expresar de la siguiente manera:
+
+\begin{equation}
+   G_\sigma(t) = \frac{1}{\sqrt{2\pi}\sigma}
+e^{-\frac{t^2}{2\sigma^2}}
+\end{equation}
+%%%%revirsar esta formula
+y la segunda derivada como: 
+\begin{equation}
+ G''_\sigma(t) = \left( \frac{t^2 - \sigma^2}{\sigma^4} \right) G_\sigma(t)
+\end{equation}
+
+El kernel discreto correspondiente puede obtenerse evaluando esta expresión en las posiciones temporales utilizadas por la ventana. La aceleración estimada se calcula posteriormente mediante la convolución.
+
+\begin{equation}
+    \sum_{k=-K}^{K}
+G_\sigma''(kT_s)s[n-k]
+\end{equation}
+
+
+Esta formulación corresponde al principio empleado por Zhang et al., quienes relacionan la segunda derivada temporal con el Laplaciano de una señal suavizada mediante una función Gaussiana \cite{Zhang2017}.
+
+En el método jerk-aware se extiende este procedimiento a la tercera derivada. La tercera derivada de la función Gaussiana puede expresarse como
+
+\begin{equation}
+\frac{t^3}{\sigma^6}
+\right)G_\sigma(t)
