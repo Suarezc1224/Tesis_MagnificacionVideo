@@ -10,8 +10,32 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Database file #1: Bibliografia.bib
-Warning--I didn't find a database entry for "nist80082"
-Warning--I didn't find a database entry for "alcaraz2015"
+Warning--I didn't find a database entry for "Wu2012"
+Warning--I didn't find a database entry for "Wadhwa2013"
+Warning--I didn't find a database entry for "Wadhwa2014"
+Warning--I didn't find a database entry for "Elgharib2015"
+Warning--I didn't find a database entry for "Takeda2018"
+Warning--I didn't find a database entry for "Takeda2022"
+Warning--I didn't find a database entry for "Nandana2020"
+Warning--I didn't find a database entry for "Yan2014"
+Warning--I didn't find a database entry for "Castellini2006"
+Warning--I didn't find a database entry for "Cheng2025"
+Warning--I didn't find a database entry for "Pieraccini2008"
+Warning--I didn't find a database entry for "Chen2019"
+Warning--I didn't find a database entry for "Fleet2006"
+Warning--I didn't find a database entry for "Sun2018"
+Warning--I didn't find a database entry for "Sutton2009"
+Warning--I didn't find a database entry for "Szeliski2022"
+Warning--I didn't find a database entry for "Hartley2004"
+Warning--I didn't find a database entry for "Oh2018"
+Warning--I didn't find a database entry for "LucasKanade1981"
+Warning--I didn't find a database entry for "HornSchunck1981"
+Warning--I didn't find a database entry for "Lindeberg1994ScaleSpace"
+Warning--I didn't find a database entry for "BurtAdelson1983"
+Warning--I didn't find a database entry for "SimoncelliFreeman1995"
+Warning--I didn't find a database entry for "FreemanAdelson1991"
+Warning--I didn't find a database entry for "Ahmed2023"
+Warning--I didn't find a database entry for "Simoncelli1995"
 Warning--I didn't find a database entry for "peffers2007dsrm"
 Warning--I didn't find a database entry for "hevner2004designscience"
 -- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
@@ -19,45 +43,45 @@ Warning--I didn't find a database entry for "hevner2004designscience"
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 0 entries,
+You've used 5 entries,
             3955 wiz_defined-function locations,
-            806 strings with 7271 characters,
-and the built_in function-call counts, 103 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 19
-:= -- 26
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 3
+            895 strings with 8819 characters,
+and the built_in function-call counts, 4425 in all, are:
+= -- 331
+> -- 132
+< -- 48
++ -- 70
+- -- 23
+* -- 217
+:= -- 665
+add.period$ -- 11
+call.type$ -- 5
+change.case$ -- 5
+chr.to.int$ -- 108
+cite$ -- 5
+duplicate$ -- 323
+empty$ -- 308
+format.name$ -- 28
+if$ -- 1012
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 23
-num.names$ -- 0
-pop$ -- 0
+int.to.str$ -- 5
+missing$ -- 57
+newline$ -- 38
+num.names$ -- 5
+pop$ -- 124
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1
+skip$ -- 354
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 142
+swap$ -- 289
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 0
+type$ -- 5
 warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 22
-(There were 4 warnings)
+while$ -- 15
+width$ -- 6
+write$ -- 74
+(There were 28 warnings)

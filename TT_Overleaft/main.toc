@@ -10,20 +10,39 @@
 \contentsline {chapter}{Dedicatoria}{11}{chapter*.9}%
 \contentsline {chapter}{\numberline {1}Introducción}{12}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Antecedentes}{12}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Identificación del Problema}{12}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Justificación}{12}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Alcance}{12}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Objetivos}{12}{section.1.5}%
-\contentsline {subsection}{\numberline {1.5.1}Objetivo general}{12}{subsection.1.5.1}%
-\contentsline {subsection}{\numberline {1.5.2}Objetivos específicos}{12}{subsection.1.5.2}%
-\contentsline {chapter}{\numberline {2}Marco teórico}{14}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Sistemas de Control Industrial e infraestructuras críticas}{14}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Sistemas de Control Industrial}{14}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Convergencia entre tecnologías de información y tecnologías de operación}{15}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Infraestructuras críticas y sistemas eléctricos experimentales}{16}{subsection.2.1.3}%
-\contentsline {chapter}{\numberline {3}Metodología}{17}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Resultados}{18}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusiones y recomendaciones}{19}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Conclusiones}{19}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Recomendaciones}{19}{section.5.2}%
-\contentsline {chapter}{Referencias}{20}{chapter*.11}%
+\contentsline {section}{\numberline {1.2}Identificación del Problema}{13}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Justificación}{14}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Alcance}{14}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Objetivos}{15}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Objetivo general}{15}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Objetivos específicos}{16}{subsection.1.5.2}%
+\contentsline {chapter}{\numberline {2}Marco teórico}{17}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Sistemas de medición no invasivos}{17}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}\textbf {Medición invasiva y no invasiva}}{17}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}\textbf {Sistemas de medición basados en visión}}{20}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}\textbf {Detección de movimientos y vibraciones sutiles}}{24}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Análisis del movimiento en video}{26}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}\textbf {Enfoque Lagrangiano}}{26}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}\textbf {Enfoque Euleriano}}{30}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}\textbf {Comparación entre los enfoques Lagrangiano y Euleriano}}{35}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Representaciones multiescala mediante pirámides de imágenes}{38}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}\textbf {Representación multiescala y espacio-escala}}{38}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}\textbf {Pirámide Gaussiana}}{41}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}\textbf {Pirámide Laplaciana}}{43}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}\textbf {Pirámides orientables (\textit {Steerable Pyramid})}}{46}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}\textbf {Pirámide de Riesz}}{49}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}\textbf {Comparación entre representaciones piramidales}}{52}{subsection.2.3.6}%
+\contentsline {section}{\numberline {2.4}Métodos de magnificación de video}{55}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}\textbf {Magnificación Euleriana Lineal}}{55}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}\textbf {Magnificación basada en Fase}}{62}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Técnicas avanzadas de magnificación de video}{69}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Magnificación en presencia de grandes movimientos}{69}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Magnificación basada en aceleración y jerk}{69}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Filtros espaciales y temporales para reducción de artefactos}{69}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}Otros enfoques recientes}{69}{subsection.2.5.4}%
+\contentsline {chapter}{\numberline {3}Metodología}{70}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Resultados}{71}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Conclusiones y recomendaciones}{72}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Conclusiones}{72}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Recomendaciones}{72}{section.5.2}%
+\contentsline {chapter}{Referencias}{73}{chapter*.10}%

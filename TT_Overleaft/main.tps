@@ -11,14 +11,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=36
-NormalPos.right=1157
-NormalPos.bottom=681
+NormalPos.right=662
+NormalPos.bottom=619
 Class=LaTeXView
 Document=main.tex
 
 [Frame0_View0,0]
-TopLine=210
-Cursor=7367
+TopLine=287
+Cursor=7807
 
 [Frame1]
 Flags=0
@@ -29,14 +29,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=36
-NormalPos.right=1157
-NormalPos.bottom=681
+NormalPos.right=662
+NormalPos.bottom=619
 Class=LaTeXView
-Document=sections\00_Portada.tex
+Document=sections\01_Capitulo1_Generalidades.tex
 
 [Frame1_View0,0]
-TopLine=58
-Cursor=937
+TopLine=63
+Cursor=3027
 
 [Frame2]
 Flags=0
@@ -47,16 +47,16 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=36
-NormalPos.right=1157
-NormalPos.bottom=681
-Class=LaTeXView
-Document=sections\01_Capitulo1_Generalidades.tex
+NormalPos.right=662
+NormalPos.bottom=619
+Class=BibTeXView
+Document=Bibliografia.bib
 
 [Frame2_View0,0]
-TopLine=3
-Cursor=791
+TopLine=643
+Cursor=21063
 
 [SessionInfo]
 FrameCount=3
-ActiveFrame=2
+ActiveFrame=1
 

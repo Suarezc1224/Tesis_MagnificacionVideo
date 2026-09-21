@@ -2,65 +2,1494 @@
 \glsresetall
 \label{cap:MarcoTeorico}
 
-En este capítulo se presentan los conceptos técnicos necesarios para comprender el diseño e implementación de un canal seguro transparente para la comunicación entre el controlador de estación \gls{API} y el servidor \gls{SCADA} de la Micro-Red de la Universidad de Cuenca. Se abordan los fundamentos de los sistemas de control industrial, las comunicaciones industriales basadas en \gls{MODBUS}, las amenazas asociadas al tráfico en texto claro, los mecanismos criptográficos aplicables, las tecnologías de encapsulación segura y las métricas de evaluación utilizadas para validar la solución propuesta.
+%En este capítulo se presentan los conceptos técnicos necesarios para comprender el diseño e implementación de un canal seguro transparente para la comunicación entre el controlador de estación \gls{API} y el servidor \gls{SCADA} de la Micro-Red de la Universidad de Cuenca. Se abordan los fundamentos de los sistemas de control industrial, las comunicaciones industriales basadas en \gls{MODBUS}, las amenazas asociadas al tráfico en texto claro, los mecanismos criptográficos aplicables, las tecnologías de encapsulación segura y las métricas de evaluación utilizadas para validar la solución propuesta.
+%La estructura del capítulo sigue una lógica progresiva. Primero se define el contexto de los \gls{ICS}, la arquitectura \gls{SCADA} y la convergencia entre \gls{IT} y \gls{OT}. Luego se describe la comunicación industrial sobre \gls{TCP}/\gls{IP} y el protocolo \gls{MODBUS}, que constituye la base del enlace operativo que se busca proteger. Posteriormente, se analizan las amenazas que afectan a una comunicación industrial sin cifrado ni autenticación nativa. Finalmente, se presentan los principios de seguridad, los mecanismos criptográficos, las tecnologías de canal seguro, los lineamientos normativos y los trabajos relacionados que sustentan la propuesta.
 
-La estructura del capítulo sigue una lógica progresiva. Primero se define el contexto de los \gls{ICS}, la arquitectura \gls{SCADA} y la convergencia entre \gls{IT} y \gls{OT}. Luego se describe la comunicación industrial sobre \gls{TCP}/\gls{IP} y el protocolo \gls{MODBUS}, que constituye la base del enlace operativo que se busca proteger. Posteriormente, se analizan las amenazas que afectan a una comunicación industrial sin cifrado ni autenticación nativa. Finalmente, se presentan los principios de seguridad, los mecanismos criptográficos, las tecnologías de canal seguro, los lineamientos normativos y los trabajos relacionados que sustentan la propuesta.
+\section{Sistemas de medición no invasivos}
+    \subsection{Medición invasiva y no invasiva}
+    
+El monitoreo de movimientos y vibraciones constituye una actividad fundamental en numerosas disciplinas de la ingeniería, debido a que permite evaluar el comportamiento dinámico de estructuras, maquinaria, componentes mecánicos e incluso sistemas biológicos sin comprometer su funcionamiento normal debido a que la medición de vibraciones proporciona información valiosa sobre parámetros como el desplazamiento, la velocidad, la aceleración, las frecuencias naturales, las formas modales y los mecanismos de amortiguamiento, los cuales son ampliamente utilizados para la evaluación de la integridad estructural, el diagnóstico de fallas, el mantenimiento predictivo y la validación de modelos matemáticos y numérico. Tradicionalmente, la adquisición de estas variables ha dependido de sensores físicos instalados directamente sobre el objeto de estudio, tales como acelerómetros, galgas extensométricas, sensores piezoeléctricos y transductores de desplazamiento; aunque estas tecnologías han demostrado un elevado nivel de precisión y confiabilidad durante décadas, presentan diversas limitaciones asociadas con la necesidad de establecer contacto físico con la estructura, lo que puede alterar su respuesta dinámica, incrementar los costos de instrumentación y dificultar las mediciones en estructuras de gran tamaño, elementos de difícil acceso o componentes que operan bajo condiciones extremas \cite{Castellini2006}.\\
 
-\section{Sistemas de Control Industrial e infraestructuras críticas}
+Como respuesta a estas limitaciones, durante las últimas décadas se ha producido un importante desarrollo de los sistemas de medición no invasivos o sin contacto (non-contact measurement systems), los cuales permiten obtener información dinámica del objeto analizado sin necesidad de instalar sensores físicos sobre su superficie. Estos sistemas aprovechan diferentes principios físicos, entre ellos la propagación de ondas electromagnéticas, acústicas y ópticas, para estimar el movimiento mediante el análisis de señales reflejadas o imágenes adquiridas durante el proceso de observación \cite{Cheng2025}, y  la ausencia de contacto físico elimina el efecto de carga producido por los sensores tradicionales, facilita la inspección de estructuras remotas y reduce considerablemente el tiempo requerido para la instrumentación del sistema de medición.\\
 
-\label{sec:Marco_SistemasInfra}
+En este contexto, los métodos no invasivos pueden clasificarse, de manera general, en tres grandes categorías. La primera corresponde a las técnicas basadas en ondas electromagnéticas, entre las cuales destacan los radares de microondas y de ondas milimétricas, capaces de estimar desplazamientos mediante el análisis del efecto Doppler de las señales reflejadas; las cuales ofrecen un amplio alcance de medición y son particularmente útiles para el monitoreo de grandes infraestructuras pero su precisión puede verse afectada cuando múltiples objetos vibran simultáneamente dentro del campo de observación \cite{Pieraccini2008,Cheng2025}. La segunda categoría comprende los sistemas fundamentados en ondas acústicas, los cuales emplean micrófonos o sensores ultrasónicos para detectar las vibraciones generadas por un objeto, sin embargo suelen ser sensibles al ruido ambiental y requieren algoritmos avanzados de procesamiento digital de señales para mejorar la relación señal-ruido \cite{Cheng2025}. Finalmente la tercera categoría corresponde a los sistemas ópticos de medición, considerados actualmente como una de las alternativas más prometedoras debido a su elevada precisión, facilidad de implementación y capacidad para realizar mediciones remotas, debido a que dentro de este grupo se encuentran los sensores láser de desplazamiento, los vibrometros láser Doppler y, especialmente, los sistemas basados en visión por computador donde las técnicas de visión computacional y artificial permiten analizar simultáneamente múltiples regiones de interés utilizando únicamente cámaras digitales convencionales y algoritmos de procesamiento de imágenes lo que permite reducir significativamente el costo del sistema de adquisición \cite{Chen2019,Cheng2025}, debido a que los sistemas basados en sensores láser suelen proporcionar mediciones de alta exactitud en unos pocos puntos espec\'ificos.\\
 
-Los sistemas de control industrial constituyen el contexto técnico en el que se ubica la comunicación entre el servidor \gls{SCADA} y el controlador de estación \gls{API}. Antes de analizar el canal protegido propuesto, es necesario delimitar qué caracteriza a estos entornos, cómo difieren de los sistemas informáticos convencionales y por qué la continuidad, integridad y confiabilidad de la comunicación tienen un papel central en infraestructuras de supervisión y control.
+El rápido avance de las cámaras digitales de alta resolución, junto con el incremento de la capacidad computacional y el desarrollo de algoritmos modernos de visión artificial e inteligencia artificial, ha impulsado una transformación significativa en los sistemas de medición óptica. Actualmente es posible detectar desplazamientos extremadamente pequeños, del orden de fracciones de píxel, mediante técnicas de estimación subpíxel, flujo óptico (optical flow), correlación digital de imágenes (Digital Image Correlation, DIC), seguimiento de características (feature tracking) y, más recientemente, mediante redes neuronales profundas entrenadas para identificar patrones complejos de movimiento incluso bajo condiciones de iluminación variables o presencia de ruido \cite{Fleet2006,Sun2018,Cheng2025}.\\
 
-\subsection{Sistemas de Control Industrial}
-\label{subsec:Marco_SistemasControlIndustrial}
+En comparación con los sistemas tradicionales, la medición no invasiva ofrece ventajas que trascienden la simple eliminación del contacto físico, la posibilidad de realizar mediciones multipunto o incluso de campo completo (full-field measurement) permite obtener una representación espacial mucho más completa del comportamiento dinámico de una estructura. Esta característica resulta especialmente relevante en aplicaciones de monitoreo de salud estructural (Structural Health Monitoring, SHM), análisis modal experimental, inspección de puentes, edificaciones, turbinas eólicas, maquinaria rotativa y equipos industriales, donde conocer la distribución espacial de las vibraciones proporciona información que difícilmente podría obtenerse mediante un número limitado de sensores convencionales \cite{Sutton2009,Cheng2025}.\\
 
+No obstante, estos sistemas también presentan desafíos importantes relacionados con las condiciones ambientales, la calibración geométrica de las cámaras, las variaciones de iluminación, las vibraciones propias del sistema de adquisición, la oclusión parcial del objeto y las limitaciones impuestas por la resolución espacial y temporal de los sensores ópticos. Asimismo, la precisión alcanzable depende directamente de factores como la distancia entre la cámara y el objeto, la calidad óptica del sistema de adquisición, la frecuencia de captura y la robustez de los algoritmos empleados para la estimación del movimiento \cite{Szeliski2022,Cheng2025}. Por esta razón, la investigación reciente ha orientado sus esfuerzos hacia el desarrollo de algoritmos más robustos que integran técnicas tradicionales de procesamiento de imágenes con modelos basados en aprendizaje profundo, buscando incrementar la capacidad de generalización y mejorar el desempeño frente a escenarios reales caracterizados por condiciones ambientales complejas.\\
 
-Un \gls{ICS} integra dispositivos, redes, aplicaciones y procedimientos orientados al monitoreo y control de procesos físicos. En esta categoría se incluyen sistemas \gls{SCADA}, controladores, dispositivos de campo, estaciones \gls{HMI}, servidores de supervisión y redes industriales. A diferencia de los sistemas informáticos convencionales, su operación está vinculada con variables físicas y con la continuidad de procesos reales \cite{nist80082}.
+Considerando las ventajas anteriormente descritas, los sistemas de medición no invasivos representan actualmente una de las principales líneas de investigación en ingeniería mecánica, civil, aeroespacial y biomédica. En particular, para aplicaciones orientadas a la magnificación de movimientos y vibraciones sutiles en video, estas tecnologías constituyen la base sobre la cual se desarrollan los algoritmos modernos de procesamiento visual, ya que permiten capturar variaciones imperceptibles para el ojo humano sin modificar el comportamiento físico del objeto analizado. En consecuencia, el estudio de los diferentes métodos de medición no invasiva resulta indispensable para comprender las técnicas de visión por computador que serán abordadas en las siguientes secciones, donde se analizarán con mayor profundidad los sistemas de medición basados en visión y los algoritmos destinados a la detección y amplificación de movimientos de muy baja amplitud.\\
 
-En entornos de control industrial, la disponibilidad, la integridad y la estabilidad de la comunicación tienen un peso especialmente alto. Una interrupción del enlace, una lectura incorrecta o una modificación no autorizada de datos puede afectar la supervisión del proceso y alterar la percepción del operador sobre el estado real del sistema \cite{nist80082,alcaraz2015}.
+%[SUGERENCIA DE FIGURA 2.3]: Elaborar un esquema comparativo que clasifique los sistemas de medición de vibraciones en métodos invasivos (con contacto) y métodos no invasivos (sin contacto). Dentro de estos últimos incluir las tres categorías principales: ondas electromagnéticas, ondas acústicas y métodos ópticos, destacando que la visión por computador constituye una subcategoría de los métodos ópticos.
 
-Desde esta perspectiva, la Micro-Red de la Universidad de Cuenca se analiza como un entorno académico de supervisión y control con características propias de un sistema \gls{OT}. Por ello, la protección del canal entre el servidor \gls{SCADA} y el controlador de estación \gls{API} se considera una medida orientada a preservar la confiabilidad de la comunicación operativa del laboratorio.
+    \subsection{\textbf{Sistemas de medición basados en visión}}.\\
 
-\subsection{Convergencia entre tecnologías de información y tecnologías de operación}
-\label{subsec:Marco_ConvergenciaITOT}
+El desarrollo de los sistemas de medición basados en visión ha transformado significativamente la forma en que se realizan las mediciones dinámicas en diversas áreas de la ingeniería. Gracias a los avances en cámaras digitales, procesamiento digital de imágenes y visión por computador, actualmente es posible estimar desplazamientos, deformaciones y vibraciones de un objeto sin necesidad de instalar sensores sobre su superficie. Esta característica ha convertido a estos sistemas en una alternativa altamente atractiva frente a los métodos tradicionales de instrumentación, especialmente en aplicaciones donde el acceso físico es limitado o donde la presencia de sensores podría modificar el comportamiento dinámico de la estructura \cite{Chen2019}. En este contexto, los sistemas de visión constituyen una de las tecnologías más prometedoras para el monitoreo estructural, la evaluación de infraestructura civil, la inspección industrial y el análisis biomecánico.\\
 
+A diferencia de los sistemas convencionales, cuya información proviene directamente de transductores instalados sobre el objeto, los sistemas de medición basados en visión obtienen la información dinámica analizando la variación espacial y temporal presente en una secuencia de imágenes digitales. Como describen Cheng et al. \cite{Cheng2025}, cada imagen puede interpretarse como una representación bidimensional de la escena, donde las variaciones en la intensidad de los píxeles contienen información suficiente para estimar el movimiento de los objetos observados. De esta manera, el desplazamiento físico de una estructura se manifiesta inicialmente como un desplazamiento de píxeles entre cuadros consecutivos, el cual posteriormente puede transformarse en magnitudes reales mediante procedimientos de calibración geométrica y conversión de escala.\\
 
-La convergencia entre \gls{IT} y \gls{OT} ha permitido integrar redes \gls{ethernet}, servicios de administración, almacenamiento histórico y plataformas de supervisión dentro de entornos industriales. Esta integración facilita la interoperabilidad y el análisis de datos, pero también incrementa la exposición de sistemas que originalmente fueron diseñados para operar con menor conectividad externa \cite{nist80082}.
+Desde una perspectiva funcional, un sistema de medición basado en visión está conformado por dos subsistemas principales: el sistema de adquisición y el sistema de procesamiento. El primero comprende todos los elementos responsables de capturar la información visual, incluyendo cámaras CCD (*Charge-Coupled Device*) o CMOS (*Complementary Metal-Oxide Semiconductor*), lentes, sistemas de iluminación y dispositivos de sincronización. Por su parte, el sistema de procesamiento se encarga de interpretar la información registrada mediante algoritmos computacionales capaces de identificar patrones, seguir características visuales y calcular el movimiento presente en la secuencia de imágenes. La integración de ambos subsistemas permite obtener mediciones dinámicas sin alterar físicamente el objeto analizado, una característica que representa una ventaja considerable frente a los sensores de contacto utilizados tradicionalmente en ingeniería estructural y mecánica.\\
 
-La Tabla~\ref{tab:it_ot_tesis} resume las diferencias más relevantes para el diseño del canal seguro propuesto.
+El funcionamiento general de estos sistemas puede describirse como una cadena de procesamiento donde la información visual es transformada progresivamente en información física cuantificable. Inicialmente, la cámara registra una secuencia de imágenes con una frecuencia de adquisición suficientemente alta para capturar la dinámica del fenómeno estudiado. Posteriormente, las imágenes son sometidas a procesos de preprocesamiento orientados a mejorar su calidad, reducir el ruido, compensar variaciones de iluminación y corregir posibles distorsiones ópticas. Una vez optimizadas, se identifican regiones de interés o características visuales que puedan ser rastreadas durante toda la secuencia. Finalmente, los desplazamientos estimados son analizados mediante herramientas de procesamiento digital de señales para obtener parámetros como desplazamiento, velocidad, aceleración, frecuencias naturales o modos de vibración.\\
 
-\begin{table}[!htbp]
-\centering
-\caption{Diferencias relevantes entre entornos \gls{IT} y \gls{OT} para el diseño del canal seguro.}
-\label{tab:it_ot_tesis}
-\begin{tabularx}{\textwidth}{%
->{\RaggedRight\arraybackslash}p{3.2cm}
->{\RaggedRight\arraybackslash}p{4.7cm}
-X}
-\toprule
-\textbf{Aspecto} & \textbf{Enfoque en \gls{IT}} & \textbf{Implicación en \gls{OT} para esta tesis} \\
-\midrule
-Prioridad de seguridad & Protección de información, usuarios y servicios digitales. & Se debe proteger la comunicación sin afectar la continuidad ni la estabilidad del proceso supervisado. \\
+Dependiendo de la forma en que se obtiene la información visual, los sistemas de medición basados en visión pueden clasificarse en **métodos con marcadores** (*target-based*) y **métodos sin marcadores** (*targetless*). En el primer caso se colocan patrones artificiales sobre la superficie del objeto, tales como círculos de alto contraste, códigos fiduciarios o puntos reflectantes, cuya geometría facilita su localización y seguimiento durante toda la secuencia de imágenes. Debido a la facilidad para identificar estos patrones, los métodos con marcadores ofrecen una elevada precisión incluso bajo condiciones de ruido moderado o iluminación variable. No obstante, requieren intervenir físicamente la estructura, situación que puede resultar inconveniente cuando se trabaja con monumentos históricos, estructuras de gran tamaño o componentes cuya superficie no puede modificarse \cite{Cheng2025}. \\
 
-Cambios de configuración & Pueden aplicarse con mayor frecuencia mediante actualizaciones o reinicios controlados. & Los cambios deben ser mínimos, previsibles y compatibles con la operación del laboratorio. \\
+Con el propósito de eliminar esta limitación, durante los últimos años se han desarrollado técnicas de medición **sin marcadores**, las cuales aprovechan directamente las características naturales presentes en la superficie del objeto. En lugar de depender de patrones artificiales, estos métodos rastrean esquinas, bordes, texturas y otras características distintivas mediante algoritmos de detección y seguimiento de características. Entre los detectores más utilizados se encuentran Harris Corner Detector, Shi-Tomasi, SIFT (*Scale-Invariant Feature Transform*), SURF (*Speeded-Up Robust Features*) y ORB (*Oriented FAST and Rotated BRIEF*), mientras que el seguimiento temporal suele realizarse mediante algoritmos como Lucas-Kanade o técnicas basadas en flujo óptico \cite{Fleet2006,Szeliski2022}. La principal ventaja de este enfoque radica en que permite realizar mediciones completamente remotas sin modificar el objeto inspeccionado, favoreciendo su utilización en aplicaciones reales de monitoreo estructural.\\
 
-Protección del tráfico & Puede implementarse mediante servicios, agentes o modificaciones de aplicación. & La protección debe ser transparente para el servidor \gls{SCADA} y el controlador \gls{API}, evitando modificar los extremos industriales. \\
+En aplicaciones donde los desplazamientos son extremadamente pequeños, inferiores incluso al tamaño de un píxel, los métodos tradicionales de seguimiento pueden resultar insuficientes. Para superar esta limitación se emplean algoritmos de **estimación subpíxel**, capaces de calcular desplazamientos con resoluciones considerablemente menores que un píxel mediante procesos de interpolación y correlación matemática. Estas técnicas incrementan significativamente la precisión de la medición y constituyen la base de herramientas avanzadas como la correlación digital de imágenes (*Digital Image Correlation*, DIC), el flujo óptico denso (*Dense Optical Flow*) y los algoritmos de magnificación de movimiento.\\
 
-Criterio operativo & Flexibilidad, escalabilidad y gestión centralizada. & Compatibilidad con protocolos heredados, baja interferencia operativa y preservación del canal existente. \\
-\bottomrule
-\end{tabularx}
-\end{table}
+La evolución reciente de estos sistemas ha estado estrechamente ligada al desarrollo de modelos basados en aprendizaje profundo. A diferencia de los enfoques clásicos, que requieren diseñar manualmente detectores de características y modelos matemáticos específicos, las redes neuronales convolucionales pueden aprender automáticamente representaciones espaciales y temporales del movimiento a partir de grandes conjuntos de datos. Esta capacidad ha permitido mejorar considerablemente la robustez frente a ruido, cambios de iluminación, desenfoque por movimiento y oclusiones parciales, ampliando el campo de aplicación de los sistemas de medición basados en visión hacia escenarios reales de mayor complejidad \cite{Sun2018,Cheng2025}.\\
 
-Esta diferencia condiciona el alcance de la solución. El canal seguro no se plantea como un reemplazo del sistema de supervisión, sino como una capa externa de protección que reduzca la exposición del tráfico y mantenga la lógica operativa existente.
-
-\subsection{Infraestructuras críticas y sistemas eléctricos experimentales}
-\label{subsec:Marco_InfraCriticasSistemasExperimentales}
+En consecuencia, los sistemas de medición basados en visión se han consolidado como una herramienta fundamental dentro del monitoreo estructural moderno. Su capacidad para realizar mediciones remotas, obtener información de múltiples puntos simultáneamente y detectar movimientos extremadamente pequeños ha impulsado su adopción en áreas como la ingeniería civil, la ingeniería mecánica, la robótica, la biomecánica y la inspección industrial. Asimismo, estas características constituyen el fundamento tecnológico sobre el cual se desarrollan los algoritmos de detección y magnificación de movimientos sutiles que serán estudiados en las siguientes secciones de este trabajo de investigación.
 
 
-Las infraestructuras críticas son sistemas cuya degradación puede afectar servicios esenciales, continuidad institucional o seguridad pública. Los \gls{ICS} forman parte de muchas de estas infraestructuras porque permiten supervisar y controlar procesos físicos en sectores como energía, agua, transporte y telecomunicaciones \cite{alcaraz2015}.
+    \subsection{\textbf{Detección de movimientos y vibraciones sutiles}}.\\
+La detección de movimientos y vibraciones sutiles constituye uno de los principales desafíos dentro del campo de la visión por computador y del monitoreo estructural basado en imágenes. En numerosas aplicaciones de ingeniería, medicina y biomecánica, los desplazamientos de interés presentan amplitudes extremadamente pequeñas, frecuentemente del orden de micrómetros o incluso inferiores al tamaño que representa un píxel en la imagen capturada por la cámara. Como consecuencia, estas variaciones resultan prácticamente imperceptibles tanto para el ojo humano como para numerosos algoritmos convencionales de seguimiento, dificultando la extracción de información dinámica confiable a partir de secuencias de video \cite{Cheng2025}.\\
 
-La Micro-Red de la Universidad de Cuenca no se describe en esta tesis como una infraestructura crítica nacional. Su relevancia se interpreta de forma proporcional: es una infraestructura experimental sensible dentro del contexto académico, utilizada para investigación, formación y validación de estrategias asociadas a sistemas eléctricos modernos.
+Esta limitación adquiere especial relevancia en aplicaciones como el monitoreo de la salud estructural (Structural Health Monitoring), donde pequeñas modificaciones en la respuesta vibratoria de una estructura pueden constituir indicadores tempranos de deterioro, aparición de grietas o pérdida de rigidez. De forma similar, en el ámbito biomédico, variaciones casi imperceptibles en la coloración de la piel o en el movimiento del tórax contienen información relacionada con la frecuencia cardíaca y respiratoria de una persona. En ambos escenarios, la capacidad para detectar movimientos de muy baja amplitud resulta determinante para realizar diagnósticos oportunos y obtener mediciones precisas sin necesidad de emplear instrumentación invasiva.\\
 
-Por tanto, la motivación del trabajo no es sobredimensionar el impacto del laboratorio, sino reconocer que el enlace \gls{SCADA}-\gls{API} transporta información operativa que debe protegerse frente a observación, modificación o suplantación dentro de la red local.
+Desde el punto de vista físico, el movimiento observado en un video puede describirse como una variación temporal de la posición de un objeto respecto a un sistema de referencia. Si un punto de la escena posee una posición espacial $x(t)$, su desplazamiento respecto a una posición inicial $x_0$ puede expresarse como
 
+\begin{equation}
+d(t)=x(t)-x_0,
+\end{equation}
+
+donde $d(t)$ representa el desplazamiento instantáneo del punto en función del tiempo. Cuando la amplitud de este desplazamiento es suficientemente grande, las variaciones pueden observarse directamente en la secuencia de imágenes. Sin embargo, cuando $d(t)$ es muy pequeño en comparación con la resolución espacial de la cámara, la información del movimiento queda parcialmente oculta dentro de las variaciones de intensidad de los píxeles y del ruido inherente al proceso de adquisición.\\
+
+En el caso particular de las vibraciones mecánicas, el desplazamiento suele modelarse mediante un comportamiento periódico que puede aproximarse mediante una función sinusoidal,
+
+\begin{equation}
+d(t)=A\sin(2\pi ft+\phi),
+\end{equation}
+
+donde $A$ representa la amplitud de la vibración, $f$ corresponde a la frecuencia de oscilación y $\phi$ es la fase inicial del movimiento. En aplicaciones reales, el parámetro de mayor interés suele ser precisamente la amplitud $A$, ya que su magnitud puede encontrarse muy por debajo del límite de percepción visual. Esta situación explica por qué numerosas vibraciones presentes en estructuras, maquinaria o tejidos biológicos pasan inadvertidas durante una inspección convencional, aun cuando contienen información relevante acerca del estado dinámico del sistema.\\
+
+La capacidad para detectar estas pequeñas variaciones depende de diversos factores relacionados tanto con el sistema de adquisición como con los algoritmos de procesamiento utilizados. Entre ellos destacan la resolución espacial de la cámara, la frecuencia de captura, la calidad óptica del sistema, las condiciones de iluminación, la relación señal-ruido y la precisión de los algoritmos de estimación subpíxel. Incluso utilizando cámaras de alta resolución, la detección de desplazamientos extremadamente pequeños continúa representando un desafío, debido a que el movimiento puede quedar enmascarado por ruido electrónico, compresión del video o ligeras variaciones de iluminación entre cuadros consecutivos.\\
+
+Con el propósito de superar estas limitaciones, durante los últimos años se han desarrollado diversos algoritmos especializados capaces de amplificar o hacer visibles movimientos que originalmente resultan imperceptibles. Estos métodos no buscan modificar el comportamiento físico del objeto, sino incrementar visualmente las pequeñas variaciones presentes en la secuencia de imágenes para facilitar su observación y análisis cuantitativo. Entre las principales estrategias propuestas en la literatura destacan los métodos basados en seguimiento explícito del movimiento (Lagrangian Motion Magnification), los enfoques fundamentados en el procesamiento de señales espaciales y temporales (Eulerian Motion Magnification) y, más recientemente, los modelos basados en aprendizaje profundo, los cuales han demostrado una mayor capacidad para preservar la calidad visual mientras amplifican movimientos complejos \cite{Wu2012,Oh2018}.\\
+
+Particularmente, la Magnificación Euleriana del Movimiento (Eulerian Motion Magnification, EVM) ha despertado un notable interés dentro de la comunidad científica debido a que permite revelar movimientos y variaciones de intensidad prácticamente imperceptibles utilizando únicamente técnicas de procesamiento de video, sin requerir el seguimiento explícito de características individuales. Esta metodología abrió una nueva línea de investigación en visión por computador al demostrar que la información correspondiente a pequeñas vibraciones ya se encuentra contenida en la señal de video y que, mediante un adecuado procesamiento espacial y temporal, es posible hacerla visible sin recurrir a sensores adicionales. A partir de este trabajo surgieron numerosas variantes orientadas a mejorar la robustez, reducir los artefactos visuales y ampliar el rango de movimientos que pueden magnificarse, constituyendo actualmente una de las principales líneas de investigación en el análisis de movimientos sutiles mediante visión artificial.\\
+
+%[SUGERENCIA DE FIGURA:] Elaborar un esquema conceptual que muestre la diferencia entre un movimiento visible y un movimiento sutil en una secuencia de video. El diagrama puede representar una estructura vibrando con una amplitud fácilmente observable y otra con una amplitud inferior a un píxel, indicando cómo los algoritmos de magnificación permiten hacer perceptible este último caso.
+%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------
+\section{Análisis del movimiento en video}
+\label{subsec:analisis_movimiento_video}
+
+	\subsection{\textbf{Enfoque Lagrangiano}}.\\
+	\label{subsubsec:enfoque_lagrangiano}
+
+El enfoque lagrangiano analiza el movimiento mediante el seguimiento explícito de puntos, características visuales, regiones u objetos a lo largo de una secuencia de video. Su fundamento conceptual proviene de la mecánica de fluidos, donde una descripción lagrangiana estudia la evolución de partículas individuales mientras estas se desplazan a través del espacio. En el procesamiento de video, esta perspectiva se traduce en la estimación de correspondencias entre cuadros consecutivos, con el propósito de reconstruir las trayectorias de los elementos visibles de la escena \cite{Ahmed2023Overview,Liu2005Motion}.\\
+
+Considérese un punto de interés cuya posición inicial se encuentra representada por el vector $\mathbf{x}_0$. Su posición a lo largo del tiempo puede modelarse como
+
+\begin{equation}
+    \mathbf{x}(t)=\mathbf{x}_0+\boldsymbol{\delta}(t),
+    \label{eq:trayectoria_lagrangiana}
+\end{equation}
+
+donde $\mathbf{x}(t)$ representa la posición del punto en el instante $t$ y $\boldsymbol{\delta}(t)$ corresponde a su desplazamiento respecto de la posición inicial. A partir de esta trayectoria también pueden obtenerse magnitudes cinemáticas, como la velocidad y la aceleración, mediante
+
+\begin{equation}
+    \mathbf{v}(t)=\frac{d\mathbf{x}(t)}{dt},
+    \qquad
+    \mathbf{a}(t)=\frac{d^2\mathbf{x}(t)}{dt^2}.
+    \label{eq:cinematica_lagrangiana}
+\end{equation}
+
+En una secuencia digital, la trayectoria no se encuentra disponible de forma directa, por lo que debe estimarse a partir de los cambios observados entre cuadros. Para este propósito pueden utilizarse técnicas de seguimiento de características o métodos de flujo óptico. En el primer caso se detectan puntos visualmente distinguibles, como esquinas o regiones con textura, y se determina su posición en los cuadros siguientes. En el segundo, se estima un campo denso de movimiento que asigna un vector de desplazamiento a cada píxel o región de la imagen \cite{LucasKanade1981,HornSchunck1981}.\\
+
+La mayoría de los métodos de flujo óptico se fundamentan en la hipótesis de constancia de brillo, según la cual la intensidad correspondiente a un punto físico de la escena permanece aproximadamente constante durante un intervalo temporal pequeño. Esta condición puede expresarse como
+
+\begin{equation}
+    I(x,y,t)=I(x+\Delta x,y+\Delta y,t+\Delta t),
+    \label{eq:constancia_brillo_lagrangiana}
+\end{equation}
+
+donde $I(x,y,t)$ representa la intensidad de la imagen en la posición $(x,y)$ y en el instante $t$, mientras que $\Delta x$ y $\Delta y$ representan el desplazamiento espacial durante el intervalo $\Delta t$. Al desarrollar el término de la derecha mediante una expansión de Taylor de primer orden, se obtiene
+
+\begin{equation}
+    I_x u+I_y v+I_t=0,
+    \label{eq:restriccion_flujo_optico}
+\end{equation}
+
+donde $I_x$, $I_y$ e $I_t$ son las derivadas parciales de la intensidad respecto de las coordenadas espaciales y del tiempo, respectivamente, mientras que $u=\Delta x/\Delta t$ y $v=\Delta y/\Delta t$ representan las componentes horizontal y vertical del flujo óptico. Debido a que esta ecuación contiene dos incógnitas y una sola restricción, los algoritmos deben incorporar condiciones adicionales de suavidad o coherencia espacial para determinar el campo de movimiento \cite{HornSchunck1981}.\\
+
+En el contexto de la magnificación de movimiento, el enfoque lagrangiano modifica directamente las trayectorias estimadas. Si $\boldsymbol{\delta}(t)$ representa el desplazamiento original, una trayectoria magnificada puede expresarse como
+
+\begin{equation}
+    \widehat{\mathbf{x}}(t)
+    =
+    \mathbf{x}_0+(1+\alpha)\boldsymbol{\delta}(t),
+    \label{eq:trayectoria_lagrangiana_magnificada}
+\end{equation}
+
+donde $\alpha$ es el factor de magnificación. Cuando $\alpha=0$, la trayectoria conserva su amplitud original; en cambio, para $\alpha>0$, el desplazamiento observado en el video de salida aumenta. No obstante, en aplicaciones reales no resulta conveniente amplificar todas las componentes del movimiento, puesto que la secuencia puede contener traslaciones globales, movimientos voluntarios, vibraciones no deseadas o desplazamientos de cámara.\\
+
+Para aislar el movimiento sutil, la trayectoria puede descomponerse en una componente global o de baja frecuencia y una componente relacionada con el fenómeno de interés:
+
+\begin{equation}
+    \boldsymbol{\delta}(t)
+    =
+    \boldsymbol{\delta}_{g}(t)
+    +
+    \boldsymbol{\delta}_{s}(t),
+    \label{eq:descomposicion_trayectoria}
+\end{equation}
+
+donde $\boldsymbol{\delta}_{g}(t)$ representa el movimiento global y $\boldsymbol{\delta}_{s}(t)$ corresponde al movimiento sutil. La trayectoria modificada puede definirse entonces como
+
+\begin{equation}
+    \widehat{\mathbf{x}}(t)
+    =
+    \mathbf{x}_0
+    +
+    \boldsymbol{\delta}_{g}(t)
+    +
+    (1+\alpha)\boldsymbol{\delta}_{s}(t).
+    \label{eq:magnificacion_selectiva_lagrangiana}
+\end{equation}
+
+La componente $\boldsymbol{\delta}_{s}(t)$ puede obtenerse mediante el filtrado temporal de las trayectorias:
+
+\begin{equation}
+    \boldsymbol{\delta}_{s}(t)
+    =
+    \mathcal{B}
+    \left\{
+        \boldsymbol{\delta}(t)
+    \right\},
+    \label{eq:filtrado_trayectoria}
+\end{equation}
+
+donde $\mathcal{B}\{\cdot\}$ representa un filtro temporal configurado para conservar las frecuencias asociadas con el movimiento que se desea amplificar. Por ejemplo, en el análisis de vibraciones mecánicas, la banda de paso puede establecerse alrededor de una frecuencia de resonancia conocida.\\
+
+Uno de los primeros métodos de magnificación lagrangiana fue propuesto por Liu et al., quienes plantearon un procedimiento basado en el registro de cuadros, el seguimiento de puntos característicos, la agrupación de trayectorias y la segmentación de la escena en capas de movimiento \cite{Liu2005Motion}. En este método, las trayectorias que presentan comportamientos similares se agrupan considerando su posición, intensidad, dirección y velocidad. Posteriormente, el usuario puede seleccionar una capa específica y establecer el factor con el que se amplificará su movimiento.\\
+
+Una vez modificadas las trayectorias, es necesario reconstruir cada cuadro mediante una transformación geométrica. Este procedimiento, conocido como deformación o \textit{warping}, puede representarse como
+
+\begin{equation}
+    \widehat{I}(\mathbf{x},t)
+    =
+    I\left(
+        \mathbf{x}
+        -
+        \widehat{\mathbf{d}}(\mathbf{x},t),
+        t
+    \right),
+    \label{eq:warping_lagrangiano}
+\end{equation}
+
+donde $\widehat{I}(\mathbf{x},t)$ es el cuadro de salida y $\widehat{\mathbf{d}}(\mathbf{x},t)$ corresponde al campo de desplazamiento modificado. Debido a que las coordenadas transformadas generalmente no coinciden con posiciones enteras de la cuadrícula de píxeles, debe utilizarse interpolación para calcular los valores de intensidad. Asimismo, cuando una región previamente oculta se vuelve visible, pueden aparecer espacios sin información que deben reconstruirse mediante técnicas de completado de imágenes.\\
+
+La principal ventaja de la perspectiva lagrangiana es que proporciona una descripción geométrica explícita del movimiento. Por consiguiente, permite estimar trayectorias, direcciones, velocidades, aceleraciones y amplitudes de desplazamiento. Esta propiedad es especialmente importante en aplicaciones donde no solo se requiere visualizar el movimiento, sino también cuantificarlo. Además, cuando el seguimiento es preciso, el enfoque puede manejar desplazamientos mayores que los admitidos por los modelos eulerianos lineales \cite{Ahmed2023Overview}.\\
+
+No obstante, su desempeño depende directamente de la calidad de la estimación del movimiento. Las variaciones de iluminación, las regiones con poca textura, las oclusiones, el desenfoque, los cambios de escala y los movimientos no rígidos pueden provocar correspondencias incorrectas. Cuando los errores de seguimiento son amplificados, se producen deformaciones visibles, duplicación de contornos, discontinuidades o distorsiones en los objetos.\\
+
+Paralelamente, el cálculo del flujo óptico, la segmentación de las capas, el tratamiento de las oclusiones y la reconstrucción de los cuadros incrementan el costo computacional. Esta complejidad puede dificultar su utilización en aplicaciones en tiempo real o en secuencias de alta resolución. Por esta razón, aunque el enfoque lagrangiano permite una interpretación física directa del desplazamiento, su implementación suele ser más exigente que la de los métodos eulerianos \cite{Ahmed2023Overview}.\\
+
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar un diagrama del enfoque lagrangiano que incluya las etapas de video de entrada, detección de características, estimación del flujo óptico, construcción y filtrado de trayectorias, aplicación del factor de magnificación, deformación de los cuadros y generación del video de salida.
+
+
+\subsection{\textbf{Enfoque Euleriano}}.\\
+\label{subsubsec:enfoque_euleriano}
+
+El enfoque euleriano analiza el movimiento observando las variaciones temporales de intensidad, color o fase que se producen en posiciones espaciales fijas. A diferencia del enfoque lagrangiano, no sigue explícitamente la trayectoria de los objetos ni calcula necesariamente un campo de flujo óptico. En su lugar, considera que el desplazamiento de una estructura visual genera cambios temporales en los valores registrados por los píxeles cercanos a dicha estructura \cite{Wu2012Eulerian,Ahmed2023Overview}.\\
+
+Esta perspectiva también tiene su origen en la mecánica de fluidos, donde la descripción euleriana estudia cómo cambian propiedades como la velocidad, la presión o la densidad en puntos fijos del espacio. En el procesamiento de video, cada posición espacial puede interpretarse como un sensor que registra una señal temporal:
+
+\begin{equation}
+    s_{\mathbf{x}}(t)=I(\mathbf{x},t),
+    \label{eq:senal_temporal_euleriana}
+\end{equation}
+
+donde $\mathbf{x}=(x,y)^{\mathrm{T}}$ representa una posición fija e $I(\mathbf{x},t)$ corresponde al valor de intensidad o color registrado en el instante $t$. Cuando un borde, una textura o una región se desplaza ligeramente, la señal $s_{\mathbf{x}}(t)$ presenta variaciones cuya frecuencia y amplitud se encuentran relacionadas con el movimiento.\\
+
+Para describir matemáticamente este principio, considérese una señal espacial unidimensional $f(x)$ sometida a un desplazamiento temporal $\delta(t)$. La secuencia observada puede modelarse como
+
+\begin{equation}
+    I(x,t)=f\left(x-\delta(t)\right).
+    \label{eq:modelo_euleriano}
+\end{equation}
+
+El objetivo de la magnificación consiste en obtener una señal cuya posición aparente se encuentre desplazada por un factor mayor:
+
+\begin{equation}
+    \widehat{I}(x,t)
+    =
+    f\left(x-(1+\alpha)\delta(t)\right),
+    \label{eq:objetivo_magnificacion_euleriana}
+\end{equation}
+
+donde $\alpha$ representa el factor de amplificación. Si el desplazamiento $\delta(t)$ es pequeño, la señal de entrada puede aproximarse mediante una expansión de Taylor de primer orden:
+
+\begin{equation}
+    f\left(x-\delta(t)\right)
+    \approx
+    f(x)-\delta(t)\frac{\partial f(x)}{\partial x}.
+    \label{eq:taylor_euleriano}
+\end{equation}
+
+La ecuación anterior muestra que la variación temporal producida por el movimiento es proporcional al desplazamiento $\delta(t)$ y al gradiente espacial de la señal. Al aplicar un filtro temporal que conserve el movimiento de interés, puede obtenerse una componente
+
+\begin{equation}
+    B(x,t)
+    \approx
+    -\delta(t)\frac{\partial f(x)}{\partial x},
+    \label{eq:senal_temporal_filtrada}
+\end{equation}
+
+donde $B(x,t)$ representa la variación temporal filtrada. Esta componente se multiplica por el factor $\alpha$ y se suma a la señal original:
+
+\begin{equation}
+    \widehat{I}(x,t)
+    =
+    I(x,t)+\alpha B(x,t).
+    \label{eq:suma_euleriana}
+\end{equation}
+
+Sustituyendo las aproximaciones anteriores se obtiene
+
+\begin{equation}
+    \widehat{I}(x,t)
+    \approx
+    f(x)
+    -
+    (1+\alpha)\delta(t)
+    \frac{\partial f(x)}{\partial x},
+    \label{eq:salida_taylor_euleriana}
+\end{equation}
+
+que, mediante la aproximación inversa de Taylor, puede interpretarse como
+
+\begin{equation}
+    \widehat{I}(x,t)
+    \approx
+    f\left(x-(1+\alpha)\delta(t)\right).
+    \label{eq:equivalencia_desplazamiento}
+\end{equation}
+
+Por consiguiente, dentro de los límites de la aproximación lineal, la amplificación de las variaciones temporales observadas en posiciones fijas produce un incremento aparente del movimiento, sin que sea necesario estimar explícitamente la trayectoria del objeto \cite{Wu2012Eulerian}.\\
+
+En dos dimensiones, el modelo puede expresarse como
+
+\begin{equation}
+    I(\mathbf{x},t)
+    =
+    f\left(\mathbf{x}-\boldsymbol{\delta}(t)\right)
+    \approx
+    f(\mathbf{x})
+    -
+    \nabla f(\mathbf{x})^{\mathrm{T}}
+    \boldsymbol{\delta}(t),
+    \label{eq:modelo_euleriano_bidimensional}
+\end{equation}
+
+donde $\nabla f(\mathbf{x})$ representa el gradiente espacial y $\boldsymbol{\delta}(t)$ corresponde al vector de desplazamiento. La magnitud de la variación temporal depende del gradiente, por lo que los cambios son más evidentes en los bordes y regiones con textura que en zonas espacialmente uniformes.\\
+
+El método de magnificación euleriana lineal propuesto por Wu et al. utiliza una estructura multiescala para procesar estas variaciones \cite{Wu2012Eulerian}. En primer lugar, cada cuadro del video se descompone en diferentes bandas de frecuencia espacial mediante una pirámide Laplaciana. Posteriormente, se aplica un filtro temporal a cada banda, se amplifican las componentes seleccionadas, se suman a las bandas originales y finalmente se reconstruye el video.\\
+
+Si $L_s(\mathbf{x},t)$ representa la banda espacial correspondiente al nivel $s$ de la pirámide, la señal temporal filtrada puede expresarse como
+
+\begin{equation}
+    B_s(\mathbf{x},t)
+    =
+    \mathcal{B}
+    \left\{
+        L_s(\mathbf{x},t)
+    \right\},
+    \label{eq:filtrado_temporal_multiescala}
+\end{equation}
+
+donde $\mathcal{B}\{\cdot\}$ representa el operador de filtrado temporal. La banda amplificada se obtiene mediante
+
+\begin{equation}
+    \widehat{L}_s(\mathbf{x},t)
+    =
+    L_s(\mathbf{x},t)
+    +
+    \alpha_s B_s(\mathbf{x},t),
+    \label{eq:banda_euleriana_amplificada}
+\end{equation}
+
+donde $\alpha_s$ es el factor de magnificación asignado a la escala espacial $s$. Finalmente, el cuadro procesado se reconstruye mediante
+
+\begin{equation}
+    \widehat{I}(\mathbf{x},t)
+    =
+    \mathcal{P}^{-1}
+    \left(
+        \left\{
+            \widehat{L}_s(\mathbf{x},t)
+        \right\}_{s=0}^{S}
+    \right),
+    \label{eq:reconstruccion_euleriana}
+\end{equation}
+
+donde $\mathcal{P}^{-1}$ representa la operación inversa de la pirámide y $S$ es el número total de niveles.\\
+
+La descomposición multiescala resulta necesaria porque el factor de magnificación admisible depende de la frecuencia espacial. Las estructuras finas poseen longitudes de onda pequeñas y son más sensibles a la violación de la aproximación de Taylor. De manera general, el desplazamiento magnificado debe mantenerse limitado respecto de la longitud de onda espacial $\lambda_s$:
+
+\begin{equation}
+    (1+\alpha_s)
+    \left\|
+        \boldsymbol{\delta}(t)
+    \right\|
+    <
+    C\lambda_s,
+    \label{eq:limite_linealidad_euleriana}
+\end{equation}
+
+donde $C$ es una constante asociada con el límite de linealidad. Cuando esta condición no se cumple, los términos de orden superior dejan de ser despreciables y pueden aparecer halos, duplicación de bordes, saturación y desenfoque \cite{Wu2012Eulerian}.\\
+
+La selección del filtro temporal depende de las características del fenómeno estudiado. Si el movimiento es periódico y su frecuencia es conocida, puede utilizarse un filtro pasa banda estrecho. Por ejemplo, para realzar señales fisiológicas puede seleccionarse una banda que contenga las frecuencias asociadas con la respiración o el pulso. En cambio, para vibraciones mecánicas que contienen varios componentes espectrales puede resultar conveniente emplear una banda más amplia.\\
+
+En tiempo discreto, el filtrado de una banda espacial puede escribirse como
+
+\begin{equation}
+    B_s(\mathbf{x},n)
+    =
+    \sum_{k=-K}^{K}
+    h[k]L_s(\mathbf{x},n-k),
+    \label{eq:filtrado_temporal_discreto}
+\end{equation}
+
+donde $n$ es el índice del cuadro, $h[k]$ representa la respuesta impulsiva del filtro y $2K+1$ corresponde al tamaño de la ventana temporal. En el dominio de la frecuencia, la operación se representa mediante
+
+\begin{equation}
+    B_s(\mathbf{x},\omega)
+    =
+    H(\omega)L_s(\mathbf{x},\omega),
+    \label{eq:filtrado_frecuencia_euleriano}
+\end{equation}
+
+donde $H(\omega)$ es la respuesta en frecuencia del filtro. Por consiguiente, únicamente las variaciones que se encuentran dentro de su banda de paso son amplificadas de manera significativa.\\
+
+Aunque el método lineal presenta una implementación sencilla, puede amplificar simultáneamente el movimiento y el ruido. Asimismo, los factores elevados generan artefactos cuando el desplazamiento supera el intervalo de validez del modelo. Para superar estas limitaciones, Wadhwa et al. propusieron la magnificación de movimiento basada en fase, en la que el movimiento se representa mediante las variaciones temporales de la fase local de coeficientes complejos \cite{Wadhwa2013Phase}.\\
+
+Una banda espacial compleja puede representarse como
+
+\begin{equation}
+    S_{\omega,\theta}(\mathbf{x},t)
+    =
+    A_{\omega,\theta}(\mathbf{x},t)
+    e^{i\phi_{\omega,\theta}(\mathbf{x},t)},
+    \label{eq:representacion_compleja}
+\end{equation}
+
+donde $A_{\omega,\theta}$ representa la amplitud local, $\phi_{\omega,\theta}$ corresponde a la fase, $\omega$ identifica la escala y $\theta$ la orientación. Debido al teorema de desplazamiento de Fourier, los cambios de fase se encuentran relacionados con las traslaciones locales de las estructuras visuales.\\
+
+La fase se filtra temporalmente mediante
+
+\begin{equation}
+    B_{\omega,\theta}(\mathbf{x},t)
+    =
+    \mathcal{B}
+    \left\{
+        \phi_{\omega,\theta}(\mathbf{x},t)
+    \right\},
+    \label{eq:filtrado_fase}
+\end{equation}
+
+y posteriormente se modifica de acuerdo con
+
+\begin{equation}
+    \widehat{\phi}_{\omega,\theta}(\mathbf{x},t)
+    =
+    \phi_{\omega,\theta}(\mathbf{x},t)
+    +
+    \alpha B_{\omega,\theta}(\mathbf{x},t).
+    \label{eq:amplificacion_fase}
+\end{equation}
+
+El coeficiente procesado puede reconstruirse como
+
+\begin{equation}
+    \widehat{S}_{\omega,\theta}(\mathbf{x},t)
+    =
+    A_{\omega,\theta}(\mathbf{x},t)
+    e^{i\widehat{\phi}_{\omega,\theta}(\mathbf{x},t)}.
+    \label{eq:coeficiente_complejo_magnificado}
+\end{equation}
+
+En comparación con la formulación lineal, el procesamiento basado en fase admite mayores factores de magnificación y presenta menor sensibilidad al ruido, puesto que modifica principalmente la posición local de las estructuras en vez de amplificar directamente las variaciones de intensidad \cite{Wadhwa2013Phase}. Posteriormente, la pirámide de Riesz permitió implementar este principio con una representación menos redundante y con menor costo computacional, facilitando el procesamiento cercano al tiempo real \cite{Wadhwa2014Riesz}.\\
+
+La principal ventaja del enfoque euleriano es que elimina la necesidad de realizar seguimiento explícito. Esta característica reduce la complejidad y evita los errores de correspondencia asociados con el flujo óptico. Por esta razón, resulta especialmente adecuado para revelar movimientos pequeños en videos donde la cámara y los objetos permanecen aproximadamente estables.\\
+
+No obstante, su desempeño puede degradarse cuando la secuencia contiene movimientos globales, desplazamientos arbitrarios, cambios de iluminación u oclusiones. Estas variaciones generan señales temporales que pueden encontrarse dentro de la banda de interés y ser amplificadas junto con el movimiento sutil. En consecuencia, la estabilización del video, la selección apropiada de la región de interés y la configuración del filtro temporal constituyen aspectos esenciales para obtener resultados adecuados \cite{Ahmed2023Overview}.\\
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar un diagrama del enfoque euleriano lineal que muestre la descomposición espacial del video, el filtrado temporal de cada banda, la aplicación de los factores de magnificación, la suma con la señal original y la reconstrucción del video.
+
+	\subsection{\textbf{Comparación entre los enfoques Lagrangiano y Euleriano}}.\\
+	\label{subsubsec:comparacion_lagrangiano_euleriano}
+
+La diferencia fundamental entre los enfoques lagrangiano y euleriano se encuentra en el sistema de referencia empleado para describir el movimiento. El enfoque lagrangiano sigue los elementos de la escena mientras estos se desplazan, mientras que el enfoque euleriano mantiene posiciones espaciales fijas y estudia las variaciones temporales registradas en ellas \cite{Ahmed2023Overview}.\\
+
+En la perspectiva lagrangiana, la variable principal es la trayectoria de cada punto:
+
+\begin{equation}
+    \mathbf{x}_k(t)
+    =
+    \mathbf{x}_k(t_0)
+    +
+    \boldsymbol{\delta}_k(t),
+    \label{eq:variable_lagrangiana_comparacion}
+\end{equation}
+
+donde $\boldsymbol{\delta}_k(t)$ representa el desplazamiento de la característica $k$. En la perspectiva euleriana, la variable analizada es la señal temporal obtenida en una posición fija:
+
+\begin{equation}
+    s_{\mathbf{x}}(t)=I(\mathbf{x},t).
+    \label{eq:variable_euleriana_comparacion}
+\end{equation}
+
+Por consiguiente, el enfoque lagrangiano proporciona una representación explícita del desplazamiento, mientras que el movimiento euleriano se encuentra implícito en las variaciones de intensidad, color o fase. Esta diferencia determina la naturaleza de los algoritmos utilizados y las magnitudes que pueden obtenerse directamente.\\
+
+El enfoque lagrangiano requiere establecer correspondencias entre cuadros. Para ello emplea seguimiento de puntos, flujo óptico, segmentación de movimiento y deformación geométrica. Estas operaciones permiten estimar desplazamientos, velocidades y aceleraciones, por lo que el método resulta apropiado cuando se requiere una interpretación física o geométrica del movimiento. No obstante, los errores de correspondencia pueden producir distorsiones considerables cuando las trayectorias estimadas son amplificadas \cite{Liu2005Motion}.\\
+
+En contraste, el enfoque euleriano evita la estimación directa del campo de movimiento. El procesamiento se basa principalmente en operaciones de filtrado espacial y temporal, lo que generalmente reduce el costo computacional y facilita su paralelización. En este sentido, los métodos eulerianos suelen resultar más adecuados para procesar videos extensos o implementar sistemas de magnificación cercanos al tiempo real \cite{Wu2012Eulerian,Wadhwa2014Riesz}.\\
+
+En relación con la amplitud del movimiento, la formulación euleriana lineal se encuentra limitada por la aproximación de Taylor. El desplazamiento amplificado debe permanecer pequeño en comparación con la longitud de onda espacial de las estructuras procesadas. Cuando esta restricción se viola, pueden aparecer saturación, desenfoque, halos y duplicación de contornos. Los métodos basados en fase amplían el intervalo de magnificación admisible, pero también pueden presentar problemas cuando existen movimientos grandes y arbitrarios \cite{Wadhwa2013Phase}.\\
+
+El enfoque lagrangiano puede manejar desplazamientos mayores siempre que las correspondencias entre cuadros sean estimadas correctamente. Sin embargo, su precisión disminuye en presencia de oclusiones, movimientos rápidos, desenfoque, regiones uniformes o cambios de iluminación. Por tanto, la capacidad para procesar movimientos grandes no depende únicamente de la perspectiva utilizada, sino también de la robustez del algoritmo de seguimiento.\\
+
+La sensibilidad al ruido también se manifiesta de manera diferente. En el enfoque lagrangiano, el ruido altera la localización de las características y genera errores en el campo de movimiento. Cuando estos errores se multiplican por el factor de magnificación, pueden aparecer desplazamientos geométricos inexistentes. En el enfoque euleriano lineal, el ruido que se encuentra dentro de la banda temporal seleccionada es amplificado junto con la señal de interés.\\
+
+No obstante, la regularización espacial utilizada por algunos métodos de flujo óptico puede reducir los errores de estimación lagrangiana, mientras que la descomposición multiescala y el suavizado espacial pueden mejorar la relación señal-ruido de los métodos eulerianos. En consecuencia, ninguno de los enfoques es universalmente superior frente al ruido, dado que su desempeño depende de la naturaleza de la perturbación, la frecuencia temporal, la escala espacial y el factor de magnificación \cite{Wu2012Eulerian}.\\
+
+Otra diferencia relevante corresponde al tratamiento de las oclusiones. Los métodos lagrangianos deben identificar explícitamente las regiones que aparecen, desaparecen o cambian de profundidad. Si estas situaciones no son gestionadas adecuadamente, la deformación de los cuadros produce huecos y discontinuidades. Los métodos eulerianos no resuelven correspondencias geométricas y, por tanto, no necesitan reconstruir trayectorias a través de una oclusión; sin embargo, el cambio abrupto de intensidad puede atravesar la banda del filtro temporal y generar artefactos significativos.\\
+
+En cuanto a la selección espacial del movimiento, el enfoque lagrangiano permite agrupar trayectorias y separar objetos o capas de la escena. Esta capacidad facilita la amplificación de una región móvil específica, aun cuando exista un movimiento global. En los métodos eulerianos convencionales, todos los cambios temporales presentes dentro de la banda seleccionada pueden ser amplificados, por lo que suele ser necesario utilizar máscaras, regiones de interés o estabilización previa.\\
+
+El enfoque euleriano presenta una ventaja adicional: puede amplificar variaciones de color que no corresponden necesariamente a un desplazamiento geométrico. Esta capacidad permitió revelar cambios sutiles relacionados con la circulación sanguínea y otras señales fisiológicas \cite{Wu2012Eulerian}. En contraste, el enfoque lagrangiano se centra principalmente en la evolución espacial de puntos o estructuras, por lo que no aborda de forma directa las variaciones cromáticas que ocurren sin desplazamiento.\\
+
+Desde el punto de vista de la medición, las trayectorias lagrangianas pueden transformarse en valores físicos de desplazamiento cuando se dispone de una calibración espacial adecuada. En cambio, el video euleriano magnificado constituye principalmente una representación visual. Aunque permite detectar frecuencias y patrones de vibración, el factor de magnificación aplicado no debe interpretarse automáticamente como una medición exacta del desplazamiento real, especialmente cuando se incumplen las condiciones de linealidad.\\
+
+Por consiguiente, el enfoque lagrangiano resulta apropiado cuando se necesitan trayectorias explícitas, mediciones geométricas, segmentación de objetos o procesamiento de desplazamientos moderados. El enfoque euleriano es particularmente adecuado cuando el objetivo consiste en revelar movimientos o variaciones temporales de muy baja amplitud en condiciones controladas, con la cámara y los objetos aproximadamente estables.\\
+
+También se han desarrollado métodos híbridos que combinan ambas perspectivas. Una estrategia frecuente consiste en estimar y compensar el movimiento global mediante técnicas lagrangianas y, posteriormente, aplicar magnificación euleriana sobre la secuencia estabilizada. De esta manera, el componente lagrangiano elimina los desplazamientos de gran amplitud y el componente euleriano amplifica las variaciones residuales. No obstante, esta combinación incrementa la complejidad de implementación y reúne los posibles errores de ambos enfoques \cite{Ahmed2023Overview}.\\
+
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar una comparación visual en la que el enfoque lagrangiano se represente mediante puntos y trayectorias que siguen al objeto, mientras que el enfoque euleriano se represente mediante posiciones espaciales fijas y señales temporales de intensidad.
+
+%\textbf{SUGERENCIA DE TABLA:} Incluir una tabla comparativa con los criterios: variable analizada, necesidad de flujo óptico, costo computacional, capacidad para procesar desplazamientos grandes, sensibilidad al ruido, manejo de oclusiones, posibilidad de medición física, amplificación de color, procesamiento en tiempo real y aplicaciones recomendadas.
+
+
+%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------
+\section{Representaciones multiescala mediante pirámides de imágenes}
+\label{subsec:representaciones_multiescala}
+
+
+	\subsection{\textbf{Representación multiescala y espacio-escala}}.\\
+	\label{subsubsec:representacion_multiescala_espacio_escala}
+
+Los objetos y estructuras presentes en una imagen no poseen una única escala espacial característica. Algunos elementos, como bordes finos, texturas y pequeñas irregularidades, se manifiestan principalmente en escalas reducidas, mientras que las formas generales, regiones homogéneas y contornos de gran extensión se distinguen con mayor claridad en escalas amplias. Por consiguiente, analizar una imagen únicamente en su resolución original puede resultar insuficiente para describir de manera completa su contenido espacial. La representación multiescala aborda este problema mediante la construcción de un conjunto de imágenes derivadas, cada una asociada con un nivel distinto de resolución o suavizado \cite{Lindeberg1994ScaleSpace,Ahmed2023Overview}.\\
+
+El espacio-escala constituye un marco matemático para representar una señal visual a diferentes niveles de observación. Sea $I(x,y)$ una imagen bidimensional. Su representación lineal en el espacio-escala puede definirse mediante la convolución con un núcleo Gaussiano:
+
+\begin{equation}
+    L(x,y;\sigma)
+    =
+    g(x,y;\sigma)*I(x,y),
+    \label{eq:espacio_escala}
+\end{equation}
+
+donde $L(x,y;\sigma)$ representa la imagen observada en la escala $\sigma$, el símbolo $*$ denota la operación de convolución y $g(x,y;\sigma)$ corresponde al núcleo Gaussiano bidimensional:
+
+\begin{equation}
+    g(x,y;\sigma)
+    =
+    \frac{1}{2\pi\sigma^2}
+    \exp
+    \left(
+        -\frac{x^2+y^2}{2\sigma^2}
+    \right).
+    \label{eq:nucleo_gaussiano}
+\end{equation}
+
+El parámetro $\sigma$ controla la extensión espacial del suavizado. Para valores pequeños de $\sigma$, la representación conserva detalles finos y componentes de alta frecuencia. A medida que $\sigma$ aumenta, estas estructuras son progresivamente atenuadas y predominan las características de mayor extensión espacial. En este sentido, la dimensión de escala complementa las coordenadas espaciales $(x,y)$, por lo que la imagen deja de considerarse una función exclusivamente bidimensional y pasa a describirse como una familia tridimensional $L(x,y;\sigma)$ \cite{Lindeberg1994ScaleSpace}.\\
+
+Una propiedad fundamental de la representación Gaussiana es su estructura de semigrupo. La aplicación consecutiva de dos suavizados Gaussianos con desviaciones estándar $\sigma_1$ y $\sigma_2$ equivale a aplicar un único suavizado cuya escala satisface
+
+\begin{equation}
+    g(\mathbf{x};\sigma_1)
+    *
+    g(\mathbf{x};\sigma_2)
+    =
+    g
+    \left(
+        \mathbf{x};
+        \sqrt{\sigma_1^2+\sigma_2^2}
+    \right),
+    \label{eq:semigrupo_gaussiano}
+\end{equation}
+
+donde $\mathbf{x}=(x,y)^{\mathrm{T}}$. Por tanto, una representación de escala gruesa puede obtenerse a partir de otra escala más fina sin regresar necesariamente a la imagen original. Esta propiedad permite construir estructuras jerárquicas eficientes y garantiza una evolución coherente del contenido visual a través de las escalas.\\
+
+De manera equivalente, si se utiliza el parámetro de escala $s=\sigma^2$, la representación Gaussiana satisface la ecuación de difusión:
+
+\begin{equation}
+    \frac{\partial L}{\partial s}
+    =
+    \frac{1}{2}
+    \nabla^2 L,
+    \label{eq:ecuacion_difusion_espacio_escala}
+\end{equation}
+
+donde $\nabla^2 L=L_{xx}+L_{yy}$ representa el operador Laplaciano. Esta relación muestra que el incremento de la escala puede interpretarse como un proceso de difusión en el cual las variaciones locales de intensidad se propagan gradualmente hacia las regiones vecinas. Como resultado, los detalles pequeños desaparecen antes que las estructuras de mayor extensión.\\
+
+La representación multiescala debe evitar la creación artificial de nuevas estructuras al pasar de escalas finas a escalas gruesas. En otras palabras, el proceso de suavizado puede simplificar el contenido de la imagen, pero no debería introducir nuevos máximos, mínimos o contornos que no estuvieran presentes en escalas inferiores. Bajo condiciones de linealidad, invariancia ante traslaciones, isotropía y causalidad respecto de la escala, el núcleo Gaussiano constituye la solución fundamental para la construcción de un espacio-escala lineal \cite{Lindeberg1994ScaleSpace}.\\
+
+En una implementación digital, las escalas pueden muestrearse de forma discreta. Si $\sigma_0$ representa la escala inicial, una secuencia geométrica puede definirse mediante
+
+\begin{equation}
+    \sigma_s
+    =
+    k^s\sigma_0,
+    \qquad
+    s=0,1,\ldots,S,
+    \label{eq:muestreo_escala}
+\end{equation}
+
+donde $k>1$ determina la separación entre escalas y $S$ es el número de niveles. Esta distribución permite cubrir un intervalo amplio de tamaños espaciales con un número moderado de representaciones.\\
+
+Las pirámides de imágenes constituyen una forma discreta y computacionalmente eficiente de implementar el análisis multiescala. En ellas, el suavizado suele combinarse con una reducción progresiva de la resolución espacial. De esta manera, las bandas de baja frecuencia se almacenan con una menor densidad de muestras, puesto que el filtrado previo elimina componentes que no podrían representarse adecuadamente después del submuestreo \cite{BurtAdelson1983}.\\
+
+En la magnificación de movimiento, la representación multiescala permite separar estructuras de diferentes longitudes de onda espaciales. Esta separación es fundamental porque el desplazamiento admisible y el factor de amplificación dependen de la escala. Los detalles finos son sensibles a movimientos pequeños y a la presencia de ruido, mientras que los niveles gruesos permiten procesar desplazamientos de mayor amplitud. Por ello, los métodos eulerianos lineales y basados en fase utilizan pirámides para aplicar el filtrado temporal y la amplificación de manera independiente en cada banda espacial \cite{Wu2012Eulerian,Wadhwa2013Phase,Ahmed2023Overview}.
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar una representación del espacio-escala como un volumen tridimensional con los ejes $x$, $y$ y $\sigma$. Mostrar la imagen original en la escala más fina y versiones progresivamente suavizadas a medida que aumenta $\sigma$, destacando la desaparición gradual de texturas y detalles pequeños.
+
+	\subsection{\textbf{Pirámide Gaussiana}}.\\
+	\label{subsubsec:piramide_gaussiana}
+
+La pirámide Gaussiana es una representación multirresolución formada por una secuencia de imágenes progresivamente suavizadas y submuestreadas. Cada nivel contiene una aproximación de baja frecuencia de la imagen del nivel anterior, por lo que las dimensiones espaciales disminuyen mientras aumenta la escala efectiva de observación \cite{BurtAdelson1983,Ahmed2023Overview}.\\
+
+Sea $G_0(x,y)$ la imagen original:
+
+\begin{equation}
+    G_0(x,y)=I(x,y).
+    \label{eq:nivel_inicial_gaussiano}
+\end{equation}
+
+El siguiente nivel se obtiene mediante una operación de reducción que combina filtrado pasa bajos y submuestreo:
+
+\begin{equation}
+    G_{s+1}(i,j)
+    =
+    \operatorname{REDUCE}
+    \left\{
+        G_s
+    \right\}(i,j),
+    \label{eq:reduce_gaussiana}
+\end{equation}
+
+o, de forma explícita,
+
+\begin{equation}
+    G_{s+1}(i,j)
+    =
+    \sum_{m=-M}^{M}
+    \sum_{n=-N}^{N}
+    w(m,n)
+    G_s(2i+m,2j+n),
+    \label{eq:construccion_piramide_gaussiana}
+\end{equation}
+
+donde $w(m,n)$ es un filtro pasa bajos, generalmente una aproximación discreta del núcleo Gaussiano. Los términos $2i$ y $2j$ indican que, después del filtrado, se conserva una muestra por cada dos posiciones horizontales y verticales.\\
+
+El filtrado previo al submuestreo es indispensable para reducir el aliasing. Al disminuir por dos la frecuencia de muestreo espacial, la nueva frecuencia de Nyquist también se reduce a la mitad. En consecuencia, las componentes espectrales que excedan este límite deben atenuarse antes de eliminar muestras. Si el submuestreo se aplica sin filtrado, las frecuencias altas se repliegan sobre las bajas y generan patrones espurios que no pueden eliminarse posteriormente.\\
+
+Cuando cada nivel posee la mitad de la anchura y la mitad de la altura del nivel anterior, el número total de muestras almacenadas en una pirámide con un número elevado de niveles se aproxima a
+
+\begin{equation}
+    NM
+    \left(
+        1+\frac{1}{4}+\frac{1}{16}+\cdots
+    \right)
+    =
+    \frac{4}{3}NM,
+    \label{eq:redundancia_gaussiana}
+\end{equation}
+
+donde $N\times M$ son las dimensiones de la imagen original. Por consiguiente, la pirámide completa requiere aproximadamente un tercio más de muestras que la imagen inicial, aunque contiene representaciones de múltiples escalas \cite{Ahmed2023Overview}.\\
+
+En el dominio de la frecuencia espacial, cada nivel conserva una región de baja frecuencia más estrecha que la del nivel anterior. Sin embargo, debido a la reducción de resolución, esta región vuelve a ocupar una proporción significativa del espectro normalizado del nuevo nivel. De este modo, cada imagen piramidal describe estructuras visuales similares, pero observadas con diferentes tamaños relativos.\\
+
+La profundidad máxima de la pirámide depende de las dimensiones de la imagen y del tamaño mínimo requerido para el procesamiento. Si la reducción se realiza por un factor de dos, el número máximo aproximado de niveles puede expresarse como
+
+\begin{equation}
+    S_{\max}
+    =
+    \left\lfloor
+        \log_2
+        \left(
+            \min(N,M)
+        \right)
+    \right\rfloor,
+    \label{eq:niveles_maximos_gaussianos}
+\end{equation}
+
+aunque, en aplicaciones prácticas, el proceso suele detenerse antes de alcanzar una imagen de un solo píxel.\\
+
+La pirámide Gaussiana ofrece una descripción eficiente de la componente de baja frecuencia de la imagen. Por esta razón, se utiliza en detección multiescala, registro, segmentación, fusión de imágenes y construcción de otras representaciones piramidales. No obstante, sus niveles contienen información acumulativa: cada imagen incluye nuevamente las estructuras de baja frecuencia presentes en niveles superiores. Esta redundancia dificulta la manipulación independiente de detalles correspondientes a una escala específica.\\
+
+En la magnificación euleriana, la pirámide Gaussiana puede emplearse cuando el interés principal se encuentra en variaciones de color o intensidad de baja frecuencia espacial. El suavizado incrementa la relación señal-ruido mediante la combinación de información procedente de varios píxeles. Sin embargo, cuando se pretende modificar movimiento en distintas bandas espaciales, resulta más conveniente utilizar una representación que separe explícitamente los detalles perdidos entre niveles, como la pirámide Laplaciana \cite{Wu2012Eulerian}.\\
+
+%\textbf{SUGERENCIA DE FIGURA:} Representar la construcción de una pirámide Gaussiana a partir de una imagen inicial. En cada nivel deben mostrarse el filtrado pasa bajos, el submuestreo por un factor de dos y la reducción de las dimensiones espaciales. Incluir debajo de cada imagen su resolución relativa.
+
+
+	\subsection{\textbf{Pirámide Laplaciana}}.\\
+	\label{subsubsec:piramide_laplaciana}
+
+La pirámide Laplaciana es una representación multiescala de tipo pasa banda que almacena la información eliminada durante la construcción de una pirámide Gaussiana. Su principio consiste en predecir cada nivel fino a partir de una versión expandida del siguiente nivel grueso y conservar el error de predicción. De esta manera, cada banda representa detalles asociados con un intervalo específico de frecuencias espaciales \cite{BurtAdelson1983}.\\
+
+Sea $\{G_s\}_{s=0}^{S}$ una pirámide Gaussiana. Para comparar dos niveles consecutivos, el nivel $G_{s+1}$ debe expandirse hasta alcanzar las dimensiones de $G_s$:
+
+\begin{equation}
+    \widetilde{G}_{s}(x,y)
+    =
+    \operatorname{EXPAND}
+    \left\{
+        G_{s+1}
+    \right\}(x,y).
+    \label{eq:expansion_gaussiana}
+\end{equation}
+
+La expansión incluye la inserción de muestras nulas o una operación equivalente de sobremuestreo, seguida por un filtrado de interpolación. La banda Laplaciana del nivel $s$ se define entonces como
+
+\begin{equation}
+    L_s(x,y)
+    =
+    G_s(x,y)
+    -
+    \widetilde{G}_{s}(x,y),
+    \qquad
+    0\leq s<S.
+    \label{eq:banda_laplaciana}
+\end{equation}
+
+El último nivel conserva el residuo de baja frecuencia:
+
+\begin{equation}
+    L_S(x,y)=G_S(x,y).
+    \label{eq:residuo_baja_frecuencia}
+\end{equation}
+
+Cada banda $L_s$ contiene las estructuras que están presentes en $G_s$, pero que no pueden representarse en el nivel más grueso $G_{s+1}$. Por consiguiente, los niveles Laplacianos resaltan bordes, texturas y cambios locales de intensidad cuyas dimensiones corresponden a la escala considerada. Aunque su nombre se relaciona con el operador Laplaciano, la construcción práctica se obtiene mediante diferencias entre niveles Gaussianos y constituye una aproximación multiescala a filtros de tipo Laplaciano de Gaussiana \cite{BurtAdelson1983,Ahmed2023Overview}.\\
+
+La pirámide permite reconstruir la imagen original mediante una operación recursiva. Partiendo del nivel más grueso,
+
+\begin{equation}
+    G_S=L_S,
+\end{equation}
+
+cada nivel fino puede recuperarse como
+
+\begin{equation}
+    G_s(x,y)
+    =
+    L_s(x,y)
+    +
+    \operatorname{EXPAND}
+    \left\{
+        G_{s+1}
+    \right\}(x,y).
+    \label{eq:reconstruccion_laplaciana}
+\end{equation}
+
+Aplicando esta relación desde $s=S-1$ hasta $s=0$, se obtiene nuevamente $G_0=I$. La precisión de la reconstrucción depende de la compatibilidad entre los filtros de reducción y expansión, así como del tratamiento de los bordes de la imagen.\\
+
+En el dominio de la frecuencia, la banda Laplaciana puede interpretarse aproximadamente como la diferencia entre dos filtros pasa bajos:
+
+\begin{equation}
+    H_{L_s}(\boldsymbol{\omega})
+    =
+    H_{G_s}(\boldsymbol{\omega})
+    -
+    H_{G_{s+1}}(\boldsymbol{\omega}),
+    \label{eq:respuesta_laplaciana}
+\end{equation}
+
+donde $\boldsymbol{\omega}=(\omega_x,\omega_y)^{\mathrm{T}}$ representa la frecuencia espacial. La resta elimina las componentes comunes de baja frecuencia y conserva un intervalo intermedio del espectro.\\
+
+Esta localización simultánea en posición y frecuencia constituye una ventaja para el procesamiento de imágenes. A diferencia de una transformada de Fourier global, la pirámide permite determinar no solo qué frecuencias están presentes, sino también dónde se encuentran las estructuras asociadas. Además, cada banda puede procesarse de manera independiente antes de reconstruir la imagen.\\
+
+En la magnificación euleriana lineal, cada cuadro del video se descompone mediante una pirámide Laplaciana. Posteriormente, para cada posición y nivel espacial se construye una señal temporal, se seleccionan las frecuencias de movimiento mediante filtrado y se amplifica la componente resultante:
+
+\begin{equation}
+    \widehat{L}_s(x,y,t)
+    =
+    L_s(x,y,t)
+    +
+    \alpha_s
+    \mathcal{B}
+    \left\{
+        L_s(x,y,t)
+    \right\},
+    \label{eq:magnificacion_laplaciana}
+\end{equation}
+
+donde $\mathcal{B}\{\cdot\}$ representa el filtro temporal y $\alpha_s$ es el factor de amplificación correspondiente a la escala $s$. El video se obtiene reconstruyendo la pirámide modificada cuadro por cuadro \cite{Wu2012Eulerian}.\\
+
+La posibilidad de asignar diferentes valores de $\alpha_s$ es esencial, debido a que las escalas finas admiten desplazamientos magnificados menores que las escalas gruesas. Así, la pirámide actúa como un mecanismo para adaptar el procesamiento a la longitud de onda espacial de cada componente.\\
+
+Entre las ventajas de la pirámide Laplaciana se encuentran su construcción sencilla, el uso de filtros separables, la posibilidad de reconstrucción y el costo computacional relativamente bajo. No obstante, sus bandas no separan las orientaciones espaciales. Un nivel contiene simultáneamente bordes horizontales, verticales, diagonales y texturas con distintas direcciones. Esta característica limita su capacidad para representar el movimiento mediante fase local, dado que una misma banda puede contener patrones superpuestos con orientaciones diferentes.\\
+
+Asimismo, el soporte espacial estrecho de los filtros Laplacianos limita la magnitud del desplazamiento que puede manipularse sin artefactos. En el desarrollo de la pirámide de Riesz, Wadhwa et al. observaron que una pirámide Laplaciana convencional posee una respuesta impulsiva relativamente estrecha, lo que restringe los factores de amplificación basados en fase. Por esta razón, diseñaron una pirámide invertible con un soporte espacial más amplio \cite{Wadhwa2014Riesz}.
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar un esquema conjunto de las pirámides Gaussiana y Laplaciana. Mostrar que cada banda Laplaciana se obtiene restando un nivel Gaussiano y la versión expandida del nivel inmediatamente superior. Incluir también el proceso inverso de reconstrucción.
+
+
+	\subsection{\textbf{Pirámides orientables (\textit{Steerable Pyramid})}}.\\
+	\label{subsubsec:piramides_orientables}
+
+La pirámide orientable o \textit{steerable pyramid} es una representación multiescala y multiorientación que descompone una imagen en subbandas localizadas simultáneamente en posición, frecuencia espacial, escala y orientación. Fue desarrollada para superar limitaciones de representaciones piramidales isotrópicas y ofrecer una arquitectura flexible para el cálculo de derivadas direccionales \cite{SimoncelliFreeman1995}.\\
+
+Mientras que una pirámide Laplaciana separa principalmente la escala espacial, la pirámide orientable divide cada banda en varios canales direccionales. De este modo, los bordes y texturas con orientaciones diferentes producen respuestas en subbandas distintas. Esta separación resulta especialmente útil en el análisis de movimiento, puesto que el desplazamiento local de una estructura se manifiesta principalmente en la dirección perpendicular a su orientación.
+
+La propiedad de orientabilidad establece que la respuesta de un filtro rotado a un ángulo arbitrario $\theta$ puede sintetizarse como una combinación lineal de un conjunto finito de filtros base:
+
+\begin{equation}
+    R_{\theta}(x,y)
+    =
+    \sum_{k=1}^{K}
+    c_k(\theta)R_{\theta_k}(x,y),
+    \label{eq:orientabilidad_respuestas}
+\end{equation}
+
+donde $R_{\theta_k}(x,y)$ es la respuesta del filtro base orientado en $\theta_k$, $c_k(\theta)$ representa el coeficiente de interpolación angular y $K$ es el número de orientaciones base. Esta propiedad evita aplicar un filtro nuevo para cada dirección que se desea analizar \cite{FreemanAdelson1991,SimoncelliFreeman1995}.
+
+La descomposición comienza separando la imagen en un residuo pasa altos y una componente pasa bajos:
+
+\begin{equation}
+    H_0(\mathbf{x})
+    =
+    I(\mathbf{x})*h_0(\mathbf{x}),
+\end{equation}
+
+\begin{equation}
+    L_0(\mathbf{x})
+    =
+    I(\mathbf{x})*l_0(\mathbf{x}),
+\end{equation}
+
+donde $h_0$ y $l_0$ son los filtros iniciales de alta y baja frecuencia. La componente pasa bajos se divide posteriormente en $K$ bandas orientadas:
+
+\begin{equation}
+    B_{s,k}(\mathbf{x})
+    =
+    L_s(\mathbf{x})
+    *
+    b_k(\mathbf{x}),
+    \label{eq:subbanda_orientada}
+\end{equation}
+
+donde $B_{s,k}$ corresponde a la escala $s$ y a la orientación $k$. La parte de baja frecuencia restante se filtra y se submuestrea para generar el siguiente nivel:
+
+\begin{equation}
+    L_{s+1}
+    =
+    \operatorname{DOWNSAMPLE}
+    \left\{
+        L_s*l_1
+    \right\}.
+    \label{eq:reduccion_steerable}
+\end{equation}
+
+En el dominio polar de la frecuencia, una banda orientada puede describirse de forma conceptual como
+
+\begin{equation}
+    B_{s,k}(r,\vartheta)
+    =
+    R_s(r)A_k(\vartheta),
+    \label{eq:filtro_radial_angular}
+\end{equation}
+
+donde $R_s(r)$ controla la selección radial de frecuencias para la escala $s$ y $A_k(\vartheta)$ determina la selectividad angular alrededor de la orientación $\theta_k$. Esta separación entre componentes radiales y angulares facilita el diseño de un banco de filtros con cobertura controlada del plano de frecuencias.
+
+Una propiedad importante de la pirámide orientable es su invariancia aproximada frente a traslaciones. A diferencia de transformadas ortogonales críticamente muestreadas, suele evitar el submuestreo en las bandas orientadas. Esto reduce el aliasing y permite que pequeños desplazamientos produzcan cambios suaves en los coeficientes. No obstante, la ausencia de submuestreo genera una representación redundante.
+
+En su versión compleja, cada subbanda forma un par en cuadratura y puede expresarse como
+
+\begin{equation}
+    S_{s,k}(\mathbf{x})
+    =
+    C_{s,k}(\mathbf{x})
+    +
+    iQ_{s,k}(\mathbf{x})
+    =
+    A_{s,k}(\mathbf{x})
+    e^{i\phi_{s,k}(\mathbf{x})},
+    \label{eq:coeficiente_steerable_complejo}
+\end{equation}
+
+donde $C_{s,k}$ y $Q_{s,k}$ representan las respuestas en cuadratura, $A_{s,k}$ es la amplitud local y $\phi_{s,k}$ corresponde a la fase local. La amplitud se calcula como
+
+\begin{equation}
+    A_{s,k}(\mathbf{x})
+    =
+    \sqrt{
+        C_{s,k}^2(\mathbf{x})
+        +
+        Q_{s,k}^2(\mathbf{x})
+    },
+    \label{eq:amplitud_steerable}
+\end{equation}
+
+mientras que la fase se obtiene mediante
+
+\begin{equation}
+    \phi_{s,k}(\mathbf{x})
+    =
+    \operatorname{atan2}
+    \left(
+        Q_{s,k}(\mathbf{x}),
+        C_{s,k}(\mathbf{x})
+    \right).
+    \label{eq:fase_steerable}
+\end{equation}
+
+La fase local posee una relación directa con el desplazamiento de las estructuras. Para una componente sinusoidal unidimensional,
+
+\begin{equation}
+    f(x)=A\cos(\omega_0x+\phi_0),
+\end{equation}
+
+un desplazamiento $\delta$ produce
+
+\begin{equation}
+    f(x-\delta)
+    =
+    A
+    \cos
+    \left(
+        \omega_0x+\phi_0-\omega_0\delta
+    \right).
+    \label{eq:desplazamiento_fase}
+\end{equation}
+
+Por consiguiente, la variación de fase está relacionada con el desplazamiento mediante
+
+\begin{equation}
+    \Delta\phi=-\omega_0\delta.
+    \label{eq:relacion_fase_desplazamiento}
+\end{equation}
+
+Esta relación constituye la base de la magnificación de movimiento basada en fase. En cada escala, orientación y posición se filtra temporalmente la fase local, se amplifica la componente de interés y se reconstruyen los coeficientes modificados:
+
+\begin{equation}
+    \widehat{\phi}_{s,k}(\mathbf{x},t)
+    =
+    \phi_{s,k}(\mathbf{x},t)
+    +
+    \alpha
+    \mathcal{B}
+    \left\{
+        \phi_{s,k}(\mathbf{x},t)
+    \right\}.
+    \label{eq:fase_steerable_magnificada}
+\end{equation}
+
+La pirámide orientable compleja permite utilizar factores de magnificación mayores y genera menos artefactos que la magnificación lineal basada en intensidades \cite{Wadhwa2013Phase}. No obstante, su principal desventaja es la redundancia. El número de coeficientes aumenta con la cantidad de escalas, orientaciones y componentes en cuadratura. Además, las implementaciones en el dominio de la frecuencia requieren transformadas de Fourier y un tratamiento cuidadoso de los límites para evitar artefactos de periodicidad espacial.
+
+%\textbf{SUGERENCIA DE FIGURA:} Representar el plano de frecuencias de una pirámide orientable. Mostrar el residuo pasa altos, el residuo pasa bajos y varias bandas radiales divididas en sectores angulares. Relacionar cada sector con una imagen de respuesta que destaque bordes de una orientación específica.
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar un esquema del procesamiento basado en fase con una pirámide orientable compleja. Deben mostrarse la descomposición por escalas y orientaciones, la obtención de amplitud y fase, el filtrado temporal de la fase, la amplificación y la reconstrucción.
+
+
+	\subsection{\textbf{Pirámide de Riesz}}.\\
+	\label{subsubsec:piramide_riesz}
+
+La pirámide de Riesz es una representación multiescala diseñada para realizar magnificación de movimiento basada en fase con una menor redundancia y un costo computacional inferior al de la pirámide orientable compleja. Su estructura combina una pirámide invertible de subbandas no orientadas con la transformada de Riesz aplicada en cada nivel \cite{Wadhwa2014Riesz}.
+
+La transformada de Riesz es una generalización bidimensional de la transformada de Hilbert. Para una señal $f(\mathbf{x})$, sus dos componentes se definen en el dominio de la frecuencia mediante
+
+\begin{equation}
+    \widehat{\mathcal{R}_1f}
+    (\boldsymbol{\omega})
+    =
+    -i
+    \frac{\omega_x}
+    {\sqrt{\omega_x^2+\omega_y^2}}
+    \widehat{f}(\boldsymbol{\omega}),
+    \label{eq:riesz_componente_1}
+\end{equation}
+
+\begin{equation}
+    \widehat{\mathcal{R}_2f}
+    (\boldsymbol{\omega})
+    =
+    -i
+    \frac{\omega_y}
+    {\sqrt{\omega_x^2+\omega_y^2}}
+    \widehat{f}(\boldsymbol{\omega}),
+    \label{eq:riesz_componente_2}
+\end{equation}
+
+donde $\widehat{f}(\boldsymbol{\omega})$ es la transformada de Fourier de $f$, mientras que $\mathcal{R}_1f$ y $\mathcal{R}_2f$ son las componentes horizontal y vertical de Riesz. Ambas respuestas constituyen versiones en cuadratura de la señal respecto de su orientación local dominante.
+
+La señal monogénica asociada con una subbanda real $I_s$ puede representarse mediante tres componentes:
+
+\begin{equation}
+    \mathcal{M}_s
+    =
+    \left(
+        I_s,
+        R_{1,s},
+        R_{2,s}
+    \right),
+    \label{eq:senal_monogenica}
+\end{equation}
+
+donde
+
+\begin{equation}
+    R_{1,s}=\mathcal{R}_1\{I_s\},
+    \qquad
+    R_{2,s}=\mathcal{R}_2\{I_s\}.
+\end{equation}
+
+A partir de estas componentes se calcula la amplitud local:
+
+\begin{equation}
+    A_s
+    =
+    \sqrt{
+        I_s^2
+        +
+        R_{1,s}^2
+        +
+        R_{2,s}^2
+    },
+    \label{eq:amplitud_riesz}
+\end{equation}
+
+la orientación local dominante:
+
+\begin{equation}
+    \theta_s
+    =
+    \operatorname{atan2}
+    \left(
+        R_{2,s},
+        R_{1,s}
+    \right),
+    \label{eq:orientacion_riesz}
+\end{equation}
+
+y la fase local:
+
+\begin{equation}
+    \phi_s
+    =
+    \operatorname{atan2}
+    \left(
+        \sqrt{
+            R_{1,s}^2+R_{2,s}^2
+        },
+        I_s
+    \right).
+    \label{eq:fase_riesz}
+\end{equation}
+
+La principal diferencia respecto de la pirámide orientable compleja es que esta última analiza un conjunto predeterminado de orientaciones en cada escala, mientras que la representación de Riesz determina una orientación dominante en cada posición. Por tanto, la modificación de fase se realiza en la dirección local predominante en lugar de aplicarse de forma independiente sobre numerosos canales angulares \cite{Wadhwa2014Riesz}.\\
+
+Antes de aplicar la transformada de Riesz, la imagen se descompone en subbandas no orientadas mediante una pirámide invertible. Aunque una pirámide Laplaciana convencional podría utilizarse para esta tarea, su soporte espacial estrecho limita la magnificación máxima. Por ello, la formulación de Wadhwa et al. emplea una pirámide auto-invertible cuyos filtros presentan una respuesta impulsiva más amplia y una cobertura de frecuencia apropiada para la manipulación de fase \cite{Wadhwa2014Riesz}.\\
+
+En una implementación eficiente, la transformada de Riesz ideal se aproxima mediante dos filtros de diferencias finitas de tres coeficientes. Para la componente horizontal puede utilizarse una respuesta proporcional a
+
+\begin{equation}
+    r_x=
+    \frac{1}{2}
+    \begin{bmatrix}
+        -1 & 0 & 1
+    \end{bmatrix},
+    \label{eq:filtro_riesz_horizontal}
+\end{equation}
+
+mientras que la componente vertical se obtiene con
+
+\begin{equation}
+    r_y=
+    \frac{1}{2}
+    \begin{bmatrix}
+        -1\\
+        0\\
+        1
+    \end{bmatrix}.
+    \label{eq:filtro_riesz_vertical}
+\end{equation}
+
+Estas aproximaciones poseen respuestas frecuenciales relacionadas con $-i\sin(\omega_x)$ y $-i\sin(\omega_y)$. Para frecuencias espaciales bajas, se cumple que $\sin(\omega)\approx\omega$, por lo que los filtros aproximan las componentes ideales de la transformada de Riesz con un costo reducido.\\
+
+En la magnificación de movimiento, las fases locales deben acumularse temporalmente respecto de una referencia. Si $\phi_s(\mathbf{x},t)$ representa la fase local, la variación puede definirse como
+
+\begin{equation}
+    \Delta\phi_s(\mathbf{x},t)
+    =
+    \phi_s(\mathbf{x},t)
+    -
+    \phi_s(\mathbf{x},t-1).
+    \label{eq:diferencia_fase_riesz}
+\end{equation}
+
+Debido a la periodicidad de la fase, esta diferencia debe desenvolverse o representarse mediante operaciones que eviten discontinuidades de $2\pi$. Posteriormente, la variación acumulada se filtra en el tiempo y se amplifica:
+
+\begin{equation}
+    \widehat{\phi}_s(\mathbf{x},t)
+    =
+    \phi_s(\mathbf{x},t)
+    +
+    \alpha
+    \mathcal{B}
+    \left\{
+        \Delta\phi_s(\mathbf{x},t)
+    \right\}.
+    \label{eq:magnificacion_fase_riesz}
+\end{equation}
+
+La orientación y la fase pueden combinarse mediante una representación vectorial:
+
+\begin{equation}
+    \boldsymbol{\varphi}_s
+    =
+    \phi_s
+    \begin{bmatrix}
+        \cos\theta_s\\
+        \sin\theta_s
+    \end{bmatrix},
+    \label{eq:fase_orientada_riesz}
+\end{equation}
+
+la cual describe la magnitud y dirección del cambio de fase local. El filtrado temporal de este vector permite manipular el movimiento conservando la orientación dominante.\\
+
+Después de modificar la fase, las componentes se reconstruyen mediante
+
+\begin{equation}
+    \widehat{I}_s
+    =
+    A_s\cos\widehat{\phi}_s,
+    \label{eq:reconstruccion_subbanda_riesz}
+\end{equation}
+
+\begin{equation}
+    \widehat{R}_{1,s}
+    =
+    A_s
+    \sin\widehat{\phi}_s
+    \cos\theta_s,
+\end{equation}
+
+\begin{equation}
+    \widehat{R}_{2,s}
+    =
+    A_s
+    \sin\widehat{\phi}_s
+    \sin\theta_s.
+\end{equation}
+
+Para reconstruir la imagen únicamente se necesita la componente real modificada $\widehat{I}_s$ de cada subbanda, junto con el residuo pasa bajos y el residuo pasa altos de la pirámide.\\
+
+La pirámide de Riesz requiere menos canales que la pirámide orientable compleja y puede implementarse completamente en el dominio espacial mediante filtros compactos. Esta característica evita las transformadas de Fourier por cuadro y reduce los artefactos de envolvimiento asociados con el tratamiento periódico de los límites. Además, los experimentos originales mostraron una calidad comparable a la obtenida con una pirámide orientable compleja, pero con tiempos de procesamiento sustancialmente menores \cite{Wadhwa2014Riesz}.\\
+
+No obstante, la representación presupone que en cada posición existe una orientación local dominante bien definida. En regiones donde se intersectan varias estructuras, aparecen esquinas o coexisten texturas con distintas direcciones, una única orientación puede resultar insuficiente. En estas situaciones, la pirámide orientable compleja ofrece una descripción direccional más completa, aunque a costa de mayor redundancia.
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar un diagrama de la pirámide de Riesz. Mostrar primero la descomposición de la imagen en subbandas no orientadas y, para cada nivel, la generación de las componentes $I_s$, $R_{1,s}$ y $R_{2,s}$. A continuación, representar el cálculo de amplitud, orientación y fase local, seguido del filtrado temporal, la amplificación y la reconstrucción.
+
+%\textbf{SUGERENCIA DE FIGURA:} Representar geométricamente la señal monogénica mediante las componentes $I_s$, $R_{1,s}$ y $R_{2,s}$. Indicar cómo la orientación $\theta_s$ define la dirección dominante y cómo la fase $\phi_s$ describe la posición local de la estructura en esa dirección.
+
+
+	\subsection{\textbf{Comparación entre representaciones piramidales}}.\\
+	\label{subsubsec:comparacion_representaciones_piramidales}
+
+Las pirámides Gaussiana, Laplaciana, orientable y de Riesz comparten el propósito de representar una imagen en múltiples escalas, pero difieren en el tipo de información que conservan, su grado de redundancia, la selectividad direccional y el costo computacional. Por consiguiente, la selección de una representación depende tanto del fenómeno que se desea analizar como del algoritmo de magnificación empleado \cite{Ahmed2023Overview}.\\
+
+La pirámide Gaussiana contiene aproximaciones pasa bajos progresivamente suavizadas y reducidas. Su principal ventaja es la simplicidad, dado que puede construirse mediante filtrado separable y submuestreo. Además, permite analizar estructuras de gran tamaño y mejorar la relación señal-ruido mediante suavizado espacial. Sin embargo, sus niveles contienen información acumulativa y no separan explícitamente las bandas de detalle. Por ello, resulta adecuada para analizar componentes de baja frecuencia o construir otras representaciones, pero es menos conveniente cuando se requiere modificar independientemente cada intervalo espectral.\\
+
+La pirámide Laplaciana transforma la información acumulativa de la pirámide Gaussiana en bandas de detalle. Cada nivel almacena la diferencia entre una imagen y la predicción obtenida desde una escala más gruesa. Esta separación pasa banda permite aplicar factores de magnificación específicos por escala y reconstruir la imagen después del procesamiento. Su baja complejidad la convierte en una opción apropiada para la magnificación euleriana lineal \cite{Wu2012Eulerian}.\\
+
+No obstante, la pirámide Laplaciana es esencialmente isotrópica. Aunque separa las frecuencias radiales, no distingue la orientación de los contornos. En consecuencia, no proporciona directamente pares en cuadratura ni una fase local direccional. Asimismo, su soporte espacial limitado restringe los desplazamientos que pueden manipularse sin introducir artefactos.\\
+
+La pirámide orientable añade selectividad angular a la separación multiescala. Cada nivel se divide en varias orientaciones y, en su versión compleja, proporciona amplitud y fase local. Esta representación permite relacionar las variaciones temporales de fase con movimientos en direcciones específicas y constituye la base del método de magnificación de Wadhwa et al. \cite{Wadhwa2013Phase}.\\
+
+La separación explícita en orientaciones mejora el análisis de bordes, texturas y movimientos direccionales. Sin embargo, el almacenamiento de múltiples canales por escala, junto con sus componentes en cuadratura, produce una representación altamente redundante. El costo aumenta con el número de orientaciones y puede dificultar la ejecución en tiempo real, especialmente cuando la pirámide se implementa en el dominio de la frecuencia.\\
+
+La pirámide de Riesz conserva las ventajas del procesamiento basado en fase, pero evita mantener un banco extenso de orientaciones. En cada posición se obtiene una orientación dominante a partir de dos componentes de Riesz, lo que reduce el número de canales. Asimismo, su implementación mediante filtros compactos en el dominio espacial disminuye el costo de construcción y reconstrucción \cite{Wadhwa2014Riesz}.\\
+
+En términos conceptuales, las cuatro representaciones pueden ordenarse de acuerdo con la cantidad de información que describen. La pirámide Gaussiana separa escalas mediante aproximaciones pasa bajos; la pirámide Laplaciana separa escalas en bandas de detalle; la pirámide orientable separa escala y múltiples orientaciones; finalmente, la pirámide de Riesz representa escala, fase y una orientación local dominante mediante una estructura compacta.\\
+
+La redundancia también difiere entre los métodos. Una pirámide Gaussiana con reducción por dos requiere aproximadamente $4/3$ del número de muestras de la imagen original. La pirámide Laplaciana posee un almacenamiento similar, dado que cada banda tiene las dimensiones del nivel Gaussiano correspondiente. La pirámide orientable incrementa este valor de acuerdo con el número de orientaciones y con la conservación de componentes complejas. La pirámide de Riesz requiere tres componentes por banda durante el análisis, aunque su organización continúa siendo menos redundante que una pirámide orientable compleja con numerosas direcciones \cite{Wadhwa2014Riesz}.\\
+
+Desde el punto de vista de la magnificación de movimiento, la pirámide Laplaciana es adecuada para métodos lineales que amplifican variaciones de intensidad. Su implementación es rápida, pero presenta una mayor sensibilidad al ruido y a factores elevados. La pirámide orientable compleja permite manipular fase y soporta mayores amplificaciones, aunque exige más memoria y procesamiento. La pirámide de Riesz representa un equilibrio entre calidad y eficiencia, pues mantiene las ventajas del análisis de fase con un menor costo computacional.\\
+
+La selección de la pirámide también debe considerar la naturaleza de la escena. En imágenes dominadas por estructuras simples con una orientación local clara, la representación de Riesz puede resultar suficiente. Cuando existen intersecciones de bordes, texturas complejas o varias direcciones simultáneas, la pirámide orientable puede proporcionar una descripción más completa. Por otra parte, cuando el objetivo principal es amplificar cambios de color o movimientos extremadamente pequeños con factores moderados, la pirámide Laplaciana ofrece una solución eficiente.\\
+
+En consecuencia, no existe una representación piramidal universalmente superior. La pirámide Gaussiana destaca por su simplicidad y su capacidad de suavizado; la Laplaciana por su separación eficiente de detalles; la orientable por su selectividad angular y su representación de fase; y la de Riesz por su equilibrio entre información direccional, calidad de reconstrucción y velocidad de procesamiento. En un sistema comparativo de magnificación de movimientos y vibraciones sutiles, estas diferencias deben evaluarse considerando el tiempo de ejecución, el consumo de memoria, la sensibilidad al ruido, el factor máximo de amplificación y la presencia de artefactos.
+
+%\textbf{SUGERENCIA DE FIGURA:} Elaborar una comparación visual utilizando una misma imagen de entrada. Mostrar los niveles de la pirámide Gaussiana, las bandas de detalle de la pirámide Laplaciana, las respuestas por orientación de la pirámide orientable y las componentes real y de Riesz de la pirámide de Riesz.
+
+%\textbf{SUGERENCIA DE TABLA:} Elaborar una tabla comparativa de las pirámides Gaussiana, Laplaciana, orientable y de Riesz. Incluir como criterios el tipo de bandas, la selectividad por orientación, la disponibilidad de fase local, la redundancia, el dominio de implementación, la complejidad computacional, la capacidad de reconstrucción y su aplicación dentro de los algoritmos de magnificación de movimiento.
+
+%%%%%%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------
+\section{Métodos de magnificación de video}
+\label{subsec:metodos_magnificacion_video}
+	
+	\subsection{\textbf{Magnificación Euleriana Lineal}}.\\
+La magnificación Euleriana lineal (Eulerian Video Magnification, EVM) constituye uno de los avances más significativos en el procesamiento de video para la visualización de movimientos y variaciones de intensidad imperceptibles al ojo humano. Introducida por Wu \textit{et al.} en 2012, esta metodología propone un cambio conceptual respecto a los enfoques tradicionales de análisis del movimiento, al evitar el seguimiento explícito de características o trayectorias presentes en la escena. En lugar de ello, el método analiza las variaciones temporales de la intensidad luminosa registradas en posiciones espaciales fijas de la imagen, siguiendo la perspectiva Euleriana de la mecánica de fluidos, donde el interés se centra en observar cómo evolucionan las propiedades de un punto del espacio a lo largo del tiempo, en lugar de rastrear el desplazamiento de cada elemento de la escena \cite{Wu2012}. Esta aproximación permitió desarrollar un algoritmo computacionalmente eficiente capaz de revelar señales fisiológicas, vibraciones estructurales y pequeños desplazamientos mediante operaciones de filtrado espacial y temporal, eliminando la necesidad de estimar el flujo óptico o realizar procesos complejos de correspondencia entre cuadros.\\
+
+El fundamento del enfoque Euleriano radica en considerar cada píxel del video como una señal temporal independiente. Desde esta perspectiva, un video puede representarse matemáticamente como una función tridimensional
+
+\begin{equation}
+I(x,y,t),
+\end{equation}
+
+donde $x$ y $y$ representan las coordenadas espaciales del píxel e $t$ corresponde al instante temporal. En esta representación, el valor de intensidad asociado a un píxel varía con el tiempo debido a pequeños cambios de color, iluminación o movimiento. En consecuencia, el objetivo principal del algoritmo consiste en identificar aquellas componentes temporales asociadas a una banda específica de frecuencias y amplificarlas sin modificar significativamente el resto de la información presente en la secuencia de video \cite{Wu2012,Ahmed2023}.\\
+
+Para comprender el modelo matemático de la magnificación Euleriana lineal, se considera inicialmente una señal unidimensional cuya intensidad cambia únicamente debido a un pequeño desplazamiento temporal $\delta(t)$. Bajo esta hipótesis, la intensidad observada puede describirse como
+
+\begin{equation}
+I(x,t)=f(x+\delta(t)),
+\label{eq:evm_signal}
+\end{equation}
+
+donde $f(x)$ representa la distribución espacial original de intensidades y $\delta(t)$ corresponde al desplazamiento del objeto en el tiempo. Dado que la metodología está diseñada para detectar movimientos extremadamente pequeños, se asume que
+
+\[
+|\delta(t)| \ll 1,
+\]
+
+lo cual permite aproximar la función mediante una expansión de Taylor de primer orden alrededor de la posición espacial $x$. Esta aproximación constituye el fundamento matemático sobre el cual se desarrolla toda la técnica de magnificación Euleriana.\\
+
+Aplicando la expansión de Taylor se obtiene
+
+\begin{equation}
+I(x,t)\approx f(x)+\delta(t)\frac{\partial f(x)}{\partial x},
+\label{eq:taylor}
+\end{equation}
+
+donde el primer término corresponde a la intensidad estática de la escena, mientras que el segundo representa la variación producida por el movimiento. La derivada espacial
+
+\[
+\frac{\partial f(x)}{\partial x}
+\]
+
+describe la rapidez con la que cambia la intensidad en la dirección espacial, mientras que $\delta(t)$ contiene toda la información temporal asociada al desplazamiento. Esta formulación demuestra que un pequeño movimiento genera una variación aproximadamente lineal en la intensidad observada, justificando el uso de filtros temporales para recuperar dicha información \cite{Wu2012}.\\
+
+Posteriormente, el algoritmo aplica un filtro temporal pasabanda sobre la señal registrada en cada píxel con el propósito de aislar únicamente las componentes comprendidas dentro del rango de frecuencias de interés. Si se representa mediante $B(x,t)$ la salida del filtrado temporal, entonces
+
+\begin{equation}
+B(x,t)\approx
+\delta(t)\frac{\partial f(x)}{\partial x}.
+\label{eq:bandpass}
+\end{equation}
+
+Esta expresión evidencia que el filtro elimina la componente constante de la escena y conserva únicamente las pequeñas variaciones temporales responsables del movimiento o del cambio de color. En aplicaciones biomédicas, por ejemplo, la banda seleccionada suele coincidir con la frecuencia cardíaca, mientras que en monitoreo estructural corresponde a las frecuencias naturales de vibración de la estructura analizada \cite{Ahmed2023}. Asimismo, en aplicaciones industriales el filtro puede configurarse para detectar microvibraciones asociadas al funcionamiento de maquinaria o mecanismos de precisión.\\
+
+Una vez aislada la señal de interés, la metodología incrementa artificialmente su amplitud mediante un factor de amplificación $\alpha$. Matemáticamente, la imagen de salida puede expresarse como
+
+\begin{equation}
+\hat{I}(x,t)=I(x,t)+\alpha B(x,t),
+\label{eq:amplified}
+\end{equation}
+
+donde $\alpha$ representa el factor de magnificación seleccionado por el usuario. Sustituyendo la ecuación (\ref{eq:bandpass}) dentro de la ecuación (\ref{eq:amplified}) se obtiene
+
+\begin{equation}
+\hat{I}(x,t)
+=
+f(x)
++
+(1+\alpha)
+\delta(t)
+\frac{\partial f(x)}{\partial x},
+\label{eq:final}
+\end{equation}
+
+lo cual demuestra que el desplazamiento original ha sido incrementado aproximadamente en un factor $(1+\alpha)$, siempre que continúe siendo válida la aproximación lineal de Taylor. Este resultado constituye uno de los principales aportes del trabajo de Wu \textit{et al.}, ya que demuestra que es posible magnificar movimientos sin estimar explícitamente el desplazamiento de los objetos \cite{Wu2012}. No obstante, esta misma deducción establece una de las limitaciones fundamentales del método: cuando el producto $\alpha\delta(t)$ deja de ser suficientemente pequeño, la aproximación lineal pierde validez y comienzan a aparecer distorsiones visuales, dobles bordes y artefactos en la reconstrucción del video, especialmente en regiones con altas frecuencias espaciales \cite{Ahmed2023}.\\
+
+Desde un punto de vista físico, el algoritmo puede interpretarse como un amplificador selectivo de señales temporales. En lugar de incrementar uniformemente la intensidad de todos los píxeles, únicamente se magnifican aquellas componentes cuya frecuencia coincide con la banda seleccionada durante el filtrado temporal. Como consecuencia, el método permite visualizar fenómenos que normalmente permanecen ocultos debido a las limitaciones del sistema visual humano o de los sensores de adquisición, preservando la mayor parte de la información espacial original. Esta característica explica el amplio interés que la magnificación Euleriana lineal ha despertado en áreas como la visión por computador, el monitoreo remoto y el análisis de vibraciones, constituyéndose además en el punto de partida para el desarrollo de métodos posteriores basados en representaciones de fase y modelos de aprendizaje profundo \cite{Ahmed2023}.\\
+
+\vspace{0.3cm}
+
+\noindent\textbf{Sugerencia de figura}
+
+\begin{quote}
+\textbf{Figura X.X.} Diagrama conceptual del modelo matemático de la magnificación Euleriana lineal, mostrando la representación del video como una función espacio-temporal $I(x,y,t)$, la aplicación del filtro temporal sobre cada píxel y la amplificación de la señal filtrada antes de la reconstrucción.
+\end{quote}
+
+La implementación práctica de la magnificación Euleriana lineal se fundamenta en una arquitectura de procesamiento multinivel diseñada para separar las variaciones espaciales de las temporales antes de realizar la amplificación. Este procedimiento permite incrementar únicamente las señales asociadas al fenómeno de interés, evitando modificar el contenido estático de la escena. El flujo general del algoritmo consta de cuatro etapas principales: descomposición espacial, filtrado temporal, amplificación de la señal y reconstrucción del video, tal como se ilustra en la Figura~\ref{fig:evm_pipeline}. Cada una de estas etapas cumple una función específica para garantizar que la magnificación preserve, en la medida de lo posible, la calidad visual del video resultante.\\
+
+La primera etapa corresponde a la descomposición espacial mediante una pirámide Laplaciana. El objetivo de esta representación multiescala es separar la información de la imagen según diferentes bandas espaciales de frecuencia, permitiendo analizar independientemente las estructuras finas y las regiones de baja frecuencia. Para ello, inicialmente se construye una pirámide Gaussiana mediante sucesivas operaciones de suavizado y submuestreo. Si $G_l(x,y)$ representa el nivel $l$ de la pirámide Gaussiana, cada nivel puede obtenerse mediante
+
+\begin{equation}
+G_{l+1}(x,y)=\downarrow\left(G_l(x,y)\ast h(x,y)\right),
+\end{equation}
+
+donde $h(x,y)$ representa un filtro Gaussiano y $\downarrow$ denota la operación de submuestreo. Posteriormente, la pirámide Laplaciana se obtiene calculando la diferencia entre dos niveles consecutivos de la pirámide Gaussiana,
+
+\begin{equation}
+L_l(x,y)=G_l(x,y)-\uparrow\left(G_{l+1}(x,y)\right),
+\end{equation}
+
+donde $\uparrow$ representa la interpolación hacia la resolución original del nivel correspondiente. Como resultado, cada nivel de la pirámide Laplaciana contiene únicamente un rango específico de frecuencias espaciales, facilitando la aplicación independiente del proceso de magnificación sobre cada escala. Esta estrategia reduce significativamente la aparición de artefactos y mejora la estabilidad del algoritmo frente a variaciones locales de intensidad \cite{Wu2012}.\\
+
+Una vez obtenida la representación multiescala, el algoritmo procesa temporalmente cada coeficiente de la pirámide. Debido a que cada posición espacial almacena una secuencia temporal de valores, es posible aplicar un filtro pasabanda independiente sobre cada uno de ellos. Si $L_l(x,y,t)$ representa un coeficiente de la pirámide Laplaciana, la señal filtrada puede expresarse como
+
+\begin{equation}
+\widetilde{L}_l(x,y,t)=\mathcal{F}_B\{L_l(x,y,t)\},
+\end{equation}
+
+donde $\mathcal{F}_B\{\cdot\}$ representa un filtro temporal pasabanda cuya banda de frecuencias se selecciona de acuerdo con el fenómeno físico que se desea magnificar. La elección adecuada de este filtro constituye uno de los aspectos más importantes del algoritmo, ya que determina qué componentes temporales serán amplificadas y cuáles permanecerán inalteradas. En aplicaciones biomédicas, por ejemplo, la frecuencia de corte suele corresponder al rango de pulsaciones cardíacas, mientras que en aplicaciones estructurales se seleccionan las frecuencias naturales de vibración de la estructura analizada \cite{Ahmed2023}.\\
+
+Posteriormente, cada componente filtrada es multiplicada por un factor de amplificación $\alpha$, generando una nueva representación espacial dada por
+
+\begin{equation}
+L_l'(x,y,t)=L_l(x,y,t)+\alpha\widetilde{L}_l(x,y,t).
+\end{equation}
+
+Esta operación incrementa únicamente la amplitud de las variaciones temporales presentes dentro de la banda de interés, mientras conserva prácticamente inalterada la información espacial original. El parámetro $\alpha$ controla directamente el nivel de magnificación alcanzado; sin embargo, su valor no puede incrementarse indefinidamente debido a las restricciones impuestas por la aproximación lineal desarrollada en la sección anterior. Cuando el factor de amplificación supera determinados límites, los pequeños desplazamientos dejan de satisfacer la hipótesis de linealidad y aparecen deformaciones geométricas, halos alrededor de los bordes y duplicación de contornos, degradando significativamente la calidad visual del resultado final \cite{Wu2012,Ahmed2023}.\\
+
+La etapa final consiste en reconstruir cada cuadro del video utilizando la pirámide Laplaciana modificada. Este procedimiento realiza la operación inversa a la descomposición espacial mediante una sucesión de interpolaciones y sumas entre niveles consecutivos de la pirámide, obteniendo finalmente el cuadro magnificado
+
+\begin{equation}
+\hat{I}(x,y,t)=\mathcal{R}\left\{L'_0,L'_1,\ldots,L'_N\right\},
+\end{equation}
+
+donde $\mathcal{R}\{\cdot\}$ representa el operador de reconstrucción de la pirámide Laplaciana y $N$ corresponde al número de niveles considerados durante la descomposición. El resultado es una secuencia de video visualmente similar a la original, pero en la que los pequeños movimientos presentes dentro del rango de frecuencias seleccionado aparecen amplificados y, por tanto, son perceptibles para el observador.\\
+
+Una de las principales fortalezas de la magnificación Euleriana lineal es su simplicidad computacional. A diferencia de los métodos Lagrangianos, que requieren estimar explícitamente el movimiento mediante técnicas de flujo óptico o seguimiento de características, el enfoque Euleriano procesa directamente las variaciones temporales registradas en posiciones espaciales fijas. Esta característica reduce considerablemente el costo computacional y facilita la implementación del algoritmo en aplicaciones de monitoreo remoto, análisis biomédico y procesamiento de video en tiempo casi real \cite{Wu2012}. Asimismo, la utilización de representaciones multiescala permite mejorar la estabilidad numérica del procedimiento y reducir la amplificación del ruido de alta frecuencia presente en la imagen.\\
+
+No obstante, la metodología presenta varias limitaciones derivadas de las hipótesis matemáticas utilizadas durante su formulación. La principal restricción corresponde a la aproximación lineal obtenida mediante la expansión de Taylor de primer orden, la cual únicamente resulta válida para desplazamientos suficientemente pequeños. Cuando los movimientos presentes en la escena son de gran magnitud, o cuando se emplean factores elevados de amplificación, la aproximación deja de representar adecuadamente la dinámica real de la imagen y aparecen artefactos visibles que deterioran la calidad del video reconstruido. Adicionalmente, la metodología es particularmente sensible a las variaciones de iluminación y al ruido del sensor, ya que ambos fenómenos producen modificaciones temporales en la intensidad de los píxeles que pueden ser amplificadas conjuntamente con la señal de interés. En consecuencia, la selección adecuada de la banda temporal, del número de niveles de la pirámide y del factor de amplificación constituye un aspecto crítico para garantizar un equilibrio entre el nivel de magnificación alcanzado y la estabilidad visual del resultado final \cite{Ahmed2023}.\\
+
+A pesar de estas limitaciones, la magnificación Euleriana lineal representa el punto de partida de la mayoría de los desarrollos posteriores en magnificación de movimiento. Su formulación matemática demostró que era posible recuperar información dinámica de muy baja amplitud mediante operaciones de procesamiento de señales, estableciendo las bases para enfoques más robustos basados en representaciones de fase, transformadas complejas y modelos de aprendizaje profundo desarrollados durante la última década.\\
+
+\noindent\textbf{Sugerencias de figuras}
+
+\begin{itemize}
+\item \textbf{Figura \ref{fig:evm_pipeline}.} Flujo general del algoritmo de magnificación Euleriana lineal: video de entrada, construcción de la pirámide Laplaciana, filtrado temporal, amplificación y reconstrucción del video.
+\item \textbf{Figura \ref{fig:laplacian_pyramid}.} Ejemplo de una pirámide Laplaciana mostrando los diferentes niveles de resolución espacial utilizados durante el procesamiento.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Observación}
+
+Las Figuras~\ref{fig:evm_pipeline} y~\ref{fig:laplacian_pyramid} pueden elaborarse adaptando los diagramas presentados por Wu \textit{et al.} \cite{Wu2012}, redibujándolos con el mismo estilo empleado en el resto de la tesis para mantener uniformidad gráfica.
+
+	\subsection{\textbf{Magnificación basada en Fase}}
+
+La magnificación basada en fase (Phase-Based Motion Magnification) surge como una evolución de la magnificación Euleriana lineal con el propósito de superar las limitaciones impuestas por el modelo de intensidad utilizado por Wu \textit{et al.} \cite{Wu2012}. Aunque el enfoque Euleriano demostró ser efectivo para revelar pequeños movimientos y variaciones de color, su formulación depende de una aproximación lineal obtenida mediante la expansión de Taylor de primer orden, cuya validez se restringe a desplazamientos de muy pequeña magnitud. Cuando el movimiento aumenta o el factor de amplificación es elevado, esta aproximación deja de representar adecuadamente la dinámica de la escena, produciendo artefactos visuales como halos, dobles bordes y distorsiones geométricas. Con el objetivo de reducir estos inconvenientes, Wadhwa \textit{et al.} propusieron en 2013 un enfoque alternativo que describe el movimiento mediante variaciones de fase local en lugar de variaciones de intensidad, proporcionando una representación considerablemente más robusta frente a grandes gradientes espaciales y preservando mejor la estructura de los objetos presentes en la imagen \cite{Wadhwa2013}.\\
+
+El principio fundamental de este enfoque se basa en una propiedad ampliamente conocida del análisis de Fourier: un desplazamiento espacial produce un cambio de fase en la representación frecuencial de una señal, mientras que su amplitud permanece prácticamente constante. Esta relación permite interpretar el movimiento como una modificación de la fase de las componentes espectrales de la imagen, evitando la necesidad de estimar directamente el desplazamiento de los objetos. En consecuencia, la información relacionada con el movimiento queda codificada principalmente en la fase, mientras que la amplitud conserva la información asociada al contraste y la textura de la escena.\\
+
+Sea una señal unidimensional representada por
+
+\begin{equation}
+f(x).
+\end{equation}
+
+Si dicha señal experimenta un desplazamiento espacial $\delta$, puede expresarse como
+
+\begin{equation}
+g(x)=f(x-\delta).
+\label{eq:translation}
+\end{equation}
+
+Aplicando la Transformada de Fourier a la ecuación (\ref{eq:translation}) se obtiene
+
+\begin{equation}
+G(\omega)
+=
+F(\omega)e^{-j\omega\delta},
+\label{eq:shift}
+\end{equation}
+
+donde $F(\omega)$ representa la transformada de Fourier de la señal original, $\omega$ corresponde a la frecuencia angular y $j=\sqrt{-1}$ denota la unidad imaginaria. La ecuación (\ref{eq:shift}) constituye el fundamento matemático de la magnificación basada en fase, ya que demuestra que un desplazamiento espacial no modifica la magnitud del espectro, sino únicamente su fase mediante el término exponencial complejo
+
+\[
+e^{-j\omega\delta}.
+\]
+
+En otras palabras, pequeñas variaciones del movimiento pueden recuperarse directamente a partir de las variaciones temporales de la fase, evitando trabajar sobre diferencias de intensidad como ocurre en el método Euleriano lineal.\\
+
+Para comprender esta propiedad resulta conveniente expresar la transformada compleja en su forma polar,
+
+\begin{equation}
+F(\omega)
+=
+A(\omega)e^{j\phi(\omega)},
+\label{eq:polar}
+\end{equation}
+
+donde $A(\omega)$ representa la amplitud y $\phi(\omega)$ corresponde a la fase de la componente frecuencial. Sustituyendo la ecuación (\ref{eq:polar}) en la ecuación (\ref{eq:shift}) se obtiene
+
+\begin{equation}
+G(\omega)
+=
+A(\omega)
+e^{j(\phi(\omega)-\omega\delta)}.
+\label{eq:phase_shift}
+\end{equation}
+
+Esta expresión muestra que el desplazamiento únicamente modifica el término de fase, mientras que la amplitud permanece inalterada. Como consecuencia, si es posible estimar la evolución temporal de la fase local, también es posible recuperar y amplificar el movimiento presente en la secuencia de video.
+
+En una imagen bidimensional, el análisis se realiza localmente utilizando filtros complejos orientados. A diferencia de la Transformada de Fourier global, que proporciona una descripción frecuencial de toda la imagen, estos filtros permiten obtener simultáneamente información espacial y frecuencial en diferentes escalas y orientaciones. Para cada posición $(x,y)$ y para cada orientación de análisis, la respuesta del filtro puede representarse mediante un número complejo
+
+\begin{equation}
+R(x,y)
+=
+A(x,y)e^{j\phi(x,y)},
+\label{eq:complex}
+\end{equation}
+
+donde $A(x,y)$ representa la amplitud local y $\phi(x,y)$ corresponde a la fase local. La amplitud describe la energía presente en la vecindad analizada, mientras que la fase contiene la información relacionada con la posición espacial de las estructuras de la imagen. Esta representación constituye la base del procesamiento basado en fase, ya que pequeñas variaciones del movimiento producen cambios proporcionales en $\phi(x,y)$.
+
+Durante la adquisición de un video, la fase local evoluciona con el tiempo debido al desplazamiento de los objetos presentes en la escena. Si se considera una secuencia temporal, la fase puede expresarse como
+
+\begin{equation}
+\phi(x,y,t),
+\end{equation}
+
+de manera que cada coeficiente complejo almacena una señal temporal cuya variación está directamente relacionada con el movimiento local. En consecuencia, el problema de magnificación puede reformularse como la estimación y amplificación de las variaciones temporales de la fase en lugar de las variaciones de intensidad.\\
+
+Con el propósito de aislar únicamente los movimientos comprendidos dentro del rango de frecuencias de interés, sobre cada señal de fase se aplica un filtro temporal pasabanda. Matemáticamente, este proceso puede describirse mediante
+
+\begin{equation}
+\Delta\phi(x,y,t)
+=
+\mathcal{F}_B
+\left\{
+\phi(x,y,t)
+\right\},
+\label{eq:phase_filter}
+\end{equation}
+
+donde $\mathcal{F}_B\{\cdot\}$ representa el filtro temporal utilizado para eliminar las componentes no deseadas y conservar únicamente aquellas asociadas al fenómeno físico de interés. Esta etapa es conceptualmente equivalente al filtrado temporal empleado por la magnificación Euleriana lineal; sin embargo, en este caso la señal procesada corresponde a la fase local y no a la intensidad de cada píxel.\\
+
+Una vez obtenidas las variaciones temporales de fase, estas son amplificadas mediante un factor $\alpha$, obteniéndose una nueva representación dada por
+
+\begin{equation}
+\phi'(x,y,t)
+=
+\phi(x,y,t)
++
+\alpha
+\Delta\phi(x,y,t),
+\label{eq:phase_amp}
+\end{equation}
+
+donde $\alpha$ controla el nivel de magnificación deseado. Debido a que la modificación se realiza directamente sobre la fase de la representación compleja, el desplazamiento aparente de los objetos aumenta sin alterar significativamente la amplitud de la señal. Esta característica constituye una de las principales ventajas del método, ya que permite preservar con mayor fidelidad la textura, los bordes y las transiciones de intensidad presentes en la imagen, reduciendo considerablemente la aparición de artefactos observados en la magnificación Euleriana lineal \cite{Wadhwa2013,Ahmed2023}.\\
+
+Desde un punto de vista físico, la fase puede interpretarse como un descriptor de la posición relativa de las estructuras espaciales dentro de la imagen. Mientras la amplitud caracteriza la energía o el contraste local, la fase determina la ubicación de bordes, contornos y patrones de textura. Por esta razón, pequeñas modificaciones de la fase producen desplazamientos aparentes de dichas estructuras sin alterar significativamente su apariencia visual. Este principio convierte a la magnificación basada en fase en una técnica especialmente adecuada para el análisis de microvibraciones, deformaciones estructurales y movimientos periódicos de muy baja amplitud, donde resulta fundamental conservar la geometría original de la escena durante el proceso de amplificación.
+
+\vspace{0.4cm}
+
+\noindent\textbf{Sugerencia de figura}
+
+\begin{quote}
+\textbf{Figura X.X.} Representación conceptual del principio de la magnificación basada en fase. La figura debe ilustrar cómo un pequeño desplazamiento espacial produce una variación en la fase de una señal compleja sin modificar significativamente su amplitud, mostrando además la relación entre la señal original, la fase filtrada y la fase amplificada.
+\end{quote}
+
+
+La implementación de la magnificación basada en fase requiere una arquitectura de procesamiento diferente a la utilizada por la magnificación Euleriana lineal. Mientras que el método de Wu \textit{et al.} procesa directamente las variaciones de intensidad presentes en cada nivel de una pirámide Laplaciana, el enfoque basado en fase utiliza una representación compleja de la imagen que permite separar explícitamente la amplitud y la fase de cada componente espacial. Esta representación es obtenida mediante una pirámide compleja orientable (\textit{Complex Steerable Pyramid}), propuesta originalmente por Simoncelli y posteriormente adoptada por Wadhwa \textit{et al.} para el procesamiento de movimiento \cite{Simoncelli1995,Wadhwa2013}. La utilización de esta descomposición multiescala permite analizar simultáneamente diferentes orientaciones y frecuencias espaciales, proporcionando una estimación local del movimiento considerablemente más precisa que la obtenida mediante diferencias de intensidad.
+
+La primera etapa del algoritmo consiste en descomponer cada cuadro del video utilizando una pirámide compleja orientable. A diferencia de la pirámide Laplaciana, cuyos coeficientes contienen únicamente información de intensidad, cada coeficiente de la pirámide compleja corresponde a un número complejo capaz de representar simultáneamente la amplitud y la fase local de la imagen. Matemáticamente, cada coeficiente puede expresarse como
+
+\begin{equation}
+R_{s,\theta}(x,y,t)
+=
+A_{s,\theta}(x,y,t)
+e^{j\phi_{s,\theta}(x,y,t)},
+\label{eq:steerable}
+\end{equation}
+
+donde $s$ representa el nivel de escala de la pirámide, $\theta$ corresponde a la orientación del filtro, $A_{s,\theta}$ denota la amplitud local y $\phi_{s,\theta}$ la fase local. Gracias a esta representación, cada estructura presente en la imagen queda descrita mediante una combinación de orientación, frecuencia espacial y posición, permitiendo analizar el movimiento de manera independiente en múltiples escalas.
+
+Una característica importante de la pirámide compleja orientable es su elevada selectividad direccional. En lugar de utilizar filtros isotrópicos, como ocurre en la pirámide Laplaciana, este enfoque emplea un conjunto de filtros orientados que responden preferentemente a estructuras con una dirección específica. Como resultado, bordes horizontales, verticales y diagonales generan respuestas diferentes, mejorando la estimación de pequeños desplazamientos incluso en regiones con texturas complejas. Esta propiedad reduce la interferencia entre componentes espaciales y permite obtener una representación más estable del movimiento local \cite{Wadhwa2013}.
+
+Una vez obtenida la representación compleja de todos los cuadros del video, el algoritmo analiza la evolución temporal de la fase correspondiente a cada coeficiente de la pirámide. Para cada escala y orientación se dispone de una señal temporal
+
+\begin{equation}
+\phi_{s,\theta}(x,y,t),
+\end{equation}
+
+la cual contiene la información relacionada con el desplazamiento local de la estructura observada. Sin embargo, debido a que la fase es una magnitud angular definida en el intervalo $[-\pi,\pi]$, pueden presentarse discontinuidades cuando la fase cambia bruscamente entre dos cuadros consecutivos. Este fenómeno, conocido como \textit{phase wrapping}, produce saltos artificiales de aproximadamente $2\pi$ radianes que no corresponden a movimientos reales de la escena. Para evitar este problema, el algoritmo realiza un proceso de desenvolvimiento (\textit{phase unwrapping}) antes del filtrado temporal, garantizando que la evolución de la fase sea continua a lo largo del tiempo \cite{Wadhwa2013}.
+
+Posteriormente, sobre cada señal de fase se aplica un filtro temporal pasabanda con el propósito de conservar únicamente las frecuencias asociadas al fenómeno de interés. Este proceso puede describirse mediante
+
+\begin{equation}
+\Delta\phi_{s,\theta}(x,y,t)
+=
+\mathcal{F}_B
+\left\{
+\phi_{s,\theta}(x,y,t)
+\right\},
+\end{equation}
+
+donde $\mathcal{F}_B\{\cdot\}$ representa el filtro temporal seleccionado. El intervalo de frecuencias depende directamente de la aplicación considerada. En monitoreo fisiológico, por ejemplo, el filtro puede configurarse para conservar únicamente las frecuencias correspondientes al ritmo cardíaco o respiratorio, mientras que en inspección estructural se seleccionan las frecuencias naturales de vibración de la estructura bajo análisis.
+
+Las variaciones de fase obtenidas son posteriormente amplificadas utilizando un factor de magnificación $\alpha$, obteniéndose
+
+\begin{equation}
+\phi'_{s,\theta}(x,y,t)
+=
+\phi_{s,\theta}(x,y,t)
++
+\alpha
+\Delta\phi_{s,\theta}(x,y,t).
+\end{equation}
+
+A diferencia del enfoque Euleriano lineal, donde la modificación se realiza sobre la intensidad de la imagen, en este caso únicamente se altera la fase de cada coeficiente complejo, manteniendo prácticamente constante la amplitud. Posteriormente, cada coeficiente modificado puede reconstruirse mediante
+
+\begin{equation}
+R'_{s,\theta}(x,y,t)
+=
+A_{s,\theta}(x,y,t)
+e^{j\phi'_{s,\theta}(x,y,t)},
+\label{eq:reconstruction}
+\end{equation}
+
+preservando así la energía original de la señal mientras se modifica únicamente la posición aparente de las estructuras espaciales.
+
+Finalmente, todos los coeficientes modificados son combinados mediante la transformada inversa de la pirámide compleja orientable para reconstruir cada cuadro del video magnificado,
+
+\begin{equation}
+\hat{I}(x,y,t)
+=
+\mathcal{R}
+\left\{
+R'_{s,\theta}(x,y,t)
+\right\},
+\end{equation}
+
+donde $\mathcal{R}\{\cdot\}$ representa el operador inverso de reconstrucción de la pirámide. Como resultado, el video obtenido presenta desplazamientos visualmente amplificados mientras conserva una elevada fidelidad geométrica respecto a la escena original.
+
+Desde el punto de vista del rendimiento, la magnificación basada en fase presenta diversas ventajas frente al enfoque Euleriano lineal. La principal corresponde a su capacidad para representar el movimiento mediante una magnitud físicamente relacionada con el desplazamiento espacial, evitando depender de aproximaciones lineales sobre la intensidad. Gracias a ello, el método produce una menor cantidad de artefactos en regiones con fuertes gradientes de intensidad, preserva con mayor precisión la continuidad de los bordes y mantiene la geometría de los objetos incluso cuando se emplean factores de amplificación relativamente elevados \cite{Wadhwa2013}. Asimismo, la utilización de filtros orientados proporciona una representación más robusta frente a texturas complejas y variaciones locales de iluminación, incrementando la estabilidad del algoritmo durante el procesamiento de secuencias de video reales.
+
+Sin embargo, estas mejoras vienen acompañadas de un incremento en la complejidad computacional. La construcción de la pirámide compleja orientable requiere un mayor número de filtros y operaciones de convolución en comparación con la pirámide Laplaciana utilizada por la magnificación Euleriana lineal. Además, el procesamiento de coeficientes complejos y el manejo del desenvolvimiento de fase incrementan tanto el consumo de memoria como el tiempo de procesamiento, dificultando su implementación en sistemas con recursos limitados o aplicaciones estrictamente en tiempo real. De igual manera, aunque la representación basada en fase reduce significativamente los artefactos de magnificación, su desempeño continúa dependiendo de una adecuada selección de la banda temporal, del número de escalas consideradas y del factor de amplificación empleado. Valores excesivos de $\alpha$ pueden generar inconsistencias entre escalas y producir distorsiones visuales, especialmente cuando existen movimientos rápidos o discontinuidades importantes dentro de la escena \cite{Ahmed2023}.
+
+A pesar de estas limitaciones, la magnificación basada en fase representa uno de los avances más importantes en el procesamiento de movimiento sutil, ya que introdujo una formulación matemática más robusta que la propuesta originalmente por la magnificación Euleriana lineal. Su capacidad para conservar la calidad visual del video mientras amplifica desplazamientos extremadamente pequeños ha permitido su aplicación en monitoreo estructural, biomecánica, ingeniería civil, análisis biomédico y caracterización de vibraciones de precisión. Además, este enfoque sirvió como fundamento para el desarrollo de técnicas posteriores basadas en la Pirámide de Riesz y, más recientemente, en modelos de aprendizaje profundo que emplean representaciones latentes inspiradas en el concepto de fase local.
+
+\vspace{0.4cm}
+
+\noindent\textbf{Sugerencias de figuras}
+
+\begin{itemize}
+\item \textbf{Figura X.X.} Arquitectura general de la magnificación basada en fase, mostrando las etapas de descomposición mediante la pirámide compleja orientable, extracción de la fase local, filtrado temporal, amplificación y reconstrucción del video.
+\item \textbf{Figura X.X.} Ejemplo de la pirámide compleja orientable con sus diferentes escalas y orientaciones, indicando cómo cada filtro captura información direccional específica.
+\item \textbf{Figura X.X.} Comparación conceptual entre una representación basada en intensidad y una representación basada en fase, ilustrando cómo un pequeño desplazamiento modifica principalmente la fase mientras la amplitud permanece prácticamente constante.
+\end{itemize}
+
+
+%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------%%%%%%%------
+\section{Técnicas avanzadas de magnificación de video}
+
+    \subsection{Magnificación en presencia de grandes movimientos}
+
+    \subsection{Magnificación basada en aceleración y jerk}
+
+    \subsection{Filtros espaciales y temporales para reducción de artefactos}
+
+    \subsection{Otros enfoques recientes}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.5) (preloaded format=xelatex 2026.8.17)  8 SEP 2026 01:05
+This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.5) (preloaded format=xelatex 2026.8.17)  21 SEP 2026 05:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1867,75 +1867,698 @@ File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
 [12
 
-]) (sections/02_Capitulo2_MarcoTeorico.tex
-File: logos/Logo UCUENCA.png Graphic file (type bmp)
-<logos/Logo UCUENCA.png>
- [13]
-Capítulo 2.
-
-Package natbib Warning: Citation `nist80082' on page 14 undefined on input line
- 19.
-
-
-Package natbib Warning: Citation `nist80082' on page 14 undefined on input line
- 21.
-
-
-Package natbib Warning: Citation `alcaraz2015' on page 14 undefined on input li
-ne 21.
-
-File: logos/dspace.png Graphic file (type bmp)
-<logos/dspace.png>
-[14
-
 ]
 
-Package natbib Warning: Citation `nist80082' on page 15 undefined on input line
- 29.
+Package natbib Warning: Citation `Wu2012' on page 13 undefined on input line 23
+.
 
 
-Package natbib Warning: Citation `alcaraz2015' on page 15 undefined on input li
-ne 61.
+Package natbib Warning: Citation `Wadhwa2013' on page 13 undefined on input lin
+e 23.
+
+
+Package natbib Warning: Citation `Wadhwa2014' on page 13 undefined on input lin
+e 23.
+
+
+Package natbib Warning: Citation `Elgharib2015' on page 13 undefined on input l
+ine 23.
+
+
+Package natbib Warning: Citation `Takeda2018' on page 13 undefined on input lin
+e 23.
+
+
+Package natbib Warning: Citation `Takeda2022' on page 13 undefined on input lin
+e 23.
+
+
+Package natbib Warning: Citation `Nandana2020' on page 13 undefined on input li
+ne 25.
 
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
-[15]) (sections/03_Capitulo3_Metodologia.tex
+[13]
+
+Package natbib Warning: Citation `Wu2012' on page 14 undefined on input line 37
+.
+
+
+Package natbib Warning: Citation `Wadhwa2013' on page 14 undefined on input lin
+e 37.
+
+
+Package natbib Warning: Citation `Wadhwa2014' on page 14 undefined on input lin
+e 37.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[14]
+
+Package natbib Warning: Citation `Wu2012' on page 15 undefined on input line 41
+.
+
+
+Package natbib Warning: Citation `Yan2014' on page 15 undefined on input line 4
+1.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[15]) (sections/02_Capitulo2_MarcoTeorico.tex
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
  [16]
+Capítulo 2.
+
+Package natbib Warning: Citation `Castellini2006' on page 17 undefined on input
+ line 11.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 17 undefined on input line
+ 13.
+
+File: logos/dspace.png Graphic file (type bmp)
+<logos/dspace.png>
+[17
+
+]
+
+Package natbib Warning: Citation `Pieraccini2008' on page 18 undefined on input
+ line 15.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 18 undefined on input line
+ 15.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 18 undefined on input line
+ 15.
+
+
+Package natbib Warning: Citation `Chen2019' on page 18 undefined on input line 
+15.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 18 undefined on input line
+ 15.
+
+
+Package natbib Warning: Citation `Fleet2006' on page 18 undefined on input line
+ 17.
+
+
+Package natbib Warning: Citation `Sun2018' on page 18 undefined on input line 1
+7.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 18 undefined on input line
+ 17.
+
+
+Package natbib Warning: Citation `Sutton2009' on page 18 undefined on input lin
+e 19.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 18 undefined on input line
+ 19.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[18]
+
+Package natbib Warning: Citation `Szeliski2022' on page 19 undefined on input l
+ine 21.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 19 undefined on input line
+ 21.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[19]
+
+Package natbib Warning: Citation `Chen2019' on page 20 undefined on input line 
+29.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 20 undefined on input line
+ 31.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[20]
+
+Package natbib Warning: Citation `Hartley2004' on page 21 undefined on input li
+ne 59.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[21]
+
+Package natbib Warning: Citation `Cheng2025' on page 22 undefined on input line
+ 76.
+
+
+Package natbib Warning: Citation `Fleet2006' on page 22 undefined on input line
+ 78.
+
+
+Package natbib Warning: Citation `Szeliski2022' on page 22 undefined on input l
+ine 78.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[22]
+
+Package natbib Warning: Citation `Sun2018' on page 23 undefined on input line 8
+2.
+
+
+Package natbib Warning: Citation `Cheng2025' on page 23 undefined on input line
+ 82.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[23]
+
+Package natbib Warning: Citation `Cheng2025' on page 24 undefined on input line
+ 88.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[24]
+
+Package natbib Warning: Citation `Wu2012' on page 25 undefined on input line 11
+0.
+
+
+Package natbib Warning: Citation `Oh2018' on page 25 undefined on input line 11
+0.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[25]
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 26 undefined on in
+put line 122.
+
+
+Package natbib Warning: Citation `Liu2005Motion' on page 26 undefined on input 
+line 122.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[26]
+
+Package natbib Warning: Citation `LucasKanade1981' on page 27 undefined on inpu
+t line 140.
+
+
+Package natbib Warning: Citation `HornSchunck1981' on page 27 undefined on inpu
+t line 140.
+
+
+Package natbib Warning: Citation `HornSchunck1981' on page 27 undefined on inpu
+t line 156.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[27]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [28]
+
+Package natbib Warning: Citation `Liu2005Motion' on page 29 undefined on input 
+line 207.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 29 undefined on in
+put line 225.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[29]
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 30 undefined on in
+put line 229.
+
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 30 undefined on input
+ line 238.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 30 undefined on in
+put line 238.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[30]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [31]
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 32 undefined on input
+ line 313.
+
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 32 undefined on input
+ line 331.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[32]
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 33 undefined on input
+ line 384.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[33]
+
+Package natbib Warning: Citation `Wadhwa2013Phase' on page 34 undefined on inpu
+t line 409.
+
+
+Package natbib Warning: Citation `Wadhwa2013Phase' on page 34 undefined on inpu
+t line 456.
+
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 34 undefined on inpu
+t line 456.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[34]
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 35 undefined on in
+put line 460.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 35 undefined on in
+put line 467.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[35]
+
+Package natbib Warning: Citation `Liu2005Motion' on page 36 undefined on input 
+line 489.
+
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 36 undefined on input
+ line 491.
+
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 36 undefined on inpu
+t line 491.
+
+
+Package natbib Warning: Citation `Wadhwa2013Phase' on page 36 undefined on inpu
+t line 493.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[36]
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 37 undefined on input
+ line 499.
+
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 37 undefined on input
+ line 505.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[37]
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 38 undefined on in
+put line 511.
+
+
+Package natbib Warning: Citation `Lindeberg1994ScaleSpace' on page 38 undefined
+ on input line 527.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 38 undefined on in
+put line 527.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[38]
+
+Package natbib Warning: Citation `Lindeberg1994ScaleSpace' on page 39 undefined
+ on input line 551.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[39]
+
+Package natbib Warning: Citation `Lindeberg1994ScaleSpace' on page 40 undefined
+ on input line 582.
+
+
+Package natbib Warning: Citation `BurtAdelson1983' on page 40 undefined on inpu
+t line 597.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[40]
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 41 undefined on input
+ line 599.
+
+
+Package natbib Warning: Citation `Wadhwa2013Phase' on page 41 undefined on inpu
+t line 599.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 41 undefined on in
+put line 599.
+
+
+Package natbib Warning: Citation `BurtAdelson1983' on page 41 undefined on inpu
+t line 606.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 41 undefined on in
+put line 606.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[41]
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 42 undefined on in
+put line 655.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[42]
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 43 undefined on input
+ line 677.
+
+
+Package natbib Warning: Citation `BurtAdelson1983' on page 43 undefined on inpu
+t line 685.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[43]
+
+Package natbib Warning: Citation `BurtAdelson1983' on page 44 undefined on inpu
+t line 719.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 44 undefined on in
+put line 719.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[44]
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 45 undefined on input
+ line 773.
+
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 45 undefined on inpu
+t line 779.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[45]
+
+Package natbib Warning: Citation `SimoncelliFreeman1995' on page 46 undefined o
+n input line 787.
+
+
+Package natbib Warning: Citation `FreemanAdelson1991' on page 46 undefined on i
+nput line 801.
+
+
+Package natbib Warning: Citation `SimoncelliFreeman1995' on page 46 undefined o
+n input line 801.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[46]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [47]
+
+Package natbib Warning: Citation `Wadhwa2013Phase' on page 48 undefined on inpu
+t line 934.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[48]
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 49 undefined on inpu
+t line 944.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[49]
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 50 undefined on inpu
+t line 1036.
+
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 50 undefined on inpu
+t line 1038.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[50]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [51]
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 52 undefined on inpu
+t line 1134.
+
+
+Package natbib Warning: Citation `Ahmed2023Overview' on page 52 undefined on in
+put line 1146.
+
+
+Package natbib Warning: Citation `Wu2012Eulerian' on page 52 undefined on input
+ line 1150.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[52]
+
+Package natbib Warning: Citation `Wadhwa2013Phase' on page 53 undefined on inpu
+t line 1154.
+
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 53 undefined on inpu
+t line 1158.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[53]
+
+Package natbib Warning: Citation `Wadhwa2014Riesz' on page 54 undefined on inpu
+t line 1162.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[54]
+
+Package natbib Warning: Citation `Wu2012' on page 55 undefined on input line 11
+79.
+
+
+Package natbib Warning: Citation `Wu2012' on page 55 undefined on input line 11
+87.
+
+
+Package natbib Warning: Citation `Ahmed2023' on page 55 undefined on input line
+ 1187.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[55]
+
+Package natbib Warning: Citation `Wu2012' on page 56 undefined on input line 12
+17.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[56]
+
+Package natbib Warning: Citation `Ahmed2023' on page 57 undefined on input line
+ 1227.
+
+
+Package natbib Warning: Citation `Wu2012' on page 57 undefined on input line 12
+49.
+
+
+Package natbib Warning: Citation `Ahmed2023' on page 57 undefined on input line
+ 1249.
+
+
+Package natbib Warning: Citation `Ahmed2023' on page 57 undefined on input line
+ 1251.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[57]
+
+LaTeX Warning: Reference `fig:evm_pipeline' on page 58 undefined on input line 
+1261.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[58]
+
+Package natbib Warning: Citation `Wu2012' on page 59 undefined on input line 12
+75.
+
+
+Package natbib Warning: Citation `Ahmed2023' on page 59 undefined on input line
+ 1283.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[59]
+
+Package natbib Warning: Citation `Wu2012' on page 60 undefined on input line 12
+91.
+
+
+Package natbib Warning: Citation `Ahmed2023' on page 60 undefined on input line
+ 1291.
+
+
+Package natbib Warning: Citation `Wu2012' on page 60 undefined on input line 13
+01.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[60]
+
+Package natbib Warning: Citation `Ahmed2023' on page 61 undefined on input line
+ 1303.
+
+
+LaTeX Warning: Reference `fig:evm_pipeline' on page 61 undefined on input line 
+1310.
+
+
+LaTeX Warning: Reference `fig:laplacian_pyramid' on page 61 undefined on input 
+line 1311.
+
+
+LaTeX Warning: Reference `fig:evm_pipeline' on page 61 undefined on input line 
+1318.
+
+
+LaTeX Warning: Reference `fig:laplacian_pyramid' on page 61 undefined on input 
+line 1318.
+
+
+Package natbib Warning: Citation `Wu2012' on page 61 undefined on input line 13
+18.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[61]
+
+Package natbib Warning: Citation `Wu2012' on page 62 undefined on input line 13
+22.
+
+
+Package natbib Warning: Citation `Wadhwa2013' on page 62 undefined on input lin
+e 1322.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[62]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [63]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [64]
+
+Package natbib Warning: Citation `Wadhwa2013' on page 65 undefined on input lin
+e 1422.
+
+
+Package natbib Warning: Citation `Ahmed2023' on page 65 undefined on input line
+ 1422.
+
+
+Package natbib Warning: Citation `Simoncelli1995' on page 65 undefined on input
+ line 1435.
+
+
+Package natbib Warning: Citation `Wadhwa2013' on page 65 undefined on input lin
+e 1435.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[65]
+
+Package natbib Warning: Citation `Wadhwa2013' on page 66 undefined on input lin
+e 1449.
+
+
+Package natbib Warning: Citation `Wadhwa2013' on page 66 undefined on input lin
+e 1457.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[66]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [67]
+
+Package natbib Warning: Citation `Wadhwa2013' on page 68 undefined on input lin
+e 1508.
+
+
+Package natbib Warning: Citation `Ahmed2023' on page 68 undefined on input line
+ 1510.
+
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+[68]) (sections/03_Capitulo3_Metodologia.tex
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [69]
 Capítulo 3.
 
-Package natbib Warning: Citation `peffers2007dsrm' on page 17 undefined on inpu
+Package natbib Warning: Citation `peffers2007dsrm' on page 70 undefined on inpu
 t line 7.
 
 
-Package natbib Warning: Citation `hevner2004designscience' on page 17 undefined
+Package natbib Warning: Citation `hevner2004designscience' on page 70 undefined
  on input line 7.
 
 ) (sections/04_Capitulo4_Resultados.tex
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
- [17
+ [70
 
 ]
 Capítulo 4.
 ) (sections/05_Capitulo5_Conclusiones.tex
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
- [18
+ [71
 
 ]
 Capítulo 5.
 Excluding 'comment' comment.)
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
- [19
+ [72
 
-] (main.bbl
-
-Package natbib Warning: Empty `thebibliography' environment on input line 24.
-
-)
+] (main.bbl)
 
 Package glossaries Warning: No \printglossary or \printglossaries found. 
 (Remove \makeglossaries if you don't want any glossaries.) 
@@ -1946,27 +2569,36 @@ Package natbib Warning: There were undefined citations.
 
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
-[20
+[73
 
 
 ] (main.aux
 LaTeX Info: Redefining \. on input line 17.
 LaTeX Info: Redefining \% on input line 17.
+
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
 )
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2020/03/25>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6C89FFF949CB9A24B0DBE7A3A6108EC5;4365.
+(rerunfilecheck)             Checksum: F1531347339359EC7CAC8B093BBA6CDF;8757.
  ) 
 Here is how much of TeX's memory you used:
- 44830 strings out of 402620
- 897200 string characters out of 5437641
- 1504269 words of memory out of 5000000
- 73259 multiletter control sequences out of 15000+600000
- 635199 words of font info for 103 fonts, out of 8000000 for 9000
+ 44981 strings out of 402620
+ 900686 string characters out of 5437641
+ 1508960 words of memory out of 5000000
+ 73398 multiletter control sequences out of 15000+600000
+ 637993 words of font info for 115 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  92i,13n,120p,2495b,959s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (20 pages).
+Output written on main.pdf (73 pages).
