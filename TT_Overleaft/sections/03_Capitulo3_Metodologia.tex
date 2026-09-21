@@ -151,3 +151,196 @@ En el método jerk-aware se extiende este procedimiento a la tercera derivada. L
 \begin{equation}
 \frac{t^3}{\sigma^6}
 \right)G_\sigma(t)
+\end{equation}
+
+
+y el jerk se obtiene mediante
+
+\begin{equation}
+   \sum_{k=-K}^{K}
+G_\sigma'''(kT_s)s[n-k] 
+\end{equation}
+
+
+
+El resultado no se utiliza directamente para magnificar la señal, sino para construir una medida relacionada con la suavidad temporal y obtener el filtro jerk-aware \cite{Takeda2018}.
+
+En el caso del \textit{Bilateral Video Magnification Filter}, el procesamiento se realiza mediante un operador compuesto por un kernel Laplaciano de Gauss en el dominio temporal y un kernel Gaussiano asociado con la magnitud de la variación. De esta manera, el primer componente selecciona la frecuencia objetivo y el segundo restringe las variaciones cuya magnitud se encuentra fuera del intervalo de interés \cite{TakedaBVMF}.
+
+Finalmente, los métodos basados en anisotropía fraccional no se representan mediante una diferencia temporal de orden definido. En este caso, se utiliza una ventana de muestras para estimar una matriz de covarianza y, posteriormente, la anisotropía fraccional. Por esta razón, este método se analizará como una estrategia estadística temporal y no como una aproximación de derivada \cite{Takeda2019}.
+
+\subsection{Configuración Experimental}
+Pendiente
+
+\subsection{Configuración de los operadores temporales}
+
+Para realizar una comparación consistente entre los algoritmos seleccionados, se establecerá una configuración temporal común que permita analizar la forma en que cada método procesa la información a lo largo de los cuadros del video. Debido a que los algoritmos no utilizan necesariamente el mismo operador temporal, estos se clasificarán de acuerdo con la operación empleada para obtener o resaltar las variaciones temporales.
+
+En primer lugar, se considerará el intervalo de muestreo temporal definido por la frecuencia de cuadros del video. Para una secuencia con frecuencia de cuadros \(f_s\), el periodo de muestreo estará dado por
+
+$$
+T_s=\frac{1}{f_s}.
+$$
+
+Este parámetro permitirá expresar las operaciones temporales en función del tiempo y mantener una configuración equivalente cuando se comparen videos con diferentes frecuencias de cuadros.
+
+Los algoritmos basados en filtrado temporal, como Eulerian Video Magnification y sus variantes, serán configurados mediante una banda de frecuencias de interés. En este caso, el procesamiento temporal se realizará sobre la señal obtenida en cada posición espacial, permitiendo conservar las variaciones comprendidas dentro del intervalo seleccionado y atenuar aquellas que se encuentren fuera de este. Los límites de la banda se mantendrán constantes para las diferentes pruebas con el objetivo de que las diferencias observadas correspondan principalmente al método empleado.
+
+Para los algoritmos basados en diferencias de fase, la variación temporal se analizará mediante el cambio de fase entre cuadros consecutivos o entre los cuadros definidos por la implementación correspondiente. En este caso, la diferencia temporal de fase se considerará como la magnitud utilizada para representar el movimiento, sin asumir que esta operación constituye necesariamente una derivada temporal formal.
+
+En los métodos basados en aceleración, se analizará la segunda derivada temporal de la señal. Como referencia para la implementación discreta, puede emplearse una aproximación mediante diferencias finitas centrales:
+
+$$
+D_2s[n]=
+\frac{s[n+1]-2s[n]+s[n-1]}{T_s^2}.
+$$
+
+Esta expresión permitirá representar la aceleración temporal de la señal y servirá como referencia para comparar el comportamiento del operador utilizado por los algoritmos de magnificación basados en aceleración.
+
+De manera similar, para los métodos que incorporan información asociada al jerk, se analizará la tercera derivada temporal. Una aproximación discreta mediante diferencias finitas puede expresarse como
+
+$$
+D_3s[n]\approx
+\frac{s[n-2]-2s[n-1]+2s[n+1]-s[n+2]}
+{2T_s^3}.
+$$
+
+Esta operación permitirá estudiar la respuesta de los métodos frente a variaciones temporales de orden superior. Sin embargo, cuando el algoritmo original utilice un filtro derivativo específico, como una derivada de una función gaussiana, se conservará la formulación establecida por el método y no se sustituirá directamente por la diferencia finita.
+
+Para los operadores implementados mediante derivadas de funciones gaussianas, la función utilizada como base será
+
+$$
+G_{\sigma}(t)=
+\frac{1}{\sqrt{2\pi}\sigma}
+e^{-\frac{t^2}{2\sigma^2}},
+$$
+
+A partir de esta función se pueden obtener los operadores derivados utilizados para representar diferentes órdenes de variación temporal. Para el operador de segundo orden, correspondiente a la aceleración temporal, la segunda derivada de la función gaussiana está dada por
+
+$$
+G_{\sigma}''(t)=
+\left(
+\frac{t^2}{\sigma^4}
+-\frac{1}{\sigma^2}
+\right)G_{\sigma}(t),
+$$
+
+De manera análoga, para un operador de tercer orden, asociado con la variación de la aceleración o jerk, se obtiene
+
+$$
+G_{\sigma}'''(t)=
+\left(
+\frac{3t}{\sigma^4}
+-\frac{t^3}{\sigma^6}
+\right)G_{\sigma}(t).
+$$
+
+Estas funciones serán discretizadas utilizando el periodo de muestreo \(T_s\), de manera que el operador continuo pueda aplicarse sobre la secuencia de cuadros mediante una operación de convolución temporal.
+
+En los métodos que utilizan operadores derivados de una Laplaciana temporal, se analizará la respuesta del filtro sobre la señal temporal de cada píxel o componente de la representación utilizada por el algoritmo. En este caso, la comparación se realizará considerando el orden del operador, su soporte temporal y su respuesta en frecuencia.
+
+Finalmente, los métodos que no emplean una derivada temporal explícita, sino un análisis estadístico de la distribución temporal, serán tratados de forma independiente. En estos casos se analizarán las características estadísticas utilizadas por el algoritmo para identificar variaciones temporales, evitando clasificarlos artificialmente como métodos de derivación temporal.
+
+Para garantizar una comparación adecuada, todos los algoritmos serán evaluados utilizando las mismas secuencias de video, frecuencia de cuadros, resolución y condiciones generales de procesamiento. Los parámetros propios de cada método, como frecuencia de corte, orden de la derivada, ancho de la función gaussiana, longitud de la ventana temporal o parámetros de fase, se establecerán de acuerdo con la formulación propuesta originalmente por cada algoritmo. De esta manera, la comparación permitirá diferenciar entre el efecto producido por el operador temporal y las características particulares de cada método de magnificación.
+
+
+\subsection{Evaluación subjetiva de la magnificación de video}
+
+La evaluación de los resultados obtenidos mediante los diferentes algoritmos de magnificación de video se realizará principalmente mediante una metodología subjetiva. Esta elección se debe a que el objetivo del procesamiento no consiste únicamente en reproducir una señal de referencia, sino en hacer perceptibles movimientos o variaciones que inicialmente pueden ser difíciles de observar. Por esta razón, la valoración de aspectos como la visibilidad del movimiento magnificado, la presencia de artefactos y la naturalidad del resultado requiere considerar la percepción de los observadores.\\
+
+Para establecer un procedimiento de evaluación uniforme, se tomarán como referencia las recomendaciones descritas en la norma ITU-R BT.500, que establece metodologías para la evaluación subjetiva de la calidad de imágenes y video. De manera complementaria, se considerarán los lineamientos establecidos en ITU-T P.910 e ITU-T P.913 para la organización de las pruebas y la valoración subjetiva de contenido de video. Estas recomendaciones permiten definir diferentes formas de presentar los estímulos y recopilar las valoraciones de los observadores.\\
+
+\subsubsection{Metodología de evaluación subjetiva}
+
+La evaluación subjetiva se plantea con el propósito de comparar la percepción de los resultados obtenidos mediante los diferentes algoritmos de magnificación. Para ello, los videos procesados serán presentados a un grupo de observadores bajo condiciones controladas y siguiendo un procedimiento común para todos los métodos.\\
+
+La evaluación considerará tres posibilidades de presentación de los estímulos: doble estímulo, comparación por pares y estímulo simple. Cada una de estas modalidades permite analizar diferentes aspectos de los resultados. La selección de la modalidad dependerá del objetivo específico de la prueba y de la forma en que se requiera comparar los algoritmos.\\
+
+En todos los casos se procurará mantener constantes las condiciones de visualización, duración de los estímulos y características de reproducción, de manera que las diferencias observadas en las valoraciones estén relacionadas principalmente con los resultados producidos por los algoritmos.\\
+
+\subsubsection{Selección de los estímulos de evaluación}
+
+Los estímulos utilizados durante la evaluación estarán constituidos por los videos obtenidos mediante la aplicación de los algoritmos seleccionados. Para garantizar una comparación equivalente, los diferentes métodos serán aplicados sobre las mismas secuencias de entrada y, cuando sea posible, bajo condiciones de procesamiento similares.\\
+
+Los videos serán seleccionados de acuerdo con las características del movimiento que se desea magnificar. Se considerarán secuencias que contengan variaciones sutiles y situaciones en las que pueda existir movimiento global, de modo que sea posible analizar el comportamiento de los algoritmos frente a diferentes condiciones.\\
+
+Para cada secuencia se generarán los resultados correspondientes a los métodos evaluados. Estos resultados constituirán los estímulos que serán presentados a los observadores durante las pruebas subjetivas.\\
+
+\subsubsection{Criterios de evaluación}
+
+Los criterios de evaluación estarán orientados a las características que son relevantes para la magnificación de movimientos sutiles. En lugar de solicitar únicamente una valoración general de calidad, se buscará determinar qué tan adecuado es cada resultado para hacer perceptible el movimiento de interés sin introducir alteraciones visuales excesivas.\\
+
+Entre los principales criterios se considerarán la magnificación perceptible del movimiento, la presencia de artefactos, la naturalidad del resultado y la estabilidad visual. La magnificación perceptible permitirá determinar si el movimiento de interés puede observarse con mayor facilidad después del procesamiento. La presencia de artefactos permitirá identificar alteraciones no deseadas, como deformaciones, halos, ruido o movimientos que no corresponden al fenómeno analizado.\\
+
+La naturalidad permitirá valorar si el video magnificado mantiene una apariencia visual coherente, mientras que la estabilidad permitirá determinar si el resultado presenta variaciones o comportamientos no deseados a lo largo de la secuencia.\\
+
+Los criterios podrán utilizarse individualmente o de manera conjunta dependiendo de la modalidad de evaluación seleccionada.\\
+
+\subsubsection{Comparación por pares de los algoritmos}
+
+La comparación por pares se utilizará para determinar cuál de dos algoritmos produce un resultado preferible bajo un mismo escenario de prueba. En cada evaluación se presentarán dos resultados correspondientes a diferentes métodos aplicados sobre una misma secuencia de entrada.\\
+
+El observador deberá seleccionar el resultado que considere superior de acuerdo con el criterio establecido. Por ejemplo, podrá solicitarse identificar cuál de los dos videos presenta una mayor percepción del movimiento de interés, cuál presenta menor cantidad de artefactos o cuál proporciona una combinación más adecuada entre magnificación y calidad visual.\\
+
+La comparación por pares permitirá establecer una relación directa entre los algoritmos y facilitará la identificación del método que obtiene una mayor preferencia por parte de los observadores.\\
+
+\subsubsection{Evaluación de estímulo simple}
+
+La evaluación mediante estímulo simple permitirá analizar cada resultado de manera independiente. En este caso, el observador visualizará un único video procesado y asignará una valoración de acuerdo con los criterios definidos previamente.\\
+
+Esta modalidad permitirá obtener una valoración individual de cada algoritmo, sin que el resultado dependa directamente de la comparación inmediata con otro método. La escala de valoración será definida de acuerdo con las recomendaciones seleccionadas y se mantendrá constante durante toda la prueba.\\
+
+Los resultados obtenidos mediante esta modalidad permitirán complementar la comparación por pares y determinar la percepción general de los resultados generados por cada algoritmo.\\
+
+\subsubsection{Selección de los observadores}
+
+Los observadores serán seleccionados considerando que la evaluación busca representar la percepción humana de los resultados de magnificación. Antes de iniciar la prueba se proporcionarán instrucciones sobre el procedimiento y sobre los criterios que deberán considerar durante la visualización.\\
+
+Los observadores no deberán conocer necesariamente el algoritmo utilizado para generar cada video, con el propósito de reducir posibles preferencias asociadas con el método empleado. Las instrucciones se centrarán en las características observables del resultado y no en la identificación del algoritmo.\\
+
+\subsubsection{Procedimiento de evaluación}
+
+La prueba se realizará bajo condiciones de visualización controladas. Antes de comenzar la evaluación se explicará a los observadores el procedimiento y los criterios que deberán utilizar. Posteriormente, los estímulos serán presentados siguiendo un orden establecido.\\
+
+Para evitar que el orden de presentación influya sobre las respuestas, los estímulos podrán organizarse de manera aleatoria o mediante una distribución previamente definida. De igual forma, se procurará evitar que los observadores conozcan qué algoritmo corresponde a cada resultado durante la prueba.\\
+
+Cada observador registrará su valoración para los estímulos presentados. Las respuestas serán almacenadas para su posterior procesamiento y comparación entre los diferentes algoritmos.\\
+
+\subsubsection{Análisis de los resultados subjetivos}
+
+Los resultados obtenidos serán agrupados de acuerdo con el algoritmo, la secuencia de video y el criterio de evaluación. Para cada método se calcularán los valores representativos de las respuestas obtenidas por los observadores.\\
+
+En el caso de la comparación por pares, se analizará la frecuencia con la que cada algoritmo es seleccionado como preferido frente a otro. Esto permitirá establecer un orden de preferencia entre los métodos evaluados.\\
+
+Para la evaluación mediante estímulo simple, se calcularán los valores promedio obtenidos por cada algoritmo en los diferentes criterios. Estos resultados permitirán identificar las características en las que cada método presenta un mejor o peor comportamiento desde el punto de vista perceptual.\\
+
+Finalmente, los resultados subjetivos serán comparados con las características observadas durante el análisis de los operadores temporales y con el tiempo de procesamiento de cada método. De esta manera, será posible establecer una relación entre el comportamiento computacional del operador, la calidad visual percibida y la capacidad de cada algoritmo para magnificar los movimientos de interés.\\
+
+
+
+\section{Desarrollo}
+
+\section{Conclusiones}
+
+
+\begin{thebibliography}{99}
+
+\bibitem{forsk2020} 
+Forsk, \textit{Atoll Radio Planning and Optimisation User Guide}, Forsk, 2020.
+
+
+\end{thebibliography}
+
+\end{document}
+
+
+
+Importancia de la Arquitectura de Red Distribuida: La arquitectura de red distribuida de Netflix desempeña un papel crucial en la entrega eficiente de contenido multimedia a los usuarios finales. Al distribuir los servidores de contenido en todo el mundo, Netflix reduce la latencia y mejora la velocidad de carga, lo que contribuye a una experiencia de usuario satisfactoria.\\
+
+Adaptabilidad a través de Protocolos Dinámicos: El uso del protocolo DASH permite a Netflix adaptar dinámicamente la calidad del video según las condiciones de la red y las capacidades del dispositivo del usuario. Esta capacidad de adaptación garantiza una reproducción fluida del contenido, incluso en conexiones de internet variables.\\
+
+Seguridad y Protección de Datos: Netflix implementa medidas de seguridad robustas, como encriptación HTTPS y protección DRM, para proteger la privacidad y la integridad de los datos del usuario. Estas medidas son fundamentales para garantizar la confianza del usuario y prevenir la piratería de contenido.\\
+
+Avances en Formatos de Video Digital: La adopción de formatos de video digital como MPEG-4 y HEVC ha revolucionado la transmisión de contenido multimedia en línea. Estos formatos ofrecen una excelente calidad de compresión, lo que permite una transmisión eficiente de video en resoluciones más altas y con tasas de bits más bajas.\\
+
+Impacto en la Experiencia del Usuario: La combinación de una arquitectura de red eficiente, protocolos dinámicos, medidas de seguridad sólidas y formatos de video avanzados se traduce en una experiencia de usuario superior en Netflix. Los usuarios pueden disfrutar de contenido de alta calidad de manera fluida y segura, lo que contribuye a la popularidad y el éxito continuo del servicio.
