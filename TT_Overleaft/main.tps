@@ -17,7 +17,7 @@ Class=LaTeXView
 Document=main.tex
 
 [Frame0_View0,0]
-TopLine=234
+TopLine=233
 Cursor=7807
 
 [Frame1]
@@ -71,8 +71,8 @@ Class=LaTeXView
 Document=sections\03_Capitulo3_Metodologia.tex
 
 [Frame3_View0,0]
-TopLine=161
-Cursor=10413
+TopLine=355
+Cursor=20169
 
 [SessionInfo]
 FrameCount=4
