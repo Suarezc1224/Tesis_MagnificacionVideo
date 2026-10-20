@@ -1,0 +1,188 @@
+﻿\chapter{Estado del arte}
+\label{cap:estado_arte}
+\glsresetall
+
+\section{Alcance y organización de la revisión}
+
+La literatura sobre magnificación de video ha evolucionado desde propuestas orientadas a revelar variaciones visuales sutiles hacia investigaciones que buscan mejorar la calidad de los resultados, reducir los artefactos y ampliar las condiciones de aplicación; esta evolución reúne aportes con objetivos y criterios de validación diferentes, por lo que su revisión requiere identificar tanto los avances reportados como los límites de la evidencia disponible \cite{ahmed2023overview,smieja2021motion}.
+
+En este capítulo se analizan dieciséis trabajos relacionados con los tres enfoques seleccionados para la tesis: \gls{EVM}, magnificación basada en fase y magnificación mediante pirámides de Riesz; además, se incluyen desarrollos que abordan ruido, movimientos de gran amplitud, vibraciones estructurales y aplicaciones fisiológicas. La revisión se organiza por problemas de investigación y contribuciones, tomando como referencia los fundamentos desarrollados en el Capítulo~\ref{cap:MarcoTeorico}, sin reproducir sus definiciones ni las etapas matemáticas de los algoritmos \cite{wu2012eulerian,wadhwa2013phase,wadhwa2014riesz,ahmed2023overview}.
+
+El análisis de cada propuesta considera el problema abordado, el aporte frente a trabajos anteriores, los resultados que sustentan su utilidad y las condiciones que limitan su generalización; a partir de esta lectura se establece la pertinencia de los estudios para una comparación experimental, mientras que la selección de parámetros y los procedimientos de implementación se reservan para el capítulo de metodología.
+
+\section{Aportes fundacionales y mejoras de los enfoques de referencia}
+
+\subsection{Wu et al. (2012): establecimiento de una referencia euleriana}
+
+Wu et al. introdujeron en 2012 una propuesta que permitió revelar cambios sutiles de color y movimiento en videos, convirtiéndola en una referencia para los desarrollos posteriores; su contribución consistió en demostrar la utilidad de una alternativa que evitaba el seguimiento explícito del movimiento y que podía aplicarse a diferentes escenas mediante una estructura de procesamiento relativamente sencilla. Los ejemplos presentados en el artículo respaldaron su capacidad para hacer visibles variaciones que resultaban difíciles de observar en las secuencias originales \cite{wu2012eulerian}.
+
+Sin embargo, la misma investigación delimitó condiciones en las que la amplificación pierde fidelidad, especialmente cuando aumentan los desplazamientos o la ganancia aplicada; en consecuencia, su relevancia para esta tesis reside tanto en su papel de referencia histórica como en la posibilidad de establecer un punto de comparación para calidad visual, artefactos y costo computacional. La elección de este método como referencia no supone que sus resultados sean superiores en todas las condiciones de adquisición \cite{wu2012eulerian,ahmed2023overview}.
+
+\subsection{Wadhwa et al. (2013): mejora de la calidad de magnificación}
+
+En 2013, Wadhwa et al. propusieron una alternativa basada en fase con el propósito de superar parte de las restricciones observadas en la magnificación lineal; frente al trabajo de Wu et al., los autores reportaron mayor capacidad de amplificación y un comportamiento más favorable ante el ruido en las secuencias evaluadas. Este aporte desplazó el interés desde la posibilidad de hacer visible un movimiento hacia la calidad con la que dicho movimiento podía representarse \cite{wadhwa2013phase}.
+
+No obstante, las mejoras visuales estuvieron acompañadas de una mayor exigencia computacional, aspecto que motivó investigaciones posteriores sobre eficiencia; por ello, el trabajo constituye un segundo referente para esta tesis, ya que permite examinar si las ventajas reportadas se mantienen cuando los métodos se ejecutan con las mismas entradas y recursos. La comparación requiere conservar las condiciones de validez de cada propuesta, en lugar de extrapolar sus resultados a escenas distintas de las estudiadas \cite{wadhwa2013phase,wadhwa2014riesz}.
+
+\subsection{Wadhwa et al. (2014): reducción del costo computacional}
+
+La investigación de Wadhwa et al. de 2014 abordó la carga computacional de la magnificación basada en fase mediante una representación más compacta; los autores mostraron resultados visuales comparables con los de la representación compleja orientable utilizada como referencia, junto con una reducción importante del tiempo de procesamiento en sus experimentos. Su aporte resulta relevante porque vincula la calidad de magnificación con la viabilidad de utilizarla en aplicaciones que requieren una respuesta más rápida \cite{wadhwa2014riesz}.
+
+Estos resultados justifican considerar la propuesta de Riesz como un tercer enfoque de comparación, aunque no establecen una superioridad independiente de la escena, la implementación o los parámetros utilizados; desde la perspectiva de esta tesis, la cuestión pendiente consiste en caracterizar el equilibrio entre calidad y eficiencia dentro del mismo entorno experimental. Esta valoración constituye una interpretación del alcance de la evidencia reportada, sin atribuir al estudio una validación universal \cite{wadhwa2014riesz,ahmed2023overview}.
+
+\subsection{Wu et al. (2018): reducción de ruido mediante selección de componentes}
+
+Wu et al. investigaron en 2018 una variante basada en \gls{PCA}, orientada a escenarios donde el ruido y el desconocimiento de las frecuencias relevantes dificultaban el uso de la propuesta lineal; los autores reportaron una mejor selección de las variaciones de interés y resultados con menos ruido y artefactos, así como la posibilidad de aumentar la amplificación en los casos examinados. Su contribución amplió las alternativas para trabajar con señales débiles, sin limitar la evaluación a secuencias con condiciones favorables \cite{wu2018pca}.
+
+La evidencia presentada debe interpretarse en relación con las características de las secuencias utilizadas, puesto que la selección de componentes relevantes depende de la información contenida en los datos; por tanto, este antecedente permite identificar la robustez al ruido como un criterio de comparación, sin convertir una mejora reportada bajo determinadas condiciones en una garantía para cualquier video \cite{wu2018pca}.
+
+\subsection{Yang et al. (2023): adaptación de la magnificación por escala}
+
+Yang et al. propusieron en 2023 una variante de magnificación euleriana con pirámide laplaciana adaptativa, evaluada mediante secuencias que contenían señales biológicas y movimientos mecánicos; los resultados reportados mostraron mejoras de nitidez y reducción de artefactos frente a la referencia lineal, además de un comportamiento computacional favorable en las pruebas realizadas. El aporte del estudio consiste en ampliar las posibilidades de mejora dentro de una familia ya establecida, atendiendo a las condiciones particulares de la representación espacial \cite{yang2023adaptive}.
+
+Este trabajo complementa el antecedente basado en componentes principales, dado que ambos buscan mejorar la calidad de la magnificación mediante decisiones distintas; sin embargo, sus resultados provienen de diseños experimentales propios y no permiten establecer directamente cuál estrategia es preferible para las secuencias de esta tesis. Su inclusión resulta pertinente para reconocer alternativas de mejora, manteniendo diferenciados los avances de la literatura y los algoritmos que efectivamente se implementarán \cite{wu2018pca,yang2023adaptive}.
+
+\section{Investigaciones sobre movimientos interferentes y ruido}
+
+\subsection{Elgharib et al. (2015): escenas con movimientos de gran amplitud}
+
+Elgharib et al. estudiaron la magnificación de movimientos sutiles cuando estos coexisten con desplazamientos de mayor amplitud, una condición que restringía la aplicación de los enfoques iniciales; su propuesta mostró que era posible preservar el movimiento principal de una escena y realzar variaciones pequeñas mediante un tratamiento diferenciado de las regiones de interés. Los resultados visuales presentados ampliaron el conjunto de situaciones en las que podía utilizarse la magnificación \cite{elgharib2015video}.
+
+Aun así, la preparación de capas, la selección de regiones y la alineación incorporan tareas adicionales que deben considerarse al valorar la utilidad práctica del procedimiento; por consiguiente, este antecedente evidencia que la calidad del resultado debe examinarse junto con el esfuerzo de preparación y procesamiento. Para la tesis, su pertinencia se encuentra en delimitar el efecto de los movimientos interferentes, sin asumir que todas las propuestas parten de entradas igualmente preparadas \cite{elgharib2015video}.
+
+\subsection{Zhang et al. (2017): magnificación de aceleración}
+
+Zhang et al. presentaron en 2017 una propuesta destinada a magnificar cambios pequeños en presencia de movimientos grandes, con resultados cualitativos y cuantitativos frente a métodos anteriores; su contribución fue ampliar las posibilidades de tratamiento de escenas dinámicas sin requerir el mismo procedimiento de anotación y alineación por regiones de otras alternativas. Este avance introdujo una nueva línea de investigación para abordar situaciones en las que las propuestas iniciales producían distorsiones \cite{zhang2017acceleration}.
+
+Las ventajas reportadas están condicionadas por el comportamiento temporal del movimiento dominante, de modo que las transiciones rápidas o irregulares pueden comprometer la separación buscada; esta restricción explica la aparición de estudios posteriores orientados a mejorar la respuesta frente a cambios bruscos. En consecuencia, la presencia de movimiento grande debe describirse mediante sus características y no únicamente mediante su amplitud \cite{zhang2017acceleration,takeda2018jerk}.
+
+\subsection{Takeda et al. (2018): tratamiento de cambios rápidos}
+
+Takeda et al. desarrollaron \textit{Jerk-Aware Video Acceleration Magnification} para reducir los artefactos asociados con movimientos rápidos de gran amplitud, identificados como una dificultad para la propuesta basada en aceleración; los experimentos del artículo reportaron mejoras respecto de esta referencia en las situaciones analizadas. Su aporte debe entenderse como una respuesta a una limitación concreta, en lugar de interpretarse como una sustitución universal de los métodos anteriores \cite{takeda2018jerk}.
+
+La capacidad de distinguir los movimientos depende de que sus comportamientos temporales presenten diferencias aprovechables, por lo que la evaluación necesita incluir escenarios en los que dicha separación resulte más o menos favorable; para esta tesis, el estudio aporta un antecedente sobre la importancia de documentar la dinámica de las interferencias al interpretar la aparición de artefactos \cite{takeda2018jerk}.
+
+\subsection{Takeda et al. (2019): selección de variaciones significativas}
+
+En 2019, Takeda et al. abordaron la distinción entre variaciones vinculadas con fenómenos de interés y cambios atribuibles al ruido, mediante una propuesta basada en \gls{FA}; los autores presentaron resultados que favorecían la selección de señales significativas frente a métodos utilizados como referencia. La contribución se diferencia de los trabajos centrados principalmente en movimientos de gran amplitud, puesto que atiende a la relevancia de las variaciones que terminan siendo amplificadas \cite{takeda2019wild}.
+
+La importancia de este antecedente para el análisis comparativo reside en que una mayor visibilidad no implica necesariamente una mejor representación del fenómeno observado; en consecuencia, la valoración de los videos debe distinguir el realce de señales útiles de la amplificación del ruido. Esta lectura se deriva del problema abordado por los autores y no supone equivalencia entre su propuesta y las de aceleración o sensibilidad al jerk \cite{takeda2019wild}.
+
+\subsection{Takeda et al. (2022): selectividad frente a interferencias}
+
+Takeda et al. presentaron el \gls{BVMF} para responder a dos dificultades observadas en videos reales: la amplificación de movimientos fuera de la frecuencia objetivo y la degradación de resultados ante aceleraciones o desaceleraciones grandes; sus experimentos con secuencias sintéticas y reales reportaron mejoras frente a métodos previos. El aporte consiste en atender conjuntamente la selección del movimiento objetivo y la exclusión de interferencias con diferentes dinámicas \cite{takeda2022bilateral}.
+
+Aunque los resultados amplían las condiciones de aplicación examinadas, su interpretación continúa ligada a los parámetros y secuencias del estudio; por ello, este trabajo refuerza la necesidad de evaluar la fidelidad del movimiento seleccionado y la estabilidad visual de manera conjunta. Su inclusión en la revisión permite reconocer avances posteriores a los tres enfoques principales, sin ampliar por sí misma el alcance de implementación de la tesis \cite{takeda2022bilateral}.
+
+\section{Validación aplicada y ampliación de escenarios}
+
+\subsection{Yang y Jiang (2024): microvibraciones estructurales}
+
+Yang y Jiang orientaron su investigación a la visualización y medición sin contacto de vibraciones de pequeña amplitud, aportando evidencia experimental obtenida con una mesa vibratoria, un modelo de edificio de tres pisos y una viga en voladizo de aluminio; además de examinar la calidad de las imágenes, los autores analizaron desplazamientos y frecuencias dominantes, así como información relacionada con las formas modales. El estudio resulta relevante porque aproxima la evaluación de la magnificación a variables de interés para la ingeniería estructural \cite{yang2024phase}.
+
+A diferencia de una demostración centrada únicamente en la percepción del movimiento, esta validación vincula los resultados visuales con información dinámica cuantificable; sin embargo, su alcance depende de las condiciones de adquisición, las referencias y los escenarios utilizados. Para esta tesis, el antecedente sustenta la conveniencia de distinguir entre una imagen visualmente más clara y una estimación físicamente consistente del movimiento \cite{yang2024phase}.
+
+\subsection{Zang et al. (2026): adquisición con cámaras portátiles}
+
+Zang et al. investigaron la magnificación basada en fase en videos registrados con cámaras sostenidas a mano, abordando el efecto de las perturbaciones de adquisición sobre la identificación del movimiento objetivo; sus resultados mostraron mejoras frente a métodos de referencia en las secuencias consideradas. La contribución del artículo consiste en ampliar la investigación hacia condiciones que difieren del supuesto de una cámara fija, habitual en numerosos escenarios controlados \cite{zang2026phase}.
+
+Este avance permite reconocer que la movilidad de la cámara introduce un problema de aplicación específico, cuyo tratamiento requiere recursos adicionales y una validación acorde con ese contexto; por tanto, sus resultados no deben trasladarse directamente a una comparación diseñada para adquisición estable. Su papel en el presente estado del arte es delimitar una línea reciente y sus diferencias respecto del alcance principal de la tesis \cite{zang2026phase}.
+
+\subsection{Mattioli et al. (2023): monitoreo respiratorio}
+
+Mattioli et al. evaluaron alternativas de magnificación de amplitud y fase para estimar la frecuencia respiratoria en videos de recién nacidos y adultos, comparando sus resultados con datos fisiológicos de referencia; el estudio reportó un mejor desempeño de la alternativa basada en fase dentro de la aplicación evaluada. Su contribución demuestra que la utilidad de la magnificación puede examinarse mediante el error de una variable estimada, además de la apariencia del video procesado \cite{mattioli2023breathing}.
+
+No obstante, las características del movimiento respiratorio, los sujetos observados y las condiciones de registro delimitan el alcance de esa comparación, por lo que sus conclusiones no establecen una clasificación general para vibraciones mecánicas; desde la perspectiva de esta tesis, el valor del trabajo reside en su validación frente a una referencia independiente y en la distinción entre calidad visual y exactitud de estimación \cite{mattioli2023breathing}.
+
+\section{Estudios comparativos y revisiones de la literatura}
+
+Yadav et al. compararon en 2020 alternativas eulerianas y basadas en fase, considerando diferentes configuraciones de pirámide y factores de amplificación; los autores reportaron diferencias en tiempo de ejecución, \gls{PSNR} y comportamiento visual, con una menor exigencia computacional de la referencia lineal y mayor capacidad de amplificación del enfoque de fase en las secuencias examinadas. Estos resultados proporcionan un antecedente directamente relacionado con la selección de los enfoques de la tesis, aunque su interpretación debe permanecer circunscrita al conjunto de pruebas utilizado \cite{yadav2020performance}.
+
+Por su parte, Śmieja et al. revisaron en 2021 las aplicaciones de la magnificación para examinar el estado de objetos técnicos, mostrando su interés en la observación de vibraciones y en tareas de diagnóstico; esta contribución aporta una perspectiva de aplicación que complementa los artículos centrados en mejoras algorítmicas. Al tratarse de una revisión con ejemplos de uso, su evidencia no equivale a una comparación uniforme de los tres métodos seleccionados para el presente trabajo \cite{smieja2021motion}.
+
+Ahmed et al. publicaron en 2023 una revisión de métodos eulerianos que integra clasificación de propuestas, discusión de aplicaciones y comparaciones de implementaciones seleccionadas; su aporte permite situar los avances dentro de una trayectoria de investigación y relacionar calidad visual, artefactos y costo computacional. Sin embargo, sus resultados experimentales responden a las decisiones de implementación y a las secuencias consideradas por los autores, por lo que constituyen un antecedente de comparación y no reemplazan la evaluación específica planteada en esta tesis \cite{ahmed2023overview}.
+
+En conjunto, estos trabajos ofrecen evidencia de naturaleza diferente: las comparaciones permiten examinar comportamientos bajo configuraciones concretas, mientras que las revisiones amplían la cobertura de aplicaciones y limitaciones; en consecuencia, su lectura conjunta resulta más útil para fundamentar criterios de evaluación que para establecer un orden absoluto de superioridad entre algoritmos \cite{yadav2020performance,smieja2021motion,ahmed2023overview}.
+
+\section{Análisis crítico y delimitación de la brecha de investigación}
+
+Los trabajos revisados muestran avances en tres dimensiones relacionadas: calidad de magnificación, robustez frente a interferencias y eficiencia computacional; no obstante, las mejoras se reportan mediante problemas, secuencias y condiciones de implementación diferentes. Por ello, un resultado favorable en una de esas dimensiones no demuestra necesariamente una ventaja simultánea en las demás ni permite anticipar el comportamiento bajo nuevas condiciones de adquisición \cite{wadhwa2013phase,wadhwa2014riesz,takeda2022bilateral,ahmed2023overview}.
+
+Asimismo, los estudios aplicados evidencian que una representación visual más clara y una estimación precisa de variables físicas son resultados relacionados, aunque distintos; esta diferencia adquiere relevancia cuando se pretende utilizar la magnificación para analizar vibraciones, puesto que la valoración perceptual no sustituye la contrastación de frecuencias o desplazamientos mediante referencias apropiadas \cite{yang2024phase,mattioli2023breathing}.
+
+Dentro del conjunto documental revisado, la oportunidad para esta tesis consiste en caracterizar de manera conjunta los tres enfoques de referencia bajo condiciones comparables, haciendo explícitos los recursos y las configuraciones utilizados; esta delimitación se formula como una necesidad del estudio propuesto y no como la afirmación de que no existen comparaciones previas. Los antecedentes de Yadav et al. y Ahmed et al. muestran precisamente que tales comparaciones existen, mientras que sus contextos específicos justifican examinar nuevamente el desempeño en los escenarios de interés de la investigación \cite{yadav2020performance,ahmed2023overview}.
+
+La contribución esperada se sitúa, por tanto, en la obtención de evidencia comparativa y trazable sobre las ventajas, limitaciones y condiciones de uso de los métodos seleccionados; el diseño de los escenarios, la implementación y los procedimientos de evaluación se desarrollan en el capítulo siguiente. De este modo, la brecha identificada queda vinculada con los antecedentes analizados, sin atribuir al proyecto una novedad algorítmica que no forma parte de su alcance.
+
+\section{Tabla comparativa del estado del arte}
+\label{sec:tabla_estado_arte}
+
+La Tabla~\ref{tab:estado_arte} reúne los dieciséis trabajos revisados y distingue los aportes, los aspectos evaluados y sus límites de aplicación; en particular, los parámetros de configuración no se consideran métricas de exactitud, mientras que los resultados de cada artículo deben interpretarse dentro de sus propias condiciones experimentales.
+
+\clearpage
+\begin{table}[p]
+\centering
+\small
+\setstretch{1.0}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\caption{Comparación de trabajos relacionados sobre magnificación de video. Elaboración propia a partir de los artículos citados en cada fila.}
+\label{tab:estado_arte}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}@{}}
+\toprule
+Trabajo & Aporte del trabajo & Aspectos evaluados & Limitaciones y alcance \\
+\midrule
+Wu et al. (2012) \cite{wu2012eulerian}. & Establece una referencia para revelar movimientos y cambios de color sin seguimiento explícito. & Magnificación de color y movimiento; calidad visual. & La aproximación lineal limita los desplazamientos y las amplificaciones elevadas pueden aumentar ruido y artefactos. \\
+Wadhwa et al. (2013) \cite{wadhwa2013phase}. & Reporta mejoras de calidad y capacidad de amplificación frente a la referencia lineal. & Calidad visual, amplificación admisible y respuesta al ruido. & Representación redundante y costo computacional elevado; persisten límites ante movimientos grandes. \\
+Wadhwa et al. (2014) \cite{wadhwa2014riesz}. & Reduce el costo de procesamiento conservando calidad visual comparable en sus pruebas. & Calidad comparativa y tiempo de procesamiento. & La aproximación y la orientación dominante dependen de la estructura local y de los parámetros utilizados. \\
+Elgharib et al. (2015) \cite{elgharib2015video}. & Amplía la aplicación a escenas donde coexisten movimientos grandes y sutiles. & Calidad visual en presencia de movimientos grandes y sutiles. & Las capas y regiones introducen preparación y procesamiento adicionales. \\
+Zhang et al. (2017) \cite{zhang2017acceleration}. & Aborda movimientos sutiles superpuestos a desplazamientos dominantes. & Respuesta a movimientos grandes y pequeños; artefactos y magnificación. & Los movimientos dominantes rápidos o no lineales pueden incumplir la separación temporal supuesta. \\
+Wu et al. (2018) \cite{wu2018pca}. & Mejora la selección de señales débiles y la respuesta ante ruido. & Ruido, capacidad de amplificación y comparación con EVM. & La selección depende de los datos y del criterio que relaciona componentes con la señal de interés. \\
+\bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+
+\begin{table}[p]
+\centering
+\small
+\setstretch{1.0}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\ContinuedFloat
+\caption[]{Comparación de trabajos relacionados sobre magnificación de video (continuación).}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}@{}}
+\toprule
+Trabajo & Aporte del trabajo & Aspectos evaluados & Limitaciones y alcance \\
+\midrule
+Takeda et al. (2018) \cite{takeda2018jerk}. & Reduce artefactos ante movimientos rápidos respecto de la referencia de aceleración. & Comportamiento cualitativo y cuantitativo ante movimientos rápidos. & Requiere diferencias temporales distinguibles entre movimientos sutiles e interferentes. \\
+Takeda et al. (2019) \cite{takeda2019wild}. & Mejora la selección de variaciones significativas frente a cambios atribuibles al ruido. & Selección de variaciones significativas frente al ruido. & No equivale a una derivada temporal convencional; depende de la distribución y configuración analizadas. \\
+Yadav et al. (2020) \cite{yadav2020performance}. & Aporta una comparación experimental de enfoques lineales y de fase. & PSNR, tiempo de ejecución y observaciones de color y movimiento; variación de parámetros. & El conjunto de videos y configuraciones limita la generalización; las métricas requieren una referencia apropiada. \\
+Śmieja et al. (2021) \cite{smieja2021motion}. & Reúne aplicaciones de observación de vibraciones y diagnóstico de objetos técnicos. & Aplicaciones, observación de vibraciones y posibilidades de diagnóstico. & La revisión no constituye una evaluación uniforme de los tres algoritmos del proyecto. \\
+Takeda et al. (2022) \cite{takeda2022bilateral}. & Mejora la selección del movimiento objetivo frente a interferencias de distintas dinámicas. & Selectividad frecuencial, rechazo de interferencias y calidad visual. & El comportamiento depende de los parámetros y de las características del movimiento. \\
+\bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+
+\begin{table}[p]
+\centering
+\small
+\setstretch{1.0}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\ContinuedFloat
+\caption[]{Comparación de trabajos relacionados sobre magnificación de video (continuación).}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}@{}}
+\toprule
+Trabajo & Aporte del trabajo & Aspectos evaluados & Limitaciones y alcance \\
+\midrule
+Yang et al. (2023) \cite{yang2023adaptive}. & Reporta mejoras de nitidez y reducción de artefactos dentro del enfoque euleriano. & PSNR, \glsdisp{SSIM}{SSIM}, \glsdisp{RMSE}{RMSE}, tiempo y calidad visual según las pruebas reportadas. & Los resultados dependen de secuencias, escalas y parámetros; conserva la perspectiva euleriana. \\
+Ahmed et al. (2023) \cite{ahmed2023overview}. & Organiza la literatura y aporta comparaciones de implementaciones seleccionadas. & Comparación conceptual y experimental de técnicas, aplicaciones y limitaciones. & Las pruebas seleccionadas no sustituyen la comparación controlada específica de esta tesis. \\
+Mattioli et al. (2023) \cite{mattioli2023breathing}. & Valida alternativas de magnificación mediante estimación respiratoria con referencia. & Error de estimación y comparación con referencia fisiológica. & Aplicación específica a respiración; sus resultados no se generalizan directamente a vibraciones mecánicas. \\
+Yang y Jiang (2024) \cite{yang2024phase}. & Vincula la magnificación de microvibraciones con mediciones dinámicas estructurales. & Calidad visual, desplazamientos, frecuencias dominantes y formas modales según las pruebas. & La precisión depende del muestreo, de la adquisición y de la configuración del procesamiento. \\
+Zang et al. (2026) \cite{zang2026phase}. & Amplía la evaluación a secuencias registradas con cámaras sostenidas a mano. & Comparación visual y espacio-temporal del movimiento objetivo. & Incluye etapas adicionales para cámaras portátiles, fuera de la implementación principal prevista. \\
+\bottomrule
+\end{tabular}
+\end{table}
+\clearpage

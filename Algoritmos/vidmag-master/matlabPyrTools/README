@@ -27,10 +27,21 @@ are for UNIX):
       addpath(<full-pathname-of-matlabPyrTools>);
       help matlabPyrTools
 
-The convolution, histogram, point-operation, and range functions are
-implemented in MATLAB, so no MEX compiler or platform-specific binaries
-are required. Add the main matlabPyrTools directory to the MATLAB path;
-the MEX subdirectory is no longer needed.
+A few functions are actually MEX interfaces to C code.  These are
+contained in the subdirectory called MEX.  The MEX files have been
+tested on Sun (Solaris), LinuX (on an Intel platform), and Macintosh
+OSX (on PowerPC and Intel), but should not be difficult to compile on
+most other platforms.  Source code is included in the MEX directory,
+as well as Make files.  Pre-compiled versions are included for a
+number of platforms.  To compile on your platform, simply run
+compilePyrTools.m which is located in the MEX subdirectory.
+
+To make sure these are in your matlab path, you can do *one* of the
+following:
+  1) Create a symbolic link (or macintosh "alias") for the relavent files 
+     in the main matlabPyrTools directory,   or
+  2) Copy the relavent files into the main matlabPyrTools directory,  or 
+  3) Put the MEX subdirectory in your matlab path: addpath('matlabPyrTools/MEX');
 
 Some example script files showing usage of the code are in the
 directory <dir>/TUTORIALS.  There is a README file in that directory

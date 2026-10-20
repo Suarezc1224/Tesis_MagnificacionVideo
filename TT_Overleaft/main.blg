@@ -10,78 +10,49 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Database file #1: Bibliografia.bib
-Warning--I didn't find a database entry for "Wu2012"
-Warning--I didn't find a database entry for "Wadhwa2013"
-Warning--I didn't find a database entry for "Wadhwa2014"
-Warning--I didn't find a database entry for "Elgharib2015"
-Warning--I didn't find a database entry for "Takeda2018"
-Warning--I didn't find a database entry for "Takeda2022"
-Warning--I didn't find a database entry for "Nandana2020"
-Warning--I didn't find a database entry for "Yan2014"
-Warning--I didn't find a database entry for "Castellini2006"
-Warning--I didn't find a database entry for "Cheng2025"
-Warning--I didn't find a database entry for "Pieraccini2008"
-Warning--I didn't find a database entry for "Chen2019"
-Warning--I didn't find a database entry for "Fleet2006"
-Warning--I didn't find a database entry for "Sun2018"
-Warning--I didn't find a database entry for "Sutton2009"
-Warning--I didn't find a database entry for "Szeliski2022"
-Warning--I didn't find a database entry for "Hartley2004"
-Warning--I didn't find a database entry for "Oh2018"
-Warning--I didn't find a database entry for "LucasKanade1981"
-Warning--I didn't find a database entry for "HornSchunck1981"
-Warning--I didn't find a database entry for "Lindeberg1994ScaleSpace"
-Warning--I didn't find a database entry for "BurtAdelson1983"
-Warning--I didn't find a database entry for "SimoncelliFreeman1995"
-Warning--I didn't find a database entry for "FreemanAdelson1991"
-Warning--I didn't find a database entry for "Ahmed2023"
-Warning--I didn't find a database entry for "Simoncelli1995"
-Warning--I didn't find a database entry for "peffers2007dsrm"
-Warning--I didn't find a database entry for "hevner2004designscience"
 -- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 5 entries,
+You've used 32 entries,
             3955 wiz_defined-function locations,
-            895 strings with 8819 characters,
-and the built_in function-call counts, 4425 in all, are:
-= -- 331
-> -- 132
-< -- 48
-+ -- 70
-- -- 23
-* -- 217
-:= -- 665
-add.period$ -- 11
-call.type$ -- 5
-change.case$ -- 5
-chr.to.int$ -- 108
-cite$ -- 5
-duplicate$ -- 323
-empty$ -- 308
-format.name$ -- 28
-if$ -- 1012
+            1003 strings with 14582 characters,
+and the built_in function-call counts, 24595 in all, are:
+= -- 1946
+> -- 668
+< -- 206
++ -- 356
+- -- 121
+* -- 1138
+:= -- 3736
+add.period$ -- 67
+call.type$ -- 32
+change.case$ -- 31
+chr.to.int$ -- 462
+cite$ -- 32
+duplicate$ -- 1862
+empty$ -- 1913
+format.name$ -- 151
+if$ -- 5716
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 57
-newline$ -- 38
-num.names$ -- 5
-pop$ -- 124
+int.to.str$ -- 32
+missing$ -- 324
+newline$ -- 149
+num.names$ -- 32
+pop$ -- 757
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 354
+skip$ -- 2069
 stack$ -- 0
-substring$ -- 142
-swap$ -- 289
-text.length$ -- 12
+substring$ -- 692
+swap$ -- 1529
+text.length$ -- 52
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 5
+type$ -- 32
 warning$ -- 0
-while$ -- 15
-width$ -- 6
-write$ -- 74
-(There were 28 warnings)
+while$ -- 75
+width$ -- 34
+write$ -- 373

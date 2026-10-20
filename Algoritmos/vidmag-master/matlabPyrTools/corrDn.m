@@ -1,62 +1,63 @@
 % RES = corrDn(IM, FILT, EDGES, STEP, START, STOP)
 %
-% Correlate IM with FILT and downsample the result. STEP, START, and STOP
-% use [row column] order. The filter origin is floor(size(FILT)/2)+1.
+% Compute correlation of matrices IM with FILT, followed by
+% downsampling.  These arguments should be 1D or 2D matrices, and IM
+% must be larger (in both dimensions) than FILT.  The origin of filt
+% is assumed to be floor(size(filt)/2)+1.
+% 
+% EDGES is a string determining boundary handling:
+%    'circular' - Circular convolution
+%    'reflect1' - Reflect about the edge pixels
+%    'reflect2' - Reflect, doubling the edge pixels
+%    'repeat'   - Repeat the edge pixels
+%    'zero'     - Assume values of zero outside image boundary
+%    'extend'   - Reflect and invert (continuous values and derivs)
+%    'dont-compute' - Zero output when filter overhangs input boundaries
 %
-% EDGES may be 'circular', 'reflect1', 'reflect2', 'repeat', 'zero',
-% 'extend', or 'dont-compute'. The default is 'reflect1'.
+% Downsampling factors are determined by STEP (optional, default=[1 1]), 
+% which should be a 2-vector [y,x].
+% 
+% The window over which the convolution occurs is specfied by START 
+% (optional, default=[1,1], and STOP (optional, default=size(IM)).
+% 
+% NOTE: this operation corresponds to multiplication of a signal
+% vector by a matrix whose rows contain copies of the FILT shifted by
+% multiples of STEP.  See upConv.m for the operation corresponding to
+% the transpose of this matrix.
+
+% Eero Simoncelli, 6/96, revised 2/97.
 
 function res = corrDn(im, filt, edges, step, start, stop)
 
-if nargin < 2 || nargin > 6
-  error('corrDn requires between two and six input arguments.');
-end
-if ~isa(im, 'double') || ~isreal(im) || issparse(im) || isempty(im) || ndims(im) > 2
-  error('IM must be a nonempty, real, full double matrix.');
-end
-if ~isa(filt, 'double') || ~isreal(filt) || issparse(filt) || isempty(filt) || ndims(filt) > 2
-  error('FILT must be a nonempty, real, full double matrix.');
-end
-if any(size(filt) > size(im))
-  error('FILT dimensions cannot exceed IM dimensions.');
+%% NOTE: THIS CODE IS NOT ACTUALLY USED! (MEX FILE IS CALLED INSTEAD)
+
+%fprintf(1,'WARNING: You should compile the MEX version of "corrDn.c",\n         found in the MEX subdirectory of matlabPyrTools, and put it in your matlab path.  It is MUCH faster, and provides more boundary-handling options.\n');
+
+%------------------------------------------------------------
+%% OPTIONAL ARGS:
+
+if (exist('edges') == 1) 
+  if (strcmp(edges,'reflect1') ~= 1)
+    warning('Using REFLECT1 edge-handling (use MEX code for other options).');
+  end
 end
 
-if nargin < 3 || isempty(edges)
-  edges = 'reflect1';
-end
-if ~ischar(edges) || size(edges, 1) ~= 1
-  error('EDGES must be a character vector.');
-end
-if nargin < 4 || isempty(step)
-  step = [1 1];
-end
-if nargin < 5 || isempty(start)
-  start = [1 1];
-end
-if nargin < 6 || isempty(stop)
-  stop = size(im);
-end
+if (exist('step') ~= 1)
+	step = [1,1];
+end	
 
-step = localVector(step, 'STEP');
-start = localVector(start, 'START');
-stop = localVector(stop, 'STOP');
-if any(step < 1) || any(step ~= fix(step))
-  error('STEP values must be positive integers.');
-end
-if any(start < 1) || any(start > size(im)) || any(start ~= fix(start))
-  error('START values must be integer coordinates within IM.');
-end
-if any(stop < start) || any(stop > size(im)) || any(stop ~= fix(stop))
-  error('STOP values must be integer coordinates between START and the size of IM.');
-end
+if (exist('start') ~= 1)
+	start = [1,1];
+end	
 
-res = pyrConv('reduce', im, filt, edges, step, start, stop, []);
+if (exist('stop') ~= 1)
+	stop = size(im);
+end	
 
-end
+%------------------------------------------------------------
 
-function value = localVector(value, name)
-if ~isa(value, 'double') || ~isreal(value) || issparse(value) || numel(value) ~= 2
-  error('%s must be a real, full double vector with two elements.', name);
-end
-value = reshape(value, 1, 2);
-end
+% Reverse order of taps in filt, to do correlation instead of convolution
+filt = filt(size(filt,1):-1:1,size(filt,2):-1:1);
+
+tmp = rconv2(im,filt);
+res = tmp(start(1):step(1):stop(1),start(2):step(2):stop(2));

@@ -1,4 +1,4 @@
-\setcounter{secnumdepth}{5}
+﻿\setcounter{secnumdepth}{5}
 \chapter{Metodología}
 \label{cap:metodologia}
 
@@ -9,7 +9,7 @@
 
 \section{Metodología para el análisis de los operadores temporales}
 
-Comparar algoritmos de magnificación de video requiere considerar la representación espacial y  las variaciones temporales utilizadas en cada método. Los algoritmos analizados emplean diferentes estrategias para seleccionar y amplificar los cambios más significativos. Mientras que los primeros métodos eulerianos utilizan filtros temporales para separar bandas de frecuencia específicas, los métodos más recientes integran operadores de aceleración y variación de la aceleración para distinguir entre movimientos sutiles con respecto a movimientos de gran amplitud.\cite{Wu2012,Wadhwa2013,Zhang2017,Takeda2019}.\\
+Comparar algoritmos de magnificación de video requiere considerar la representación espacial y  las variaciones temporales utilizadas en cada método. Los algoritmos analizados emplean diferentes estrategias para seleccionar y amplificar los cambios más significativos. Mientras que los primeros métodos eulerianos utilizan filtros temporales para separar bandas de frecuencia específicas, los métodos más recientes integran operadores de aceleración y variación de la aceleración para distinguir entre movimientos sutiles con respecto a movimientos de gran amplitud.\cite{wu2012eulerian,wadhwa2013phase,zhang2017acceleration,takeda2019wild}.\\
 
 
 Desde el punto de vista computacional, estas operaciones deben aplicarse a una secuencia de imágenes discretas. Por lo tanto, esta metodología analiza la transformación entre la formulación temporal de cada algoritmo y su implementación con muestras discretas. Se tienen en cuenta el tipo de operador utilizado, el orden de la derivada (si la hay), la ventana temporal empleada y el kernel o filtro aplicado. Esto crea una base común para comparar diferentes aproximaciones temporales bajo condiciones experimentales equivalentes, evaluando la eficiencia de cada método.
@@ -19,20 +19,20 @@ Desde el punto de vista computacional, estas operaciones deben aplicarse a una s
 Los algoritmos analizados en este estudio se seleccionaron fundamentalmente en base a su importancia en el desarrollo de métodos de magnificación de vídeo y las diferencias en sus mecanismos de procesamiento temporal. Para simplificar el análisis, los métodos se dividen en tres grupos principales: magnificación Euleriana lineal, magnificación basada en fase y magnificación mediante aceleración temporal. Además, se consideraron métodos que incorporan combinaciones de estas estrategias para mejorar el rendimiento en presencia de ruido y movimiento de gran amplitud.\\
 
 
-En el campo de la amplificación Euleriana lineal, se considera en primer lugar el método de magnificación de vídeo euleriana (EVM) propuesto por Wu et al., ya que constituye una de las bases principales de los métodos eulerianos posteriores. Este método descompone espacialmente el vídeo y luego aplica un procesamiento temporal para separar las variaciones relevantes antes de amplificarlas \cite{Wu2012}. Adicionalmente, se considera el método de la pirámide laplaciana adaptativa, que transforma el procesamiento espacial y temporal de la EVM para mejorar la amplificación y reducir los artefactos, y el método basado en PCA, que incluye un proceso de selección de componentes para separar las variaciones relevantes del ruido \cite{Yang2023,Wu2018}.\\
+En el campo de la amplificación Euleriana lineal, se considera en primer lugar el método de magnificación de vídeo euleriana (EVM) propuesto por Wu et al., ya que constituye una de las bases principales de los métodos eulerianos posteriores. Este método descompone espacialmente el vídeo y luego aplica un procesamiento temporal para separar las variaciones relevantes antes de amplificarlas \cite{wu2012eulerian}. Adicionalmente, se considera el método de la pirámide laplaciana adaptativa, que transforma el procesamiento espacial y temporal de la EVM para mejorar la amplificación y reducir los artefactos, y el método basado en PCA, que incluye un proceso de selección de componentes para separar las variaciones relevantes del ruido \cite{yang2023adaptive,wu2018pca}.\\
 
 
 
-El segundo grupo comprende métodos de magnificación basados en fase. Estos incluyen \textit{Phase-Based Video Motion Processing}, \textit{Riesz Pyramids for Fast Phase-Based Video Magnification}, el método basado en fase para cámaras de mano y el método orientado para medir oscilaciones de microamplitud. Estos métodos utilizan la fase local como representación del movimiento, pero se diferencian en su representación espacial, procesamiento temporal y estrategias para administrar el movimiento no deseado \cite{Wadhwa2013,Wadhwa2014,Zang2026,Yang2024}.\\
+El segundo grupo comprende métodos de magnificación basados en fase. Estos incluyen \textit{Phase-Based Video Motion Processing}, \textit{Riesz Pyramids for Fast Phase-Based Video Magnification}, el método basado en fase para cámaras de mano y el método orientado para medir oscilaciones de microamplitud. Estos métodos utilizan la fase local como representación del movimiento, pero se diferencian en su representación espacial, procesamiento temporal y estrategias para administrar el movimiento no deseado \cite{wadhwa2013phase,wadhwa2014riesz,zang2026phase,yang2024phase}.\\
 
 
 
 
-El tercer grupo incluye métodos que utilizan información de aceleración temporal. Entre ellos se encuentran \textit{Video Acceleration Magnification}, \textit{Jerk-Aware Video Acceleration Magnification}, el método basado en anisotropía fraccional y el \textit{Bilateral Video Magnification Filter}. Estos métodos representan un mayor desarrollo del procesamiento temporal mediante la integración de operadores de segundo o tercer orden y mecanismos adicionales que permiten diferenciar entre pequeños movimientos y grandes cambios de amplitud \cite{Zhang2017,Takeda2018,Takeda2019,TakedaBVMF}.\\
+El tercer grupo incluye métodos que utilizan información de aceleración temporal. Entre ellos se encuentran \textit{Video Acceleration Magnification}, \textit{Jerk-Aware Video Acceleration Magnification}, el método basado en anisotropía fraccional y el \textit{Bilateral Video Magnification Filter}. Estos métodos representan un mayor desarrollo del procesamiento temporal mediante la integración de operadores de segundo o tercer orden y mecanismos adicionales que permiten diferenciar entre pequeños movimientos y grandes cambios de amplitud \cite{zhang2017acceleration,takeda2018jerk,takeda2019wild,takeda2022bilateral}.\\
 
 
 
-Los artículos \textit{Performance Analysis of Video Magnification} y \textit{An overview of Eulerian video motion magnification methods} no se consideran algoritmos adicionales en la implementación experimental. Sirven como referencias complementarias para clasificar las técnicas, identificar sus características y seleccionar aspectos para la comparación. En particular, el artículo de revisión compara los mecanismos temporales utilizados por diferentes métodos eulerianos y permite observar la evolución desde el filtrado temporal convencional hasta los métodos basados en la aceleración y las variaciones en la tasa de aceleración \cite{Ahmed2023,Yadav2020}.\\
+Los artículos \textit{Performance Analysis of Video Magnification} y \textit{An overview of Eulerian video motion magnification methods} no se consideran algoritmos adicionales en la implementación experimental. Sirven como referencias complementarias para clasificar las técnicas, identificar sus características y seleccionar aspectos para la comparación. En particular, el artículo de revisión compara los mecanismos temporales utilizados por diferentes métodos eulerianos y permite observar la evolución desde el filtrado temporal convencional hasta los métodos basados en la aceleración y las variaciones en la tasa de aceleración \cite{ahmed2023overview,yadav2020performance}.\\
 
 
 
@@ -198,26 +198,3 @@ Finalmente, los resultados subjetivos serán comparados con las características
 \section{Desarrollo}
 
 \section{Conclusiones}
-
-
-\begin{thebibliography}{99}
-
-\bibitem{forsk2020} 
-Forsk, \textit{Atoll Radio Planning and Optimisation User Guide}, Forsk, 2020.
-
-
-\end{thebibliography}
-
-\end{document}
-
-
-
-Importancia de la Arquitectura de Red Distribuida: La arquitectura de red distribuida de Netflix desempeña un papel crucial en la entrega eficiente de contenido multimedia a los usuarios finales. Al distribuir los servidores de contenido en todo el mundo, Netflix reduce la latencia y mejora la velocidad de carga, lo que contribuye a una experiencia de usuario satisfactoria.\\
-
-Adaptabilidad a través de Protocolos Dinámicos: El uso del protocolo DASH permite a Netflix adaptar dinámicamente la calidad del video según las condiciones de la red y las capacidades del dispositivo del usuario. Esta capacidad de adaptación garantiza una reproducción fluida del contenido, incluso en conexiones de internet variables.\\
-
-Seguridad y Protección de Datos: Netflix implementa medidas de seguridad robustas, como encriptación HTTPS y protección DRM, para proteger la privacidad y la integridad de los datos del usuario. Estas medidas son fundamentales para garantizar la confianza del usuario y prevenir la piratería de contenido.\\
-
-Avances en Formatos de Video Digital: La adopción de formatos de video digital como MPEG-4 y HEVC ha revolucionado la transmisión de contenido multimedia en línea. Estos formatos ofrecen una excelente calidad de compresión, lo que permite una transmisión eficiente de video en resoluciones más altas y con tasas de bits más bajas.\\
-
-Impacto en la Experiencia del Usuario: La combinación de una arquitectura de red eficiente, protocolos dinámicos, medidas de seguridad sólidas y formatos de video avanzados se traduce en una experiencia de usuario superior en Netflix. Los usuarios pueden disfrutar de contenido de alta calidad de manera fluida y segura, lo que contribuye a la popularidad y el éxito continuo del servicio.

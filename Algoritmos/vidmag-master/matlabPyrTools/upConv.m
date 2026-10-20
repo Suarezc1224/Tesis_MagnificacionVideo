@@ -1,78 +1,80 @@
 % RES = upConv(IM, FILT, EDGES, STEP, START, STOP, RES)
 %
-% Upsample IM and convolve it with FILT. STEP, START, and STOP use
-% [row column] order. The filter origin is floor(size(FILT)/2)+1.
+% Upsample matrix IM, followed by convolution with matrix FILT.  These
+% arguments should be 1D or 2D matrices, and IM must be larger (in
+% both dimensions) than FILT.  The origin of filt
+% is assumed to be floor(size(filt)/2)+1.
 %
-% EDGES may be 'circular', 'reflect1', 'reflect2', 'repeat', 'zero',
-% 'extend', or 'dont-compute'. The default is 'reflect1'. If an initial
-% result matrix RES is supplied, the convolution is added to it.
+% EDGES is a string determining boundary handling:
+%    'circular' - Circular convolution
+%    'reflect1' - Reflect about the edge pixels
+%    'reflect2' - Reflect, doubling the edge pixels
+%    'repeat'   - Repeat the edge pixels
+%    'zero'     - Assume values of zero outside image boundary
+%    'extend'   - Reflect and invert
+%    'dont-compute' - Zero output when filter overhangs OUTPUT boundaries
+%
+% Upsampling factors are determined by STEP (optional, default=[1 1]),
+% a 2-vector [y,x].
+% 
+% The window over which the convolution occurs is specfied by START 
+% (optional, default=[1,1], and STOP (optional, default = 
+% step .* (size(IM) + floor((start-1)./step))).
+%
+% RES is an optional result matrix.  The convolution result will be 
+% destructively added into this matrix.  If this argument is passed, the 
+% result matrix will not be returned. DO NOT USE THIS ARGUMENT IF 
+% YOU DO NOT UNDERSTAND WHAT THIS MEANS!!
+% 
+% NOTE: this operation corresponds to multiplication of a signal
+% vector by a matrix whose columns contain copies of the time-reversed
+% (or space-reversed) FILT shifted by multiples of STEP.  See corrDn.m
+% for the operation corresponding to the transpose of this matrix.
 
-function result = upConv(im, filt, edges, step, start, stop, result)
+% Eero Simoncelli, 6/96.  revised 2/97.
 
-if nargin < 2 || nargin > 7
-  error('upConv requires between two and seven input arguments.');
-end
-if ~isa(im, 'double') || ~isreal(im) || issparse(im) || isempty(im) || ndims(im) > 2
-  error('IM must be a nonempty, real, full double matrix.');
-end
-if ~isa(filt, 'double') || ~isreal(filt) || issparse(filt) || isempty(filt) || ndims(filt) > 2
-  error('FILT must be a nonempty, real, full double matrix.');
-end
+function result = upConv(im,filt,edges,step,start,stop,res)
 
-if nargin < 3 || isempty(edges)
-  edges = 'reflect1';
-end
-if ~ischar(edges) || size(edges, 1) ~= 1
-  error('EDGES must be a character vector.');
-end
-if nargin < 4 || isempty(step)
-  step = [1 1];
-end
-if nargin < 5 || isempty(start)
-  start = [1 1];
-end
-step = localVector(step, 'STEP');
-start = localVector(start, 'START');
-if any(step < 1) || any(step ~= fix(step))
-  error('STEP values must be positive integers.');
-end
-if any(start < 1) || any(start ~= fix(start))
-  error('START values must be positive integer coordinates.');
-end
+%% THIS CODE IS NOT ACTUALLY USED! (MEX FILE IS CALLED INSTEAD)
 
-if nargin < 6 || isempty(stop)
-  stop = step .* (floor((start - 1) ./ step) + size(im));
-else
-  stop = localVector(stop, 'STOP');
-end
-if any(stop < start) || any(stop ~= fix(stop))
-  error('STOP values must be integer coordinates no smaller than START.');
-end
-if any(ceil((stop + 1 - start) ./ step) ~= size(im))
-  error('IM dimensions and the upsampling arguments are incompatible.');
-end
+%fprintf(1,'WARNING: You should compile the MEX version of "upConv.c",\n         found in the MEX subdirectory of matlabPyrTools, and put it in your matlab path.  It is MUCH faster, and provides more boundary-handling options.\n');
 
-if nargin < 7 || isempty(result)
-  result = zeros(stop);
-else
-  if ~isa(result, 'double') || ~isreal(result) || issparse(result) || ndims(result) > 2
-    error('RES must be a real, full double matrix.');
-  end
-  if any(size(result) < stop)
-    error('STOP values must lie within the dimensions of RES.');
+%------------------------------------------------------------
+%% OPTIONAL ARGS:
+
+if (exist('edges') == 1) 
+  if (strcmp(edges,'reflect1') ~= 1)
+    warning('Using REFLECT1 edge-handling (use MEX code for other options).');
   end
 end
-if any(size(filt) > size(result))
-  error('FILT dimensions cannot exceed RES dimensions.');
+
+if (exist('step') ~= 1)
+  step = [1,1];
+end	
+
+if (exist('start') ~= 1)
+  start = [1,1];
+end	
+
+% A multiple of step
+if (exist('stop') ~= 1)
+  stop = step .* (floor((start-ones(size(start)))./step)+size(im))
+end	
+
+if ( ceil((stop(1)+1-start(1)) / step(1)) ~= size(im,1) )
+  error('Bad Y result dimension');
+end
+if ( ceil((stop(2)+1-start(2)) / step(2)) ~= size(im,2) )
+  error('Bad X result dimension');
 end
 
-result = pyrConv('expand', im, filt, edges, step, start, stop, result);
+if (exist('res') ~= 1)
+  res = zeros(stop-start+1);
+end	
 
-end
+%------------------------------------------------------------
 
-function value = localVector(value, name)
-if ~isa(value, 'double') || ~isreal(value) || issparse(value) || numel(value) ~= 2
-  error('%s must be a real, full double vector with two elements.', name);
-end
-value = reshape(value, 1, 2);
-end
+tmp = zeros(size(res));
+tmp(start(1):step(1):stop(1),start(2):step(2):stop(2)) = im;
+
+result = rconv2(tmp,filt) + res;

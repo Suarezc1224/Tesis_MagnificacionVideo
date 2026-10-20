@@ -1,4 +1,4 @@
-@mastersthesis{jimenez2023modelo,
+﻿@mastersthesis{jimenez2023modelo,
   author      = {Jiménez, D. D. and Sumba, J. A.},
   title       = {Construcción e implementación de un modelo para diagnosticar el nivel de la ciberseguridad en una micro-red. Caso de estudio micro-red de la Universidad de Cuenca},
   type        = {Trabajo de titulación de Ingeniero en Electrónica y Telecomunicaciones},
@@ -147,7 +147,7 @@
   number    = {7},
   pages     = {1293--1299},
   year      = {2018},
-  doi       = {10.1007/s11554-018-0771-0},
+  doi       = {10.1007/s11760-018-1282-0},
   abstract  = {Integra el Análisis de Componentes Principales (PCA) en la magnificación euleriana para aislar la señal de movimiento del ruido de fondo, permitiendo mayores factores de amplificación.}
 }
 
@@ -224,13 +224,14 @@
 }
 
 % Método: Phase-Based (Aceleración de Movimiento)
-@inproceedings{takeda2019jerk,
+@inproceedings{takeda2018jerk,
   author    = {Takeda, Shoichiro and Okami, Kazuki and Mikami, Dan and Isogai, Megumi and Kimata, Hideaki},
   title     = {Jerk-aware video acceleration magnification},
   booktitle = {IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-  pages     = {1614--1622},
-  year      = {2019},
-  abstract  = {Extiende la magnificación por aceleración integrando derivadas de movimiento de orden superior (jerk) para estabilizar la magnificación en entornos dinámicos.}
+  pages     = {1769--1777},
+  year      = {2018},
+  abstract  = {Extiende la magnificación por aceleración integrando derivadas de movimiento de orden superior (jerk) para estabilizar la magnificación en entornos dinámicos.},
+  url = {https://openaccess.thecvf.com/content_cvpr_2018/html/Takeda_Jerk-Aware_Video_Acceleration_CVPR_2018_paper.html}
 }
 
 % Método: Phase-Based (Transformada Chirplet con Núcleo Spline)
@@ -255,7 +256,8 @@
   pages     = {104806},
   year      = {2026},
   publisher = {Elsevier},
-  abstract  = {Aborda los artefactos producidos por el temblor en grabaciones hechas con cámaras de mano para permitir una magnificación basada en fase precisa sin requerir estabilización externa.}
+  abstract  = {Aborda los artefactos producidos por el temblor en grabaciones hechas con cámaras de mano para permitir una magnificación basada en fase precisa sin requerir estabilización externa.},
+  doi = {10.1016/j.cviu.2026.104806}
 }
 
 
@@ -277,13 +279,15 @@
 }
 
 % Método: Lagrangiano (Flujo Óptico Esparso Doble)
-@article{flotho2022lagrangian,
+@article{flotho2023lagrangian,
   author    = {Flotho, Philipp and Heiss, Christian and Steidl, Gabriele and Strauss, Daniel J.},
   title     = {Lagrangian motion magnification with double sparse optical flow decomposition},
-  journal   = {arXiv preprint arXiv:2204.07636},
-  year      = {2022},
+  journal   = {Frontiers in Applied Mathematics and Statistics},
+  year      = {2023},
   doi       = {10.3389/fams.2023.1164491},
-  abstract  = {Formula un marco lagrangiano utilizando descomposición de flujo óptico doblemente esparsa para separar de forma robusta los micro-movimientos dinámicos de los grandes desplazamientos.}
+  abstract  = {Formula un marco lagrangiano utilizando descomposición de flujo óptico doblemente esparsa para separar de forma robusta los micro-movimientos dinámicos de los grandes desplazamientos.},
+  volume = {9},
+  pages = {1164491}
 }
 
 
@@ -357,7 +361,7 @@
 
 % Método: Comparativo (Evaluación de EVM y PVM)
 @inproceedings{yadav2020performance,
-  author    = {Yadav, S. and Bhalkare, P. and Shingde, S. and Verma, U.},
+  author    = {Yadav, Sanket and Bhalkare, Prajakta and Shingde, Sayali and Verma, Usha},
   title     = {Performance analysis of video magnification methods},
   booktitle = {Third International Conference on Smart Systems and Inventive Technology (ICSSIT)},
   pages     = {1293--1301},
@@ -382,12 +386,223 @@
 
 % Método: Revisión de Literatura / Survey (Comparativa Integral)
 @article{ahmed2023overview,
-  author    = {Ahmed, A. M. and Abdelrazek, M. and Aryal, S. and others},
-  title     = {An overview of Eulerian video motion magnification techniques and applications},
+  author    = {Ahmed, Ahmed Mohamed and Abdelrazek, Mohamed and Aryal, Sunil and Nguyen, Thanh Thi},
+  title     = {An overview of Eulerian video motion magnification methods},
   journal   = {Computers \& Graphics},
   volume    = {117},
   pages     = {145--163},
   year      = {2023},
   publisher = {Elsevier},
-  abstract  = {Revisa la evolución de las técnicas eulerianas de magnificación de movimiento, comparando pirámides espaciales, estrategias de filtrado temporal y aplicaciones biomédicas.}
+  abstract  = {Revisa la evolución de las técnicas eulerianas de magnificación de movimiento, comparando pirámides espaciales, estrategias de filtrado temporal y aplicaciones biomédicas.},
+  doi = {10.1016/j.cag.2023.10.015}
+}
+
+% Fundamentos de representaciones multiescala, orientables y monogénicas.
+@article{lindeberg1994scalespace,
+  author  = {Lindeberg, Tony},
+  title   = {Scale-space theory: A basic tool for analysing structures at different scales},
+  journal = {Journal of Applied Statistics},
+  volume  = {21},
+  number  = {1--2},
+  pages   = {225--270},
+  year    = {1994},
+  doi     = {10.1080/757582976},
+  url     = {https://www.csc.kth.se/~tony/abstracts/Lin94-SI-abstract.html}
+}
+
+@article{burt1983laplacian,
+  author  = {Burt, Peter J. and Adelson, Edward H.},
+  title   = {The {Laplacian} Pyramid as a Compact Image Code},
+  journal = {IEEE Transactions on Communications},
+  volume  = {31},
+  number  = {4},
+  pages   = {532--540},
+  year    = {1983},
+  doi     = {10.1109/TCOM.1983.1095851},
+  url     = {https://persci.mit.edu/pub_pdfs/pyramid83.pdf}
+}
+
+@article{freeman1991steerable,
+  author  = {Freeman, William T. and Adelson, Edward H.},
+  title   = {The Design and Use of Steerable Filters},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume  = {13},
+  number  = {9},
+  pages   = {891--906},
+  year    = {1991},
+  doi     = {10.1109/34.93808},
+  url     = {https://people.csail.mit.edu/billf/steerpaper.html}
+}
+
+@inproceedings{simoncelli1995steerable,
+  author    = {Simoncelli, Eero P. and Freeman, William T.},
+  title     = {The Steerable Pyramid: A Flexible Architecture for Multi-Scale Derivative Computation},
+  booktitle = {Proceedings of the IEEE International Conference on Image Processing},
+  volume    = {3},
+  pages     = {444--447},
+  year      = {1995},
+  doi       = {10.1109/ICIP.1995.537667},
+  url       = {https://www.cns.nyu.edu/pub/eero/simoncelli95b.pdf}
+}
+
+@article{unser2009monogenic,
+  author  = {Unser, Michael and Sage, Daniel and Van De Ville, Dimitri},
+  title   = {Multiresolution Monogenic Signal Analysis Using the {Riesz--Laplace} Wavelet Transform},
+  journal = {IEEE Transactions on Image Processing},
+  volume  = {18},
+  number  = {11},
+  pages   = {2402--2418},
+  year    = {2009},
+  doi     = {10.1109/TIP.2009.2027628},
+  url     = {https://bigwww.epfl.ch/publications/unser0907.pdf}
+}
+
+@article{cheng2025vision,
+ author={Cheng, Yuansheng and Tian, Zhe and Ning, Donghong and Feng, Ke and Li, Zhixiong and Chauhan, Sumika and Vashishtha, Govind},
+ title={Computer vision-based non-contact structural vibration measurement: Methods, challenges and opportunities},
+ journal={Measurement},
+ year={2025},
+ url={https://www.sciencedirect.com/science/article/abs/pii/S026322412402311X}
+}
+@article{castellini2006laser,
+ author={Castellini, Paolo and Martarelli, Milena and Tomasini, Enrico Primo},
+ title={Laser {Doppler} Vibrometry: Development of advanced solutions answering to technology's needs},
+ journal={Mechanical Systems and Signal Processing},
+ year={2006},
+ doi={10.1016/j.ymssp.2005.11.015}
+}
+@incollection{fleet2006flow,
+ author={Fleet, David J. and Weiss, Yair},
+ title={Optical Flow Estimation},
+ booktitle={Handbook of Mathematical Models in Computer Vision},
+ publisher={Springer},
+ year={2006},
+ url={https://www.cs.toronto.edu/~fleet/research/Papers/flowChapter05.pdf}
+}
+@inproceedings{sun2018pwc,
+ author={Sun, Deqing and Yang, Xiaodong and Liu, Ming-Yu and Kautz, Jan},
+ title={{PWC-Net}: {CNNs} for Optical Flow Using Pyramid, Warping, and Cost Volume},
+ booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+ year={2018},
+ url={https://openaccess.thecvf.com/content_cvpr_2018/papers/Sun_PWC-Net_CNNs_for_CVPR_2018_paper.pdf}
+}
+@book{sutton2009correlation,
+ author={Sutton, Michael A. and Orteu, Jean-Jos{\'e} and Schreier, Hubert W.},
+ title={Image Correlation for Shape, Motion and Deformation Measurements: Basic Concepts, Theory and Applications},
+ publisher={Springer},
+ year={2009},
+ doi={10.1007/978-0-387-78747-3}
+}
+@book{szeliski2022vision,
+ author={Szeliski, Richard},
+ title={Computer Vision: Algorithms and Applications},
+ edition={2},
+ publisher={Springer},
+ year={2022},
+ doi={10.1007/978-3-030-34372-9}
+}
+@inproceedings{lucas1981registration,
+ author={Lucas, Bruce D. and Kanade, Takeo},
+ title={An Iterative Image Registration Technique with an Application to Stereo Vision},
+ booktitle={Proceedings of the International Joint Conference on Artificial Intelligence},
+ pages={674--679},
+ year={1981},
+ url={https://publications.ri.cmu.edu/storage/publications/pub_files/pub3/lucas_bruce_d_1981_1/lucas_bruce_d_1981_1.pdf}
+}
+@article{horn1981flow,
+ author={Horn, Berthold K. P. and Schunck, Brian G.},
+ title={Determining optical flow},
+ journal={Artificial Intelligence},
+ volume={17},
+ number={1--3},
+ pages={185--203},
+ year={1981},
+ doi={10.1016/0004-3702(81)90024-2}
+}
+
+@inproceedings{zhang2017acceleration,
+ author={Zhang, Yichao and Pintea, Silvia L. and van Gemert, Jan C.},
+ title={Video Acceleration Magnification},
+ booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+ year={2017},
+ doi={10.1109/CVPR.2017.61},
+ url={https://openaccess.thecvf.com/content_cvpr_2017/papers/Zhang_Video_Acceleration_Magnification_CVPR_2017_paper.pdf}
+}
+@inproceedings{takeda2019wild,
+ author={Takeda, Shoichiro and Akagi, Yasunori and Okami, Kazuki and Isogai, Megumi and Kimata, Hideaki},
+ title={Video Magnification in the Wild Using Fractional Anisotropy in Temporal Distribution},
+ booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+ year={2019},
+ pages={1614--1622},
+ url={https://openaccess.thecvf.com/content_CVPR_2019/html/Takeda_Video_Magnification_in_the_Wild_Using_Fractional_Anisotropy_in_Temporal_CVPR_2019_paper.html}
+}
+@inproceedings{takeda2022bilateral,
+ author={Takeda, Shoichiro and Niwa, Kenta and Isogawa, Mariko and Shimizu, Shinya and Okami, Kazuki and Aono, Yushi},
+ title={Bilateral Video Magnification Filter},
+ booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+ year={2022},
+ url={https://openaccess.thecvf.com/content/CVPR2022/html/Takeda_Bilateral_Video_Magnification_Filter_CVPR_2022_paper.html}
+}
+@article{yang2023adaptive,
+ author={Yang, Yuanzhao and Jiang, Qi and Danish, Masood},
+ title={A novel video magnification method for revealing subtle signals based on adaptive {Laplacian} pyramid},
+ journal={Measurement},
+ volume={219},
+ pages={113277},
+ year={2023},
+ doi={10.1016/j.measurement.2023.113277}
+}
+@article{yang2024phase,
+ author={Yang, Yuanzhao and Jiang, Qi},
+ title={A novel phase-based video motion magnification method for non-contact measurement of micro-amplitude vibration},
+ journal={Mechanical Systems and Signal Processing},
+ volume={215},
+ pages={111429},
+ year={2024},
+ doi={10.1016/j.ymssp.2024.111429}
+}
+@article{yan2014casme,
+ author={Yan, Wen-Jing and Li, Xiaobai and Wang, Su-Jing and Zhao, Guoying and Liu, Yong-Jin and Chen, Yu-Hsin and Fu, Xiaolan},
+ title={{CASME II}: An Improved Spontaneous Micro-Expression Database and the Baseline Evaluation},
+ journal={PLOS ONE},
+ volume={9},
+ number={1},
+ pages={e86041},
+ year={2014},
+ doi={10.1371/journal.pone.0086041}
+}
+@manual{espressif_esp32_devkitc,
+ author={{Espressif Systems}},
+ title={{ESP32-DevKitC V4} Getting Started Guide},
+ url={https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html},
+ note={Consultado el 20 de octubre de 2026}
+}
+@manual{joulescope_js220,
+ author={{Jetperch LLC}},
+ title={Joulescope {JS220} User's Guide},
+ url={https://download.joulescope.com/products/JS220/JS220-K000/users_guide/Joulescope%20JS220%20User%27s%20Guide%20v1_9.pdf},
+ note={Versi{\'o}n 1.9. Consultado el 20 de octubre de 2026}
+}
+
+@article{smieja2021motion,
+ author={Śmieja, Michał and Mamala, Jarosław and Prażnowski, Krzysztof and Ciepliński, Tomasz and Szumilas, Łukasz},
+ title={Motion Magnification of Vibration Image in Estimation of Technical Object Condition-Review},
+ journal={Sensors},
+ volume={21},
+ number={19},
+ pages={6572},
+ year={2021},
+ doi={10.3390/s21196572},
+ url={https://www.mdpi.com/1424-8220/21/19/6572}
+}
+
+@article{mattioli2023breathing,
+ author={Mattioli, Veronica and Alinovi, Davide and Ferrari, Gianluigi and Pisani, Francesco and Raheli, Riccardo},
+ title={Motion magnification algorithms for video-based breathing monitoring},
+ journal={Biomedical Signal Processing and Control},
+ volume={86},
+ pages={105148},
+ year={2023},
+ doi={10.1016/j.bspc.2023.105148},
+ url={https://www.sciencedirect.com/science/article/pii/S1746809423005815}
 }

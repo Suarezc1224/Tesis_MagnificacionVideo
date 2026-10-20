@@ -1,0 +1,21 @@
+﻿\begin{thebibliography}{99}
+
+\bibitem{forsk2020} 
+Forsk, \textit{Atoll Radio Planning and Optimisation User Guide}, Forsk, 2020.
+
+
+\end{thebibliography}
+
+\end{document}
+
+
+
+Importancia de la Arquitectura de Red Distribuida: La arquitectura de red distribuida de Netflix desempeña un papel crucial en la entrega eficiente de contenido multimedia a los usuarios finales. Al distribuir los servidores de contenido en todo el mundo, Netflix reduce la latencia y mejora la velocidad de carga, lo que contribuye a una experiencia de usuario satisfactoria.\\
+
+Adaptabilidad a través de Protocolos Dinámicos: El uso del protocolo DASH permite a Netflix adaptar dinámicamente la calidad del video según las condiciones de la red y las capacidades del dispositivo del usuario. Esta capacidad de adaptación garantiza una reproducción fluida del contenido, incluso en conexiones de internet variables.\\
+
+Seguridad y Protección de Datos: Netflix implementa medidas de seguridad robustas, como encriptación HTTPS y protección DRM, para proteger la privacidad y la integridad de los datos del usuario. Estas medidas son fundamentales para garantizar la confianza del usuario y prevenir la piratería de contenido.\\
+
+Avances en Formatos de Video Digital: La adopción de formatos de video digital como MPEG-4 y HEVC ha revolucionado la transmisión de contenido multimedia en línea. Estos formatos ofrecen una excelente calidad de compresión, lo que permite una transmisión eficiente de video en resoluciones más altas y con tasas de bits más bajas.\\
+
+Impacto en la Experiencia del Usuario: La combinación de una arquitectura de red eficiente, protocolos dinámicos, medidas de seguridad sólidas y formatos de video avanzados se traduce en una experiencia de usuario superior en Netflix. Los usuarios pueden disfrutar de contenido de alta calidad de manera fluida y segura, lo que contribuye a la popularidad y el éxito continuo del servicio.

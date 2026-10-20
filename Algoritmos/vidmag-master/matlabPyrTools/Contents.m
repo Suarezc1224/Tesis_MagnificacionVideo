@@ -24,13 +24,13 @@
 %
 % Point Operations:
 %   clip       - clip values to a range. 
-%   pointOp    - Lookup table with linear interpolation and extrapolation.
-%   histo      - Uniform histogram computation.
+%   pointOp    - Lookup table (much faster than interp1) [MEX file]
+%   histo      - Efficient histogram computation [MEX file]
 %   histoMatch - Modify matrix elements to match specified histogram stats.
 %
-% Convolution:
-%   corrDn     - Correlate & downsample with boundary-handling.
-%   upConv     - Upsample & convolve with boundary-handling.
+% Convolution (first two are significantly faster):
+%   corrDn     - Correlate & downsample with boundary-handling [MEX file]
+%   upConv     - Upsample & convolve with boundary-handling [MEX file]
 %   blurDn     - Blur and subsample a signal/image.
 %   upBlur     - Upsample and blur a signal/image.
 %   blur       - Multi-scale blurring, calls blurDn and then upBlur.
@@ -91,7 +91,7 @@
 %                per sample to avoid resampling artifacts.
 % 
 % Statistics (for 2D Matrices):
-%   range2     - Min and max of image (matrix).
+%   range2     - Min and max of image (matrix) [MEX file]
 %   mean2      - Sample mean of an image (matrix). 
 %   var2       - Sample variance of an image (matrix). 
 %   skew2      - Sample skew (3rd moment / variance^1.5) of an image (matrix). 
@@ -106,4 +106,4 @@
 %   vectify    - pack matrix into column vector (i.e., function to compute mtx(:)).
 %   ifftshift  - inverse of MatLab's FFTSHIFT (differs for odd-length dimensions)
 %   rcosFn     - return a lookup table of a raised-cosine threshold fn.
-%   innerProd  - Compute M'*M.
+%   innerProd  - Compute M'*M efficiently (i.e., do not copy) [MEX file]
