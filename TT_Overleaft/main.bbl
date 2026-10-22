@@ -188,14 +188,6 @@ M.~Śmieja, J.~Mamala, K.~Prażnowski, T.~Ciepliński, y �.~Szumilas, ``Motion
   l\'inea]. Disponible: \url{https://www.mdpi.com/1424-8220/21/19/6572}
 \BIBentrySTDinterwordspacing
 
-\bibitem{zhang2017acceleration}
-\BIBentryALTinterwordspacing
-Y.~Zhang, S.~L. Pintea, y J.~C. van Gemert, ``Video acceleration
-  magnification,'' in \emph{Proceedings of the IEEE Conference on Computer
-  Vision and Pattern Recognition}, 2017. [En l\'inea]. Disponible:
-  \url{https://openaccess.thecvf.com/content_cvpr_2017/papers/Zhang_Video_Acceleration_Magnification_CVPR_2017_paper.pdf}
-\BIBentrySTDinterwordspacing
-
 \bibitem{wu2018pca}
 X.~Wu, X.~Yang, J.~Jin, y Z.~Yang, ``Pca-based magnification method for
   revealing small signals in video,'' \emph{Signal, Image and Video
@@ -205,6 +197,14 @@ X.~Wu, X.~Yang, J.~Jin, y Z.~Yang, ``Pca-based magnification method for
 Y.~Yang, Q.~Jiang, y M.~Danish, ``A novel video magnification method for
   revealing subtle signals based on adaptive {Laplacian} pyramid,''
   \emph{Measurement}, vol. 219, p. 113277, 2023.
+
+\bibitem{zhang2017acceleration}
+\BIBentryALTinterwordspacing
+Y.~Zhang, S.~L. Pintea, y J.~C. van Gemert, ``Video acceleration
+  magnification,'' in \emph{Proceedings of the IEEE Conference on Computer
+  Vision and Pattern Recognition}, 2017. [En l\'inea]. Disponible:
+  \url{https://openaccess.thecvf.com/content_cvpr_2017/papers/Zhang_Video_Acceleration_Magnification_CVPR_2017_paper.pdf}
+\BIBentrySTDinterwordspacing
 
 \bibitem{takeda2019wild}
 \BIBentryALTinterwordspacing

@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=main.tex
 
 [Frame0_View0,0]
-TopLine=0
-Cursor=0
+TopLine=227
+Cursor=7263
 
 [Frame1]
 Flags=0
@@ -71,8 +71,8 @@ Class=LaTeXView
 Document=sections\03_Capitulo3_Metodologia.tex
 
 [Frame3_View0,0]
-TopLine=356
-Cursor=20942
+TopLine=321
+Cursor=20112
 
 [Frame4]
 Flags=0
@@ -89,10 +89,10 @@ Class=LaTeXView
 Document=sections\02_Capitulo2_MarcoTeorico.tex
 
 [Frame4_View0,0]
-TopLine=0
-Cursor=0
+TopLine=2569
+Cursor=145775
 
 [SessionInfo]
 FrameCount=5
-ActiveFrame=0
+ActiveFrame=4
 

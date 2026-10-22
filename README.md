@@ -13,10 +13,11 @@ A continuación se detalla la organización de archivos y directorios del proyec
 ├── Algoritmos/               # Códigos fuente e implementaciones en MATLAB
 │   ├── EVM_Matlab/           # Implementación del método Eulerian Video Magnification
 │   │   └── matlabPyrTools/   # Herramientas de pirámides espaciales y filtros (MEX/Tutoriales)
+│   ├── Riesz_Matlab/         # Magnificación Riesz: filtros MIT y procesamiento de video
 │   └── vidmag-master/        # Pipeline avanzado de magnificación de video
 │       ├── Filters/          # Filtros temporales (Paso banda, Butterworth, FIR)
 │       ├── Linear/           # Magnificación lineal espacio-temporal
-│       ├── PhaseBased/       # Magnificación basada en fase y pirámide de Riesz
+│       ├── PhaseBased/       # Magnificación basada en fase (pirámides orientables complejas)
 │       ├── pyrToolsExt/      # Extensiones para descomposición de imágenes/video
 │       └── Util/             # Funciones auxiliares y de soporte
 ├── Data/                     # Datasets de prueba y resultados (Excluido de Git remoto)

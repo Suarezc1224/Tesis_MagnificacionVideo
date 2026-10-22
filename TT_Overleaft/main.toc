@@ -8,84 +8,84 @@
 \contentsline {chapter}{Agradecimientos}{10}{chapter*.7}%
 \contentsline {chapter}{Dedicatoria}{11}{chapter*.8}%
 \contentsline {chapter}{Dedicatoria}{12}{chapter*.9}%
-\contentsline {chapter}{\numberline {1}Introducción}{15}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Antecedentes}{15}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Identificación del Problema}{16}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Justificación}{17}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Alcance}{17}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Objetivos}{18}{section.1.5}%
-\contentsline {subsection}{\numberline {1.5.1}Objetivo general}{18}{subsection.1.5.1}%
-\contentsline {subsection}{\numberline {1.5.2}Objetivos específicos}{19}{subsection.1.5.2}%
-\contentsline {chapter}{\numberline {2}Marco teórico}{20}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Sistemas de medición no invasivos}{20}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Medición invasiva y no invasiva}{20}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Sistemas de medición basados en visión}{22}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Detección de movimientos y vibraciones sutiles}{25}{subsection.2.1.3}%
-\contentsline {section}{\numberline {2.2}Análisis del movimiento en video}{28}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Enfoque Lagrangiano}{28}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Enfoque Euleriano}{31}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Comparación entre los enfoques Lagrangiano y Euleriano}{36}{subsection.2.2.3}%
-\contentsline {section}{\numberline {2.3}Representaciones multiescala mediante pirámides de imágenes}{39}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Representación multiescala y espacio-escala}{40}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Pirámide Gaussiana}{42}{subsection.2.3.2}%
-\contentsline {subsubsection}{\numberline {2.3.2.1}Operadores discretos y escala efectiva}{44}{subsubsection.2.3.2.1}%
-\contentsline {subsection}{\numberline {2.3.3}Pirámide Laplaciana}{45}{subsection.2.3.3}%
-\contentsline {subsubsection}{\numberline {2.3.3.1}Expansión, residuo y reconstrucción}{47}{subsubsection.2.3.3.1}%
-\contentsline {subsection}{\numberline {2.3.4}Pirámides orientables (\textit {Steerable Pyramid})}{48}{subsection.2.3.4}%
-\contentsline {subsubsection}{\numberline {2.3.4.1}Orientabilidad y separación espectral}{50}{subsubsection.2.3.4.1}%
-\contentsline {subsubsection}{\numberline {2.3.4.2}Cuadratura, amplitud y fase local}{51}{subsubsection.2.3.4.2}%
-\contentsline {subsection}{\numberline {2.3.5}Pirámide de Riesz}{53}{subsection.2.3.5}%
-\contentsline {subsubsection}{\numberline {2.3.5.1}Interpretación monogénica y ambigüedad angular}{54}{subsubsection.2.3.5.1}%
-\contentsline {subsubsection}{\numberline {2.3.5.2}Continuidad temporal y síntesis}{56}{subsubsection.2.3.5.2}%
-\contentsline {subsection}{\numberline {2.3.6}Comparación entre representaciones piramidales}{57}{subsection.2.3.6}%
-\contentsline {subsubsection}{\numberline {2.3.6.1}Criterios para su empleo en video}{60}{subsubsection.2.3.6.1}%
-\contentsline {section}{\numberline {2.4}Métodos de magnificación de video}{61}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Magnificación Euleriana Lineal}{61}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Magnificación basada en Fase}{67}{subsection.2.4.2}%
-\contentsline {section}{\numberline {2.5}Técnicas avanzadas de magnificación de video}{75}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Magnificación en presencia de grandes movimientos}{75}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Magnificación basada en aceleración y jerk}{75}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Filtros espaciales y temporales para reducción de artefactos}{75}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Otros enfoques recientes}{75}{subsection.2.5.4}%
-\contentsline {chapter}{\numberline {3}Estado del arte}{76}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Fundamentos de la magnificación de movimientos y vibraciones sutiles}{76}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Magnificación euleriana mediante filtrado temporal}{77}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Eulerian Video Magnification}{77}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Variantes de EVM basadas en PCA y pirámides adaptativas}{77}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Magnificación basada en fase}{78}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Phase-Based Video Motion Processing}{78}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Pirámides de Riesz para magnificación basada en fase}{79}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Métodos avanzados para la magnificación de movimiento}{80}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Magnificación en presencia de movimientos grandes}{80}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Video Acceleration Magnification}{81}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Jerk-Aware Video Acceleration Magnification}{81}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}Magnificación mediante anisotropía fraccionaria temporal}{82}{subsection.3.4.4}%
-\contentsline {subsection}{\numberline {3.4.5}Bilateral Video Magnification Filter}{82}{subsection.3.4.5}%
-\contentsline {section}{\numberline {3.5}Desarrollos recientes aplicados a vibraciones y movimientos complejos}{83}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Magnificación mediante pirámide laplaciana adaptativa}{83}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Magnificación de microvibraciones para medición sin contacto}{83}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Magnificación basada en fase con cámaras portátiles}{84}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Estudios comparativos y aplicaciones de la magnificación de video}{85}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Análisis crítico y brecha de investigación}{86}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Tabla comparativa del estado del arte}{87}{section.3.8}%
-\contentsline {chapter}{\numberline {4}Metodología}{91}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Metodología para el análisis de los operadores temporales}{91}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Selección y clasificación de los algoritmos}{91}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Configuración Experimental}{92}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Configuración de los operadores temporales}{93}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Evaluación subjetiva de la magnificación de video}{95}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Metodología de evaluación subjetiva}{96}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Selección de los estímulos de evaluación}{96}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Criterios de evaluación}{97}{subsection.4.5.3}%
-\contentsline {subsection}{\numberline {4.5.4}Comparación por pares de los algoritmos}{97}{subsection.4.5.4}%
-\contentsline {subsection}{\numberline {4.5.5}Evaluación de estímulo simple}{98}{subsection.4.5.5}%
-\contentsline {subsection}{\numberline {4.5.6}Selección de los observadores}{98}{subsection.4.5.6}%
-\contentsline {subsection}{\numberline {4.5.7}Procedimiento de evaluación}{99}{subsection.4.5.7}%
-\contentsline {subsection}{\numberline {4.5.8}Análisis de los resultados subjetivos}{99}{subsection.4.5.8}%
-\contentsline {section}{\numberline {4.6}Desarrollo}{100}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Conclusiones}{100}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Resultados}{101}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones y recomendaciones}{102}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusiones}{102}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Recomendaciones}{102}{section.6.2}%
-\contentsline {chapter}{Referencias}{103}{chapter*.24}%
+\contentsline {chapter}{\numberline {1}Introducción}{13}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Antecedentes}{13}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Identificación del Problema}{14}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Justificación}{15}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Alcance}{15}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Objetivos}{16}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Objetivo general}{16}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Objetivos específicos}{17}{subsection.1.5.2}%
+\contentsline {chapter}{\numberline {2}Marco teórico}{18}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Sistemas de medición no invasivos}{18}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Medición invasiva y no invasiva}{18}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Sistemas de medición basados en visión}{20}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Detección de movimientos y vibraciones sutiles}{23}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Análisis del movimiento en video}{26}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Enfoque Lagrangiano}{26}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Enfoque Euleriano}{29}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Comparación entre los enfoques Lagrangiano y Euleriano}{34}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Representaciones multiescala mediante pirámides de imágenes}{37}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Representación multiescala y espacio-escala}{38}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Pirámide Gaussiana}{40}{subsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.2.1}Operadores discretos y escala efectiva}{42}{subsubsection.2.3.2.1}%
+\contentsline {subsection}{\numberline {2.3.3}Pirámide Laplaciana}{43}{subsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.3.1}Expansión, residuo y reconstrucción}{45}{subsubsection.2.3.3.1}%
+\contentsline {subsection}{\numberline {2.3.4}Pirámides orientables (\textit {Steerable Pyramid})}{46}{subsection.2.3.4}%
+\contentsline {subsubsection}{\numberline {2.3.4.1}Orientabilidad y separación espectral}{48}{subsubsection.2.3.4.1}%
+\contentsline {subsubsection}{\numberline {2.3.4.2}Cuadratura, amplitud y fase local}{49}{subsubsection.2.3.4.2}%
+\contentsline {subsection}{\numberline {2.3.5}Pirámide de Riesz}{51}{subsection.2.3.5}%
+\contentsline {subsubsection}{\numberline {2.3.5.1}Interpretación monogénica y ambigüedad angular}{52}{subsubsection.2.3.5.1}%
+\contentsline {subsubsection}{\numberline {2.3.5.2}Continuidad temporal y síntesis}{54}{subsubsection.2.3.5.2}%
+\contentsline {subsection}{\numberline {2.3.6}Comparación entre representaciones piramidales}{55}{subsection.2.3.6}%
+\contentsline {subsubsection}{\numberline {2.3.6.1}Criterios para su empleo en video}{58}{subsubsection.2.3.6.1}%
+\contentsline {section}{\numberline {2.4}Métodos de magnificación de video}{59}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Magnificación Euleriana Lineal}{59}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Magnificación basada en Fase}{65}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Técnicas avanzadas de magnificación de video}{73}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Magnificación en presencia de grandes movimientos}{73}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Magnificación basada en aceleración y jerk}{73}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Filtros espaciales y temporales para reducción de artefactos}{73}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}Otros enfoques recientes}{73}{subsection.2.5.4}%
+\contentsline {chapter}{\numberline {3}Estado del arte}{74}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Alcance y organización de la revisión}{74}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Aportes fundacionales y mejoras de los enfoques de referencia}{74}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Wu et al. (2012): establecimiento de una referencia euleriana}{74}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Wadhwa et al. (2013): mejora de la calidad de magnificación}{75}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Wadhwa et al. (2014): reducción del costo computacional}{75}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Wu et al. (2018): reducción de ruido mediante selección de componentes}{76}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Yang et al. (2023): adaptación de la magnificación por escala}{76}{subsection.3.2.5}%
+\contentsline {section}{\numberline {3.3}Investigaciones sobre movimientos interferentes y ruido}{77}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Elgharib et al. (2015): escenas con movimientos de gran amplitud}{77}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Zhang et al. (2017): magnificación de aceleración}{77}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Takeda et al. (2018): tratamiento de cambios rápidos}{77}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Takeda et al. (2019): selección de variaciones significativas}{78}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Takeda et al. (2022): selectividad frente a interferencias}{78}{subsection.3.3.5}%
+\contentsline {section}{\numberline {3.4}Validación aplicada y ampliación de escenarios}{79}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Yang y Jiang (2024): microvibraciones estructurales}{79}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Zang et al. (2026): adquisición con cámaras portátiles}{79}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Mattioli et al. (2023): monitoreo respiratorio}{80}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Estudios comparativos y revisiones de la literatura}{80}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Análisis crítico y delimitación de la brecha de investigación}{81}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Tabla comparativa del estado del arte}{82}{section.3.7}%
+\contentsline {chapter}{\numberline {4}Metodología}{86}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Metodología para el análisis de los operadores temporales}{86}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Selección y clasificación de los algoritmos}{86}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Configuración Experimental}{87}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Configuración de los operadores temporales}{88}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Evaluación subjetiva de la magnificación de video}{90}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Metodología de evaluación subjetiva}{91}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Selección de los estímulos de evaluación}{91}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Criterios de evaluación}{92}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}Comparación por pares de los algoritmos}{92}{subsection.4.5.4}%
+\contentsline {subsection}{\numberline {4.5.5}Evaluación de estímulo simple}{93}{subsection.4.5.5}%
+\contentsline {subsection}{\numberline {4.5.6}Selección de los observadores}{93}{subsection.4.5.6}%
+\contentsline {subsection}{\numberline {4.5.7}Procedimiento de evaluación}{94}{subsection.4.5.7}%
+\contentsline {subsection}{\numberline {4.5.8}Análisis de los resultados subjetivos}{94}{subsection.4.5.8}%
+\contentsline {section}{\numberline {4.6}Desarrollo}{95}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Conclusiones}{95}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Resultados}{96}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones y recomendaciones}{97}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Conclusiones}{97}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Recomendaciones}{97}{section.6.2}%
+\contentsline {chapter}{Referencias}{98}{chapter*.22}%
