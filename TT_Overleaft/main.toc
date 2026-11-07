@@ -42,11 +42,6 @@
 \contentsline {section}{\numberline {2.4}Métodos de magnificación de video}{59}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Magnificación Euleriana Lineal}{59}{subsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.4.2}Magnificación basada en Fase}{65}{subsection.2.4.2}%
-\contentsline {section}{\numberline {2.5}Técnicas avanzadas de magnificación de video}{73}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Magnificación en presencia de grandes movimientos}{73}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Magnificación basada en aceleración y jerk}{73}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Filtros espaciales y temporales para reducción de artefactos}{73}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Otros enfoques recientes}{73}{subsection.2.5.4}%
 \contentsline {chapter}{\numberline {3}Estado del arte}{74}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Alcance y organización de la revisión}{74}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Aportes fundacionales y mejoras de los enfoques de referencia}{74}{section.3.2}%

@@ -21,19 +21,7 @@
 \setmonofont{Latin Modern Mono}[Scale=0.88]
 
 % Fuente tipo consola usada específicamente por \texttt{...}
-\IfFontExistsTF{Cascadia Code}
-{
-    \newfontfamily\consolefont{Cascadia Code}[Scale=0.88]
-}
-{
-    \IfFontExistsTF{DejaVu Sans Mono}
-    {
-        \newfontfamily\consolefont{DejaVu Sans Mono}[Scale=0.88]
-    }
-    {
-        \newfontfamily\consolefont{Latin Modern Mono}[Scale=0.90]
-    }
-}
+\newfontfamily\consolefont{Latin Modern Mono}[Scale=0.90]
 
 % Redefinición de \texttt para IPs, interfaces, rutas y comandos cortos.
 % Permite seguir usando \texttt{10.8.0.1}, \texttt{tun0}, etc.

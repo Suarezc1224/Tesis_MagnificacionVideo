@@ -1,5 +1,45 @@
 # Excitacion de bocina para EVM/PVM
 
+## Si MATLAB muestra Out of memory
+
+Para una prueba pequena, ejecutar `preparar_video_ligero` en MATLAB desde
+esta carpeta y seleccionar el original. Genera una copia de ancho maximo
+480 pixeles y hasta 500 fotogramas consecutivos, leyendo y escribiendo uno
+por uno. Necesita Image Processing Toolbox (`imresize`). No modifica el original.
+La salida se guarda en `Data/Audio/VideoLigero` y su ruta aparece en consola.
+Para elegir otro tramo:
+
+```matlab
+salida = preparar_video_ligero('F:\PRIVATE\M4ROOT\CLIP\Par_400.MP4',480,500,201);
+```
+
+Usar esa copia en la interfaz. Para el experimento de captura 1000 fps y
+excitacion 400 Hz: Fs=1000, f1=380, f2=420, alpha=5, sigma=3 y octave.
+Conservar los FPS originales de captura al configurar Fs: la copia mantiene
+los FPS de reproduccion del archivo. No reduce temporalmente el muestreo.
+500 fotogramas representan 0.5 segundos fisicos a 1000 fps.
+La copia Motion JPEG es con perdida y sirve para diagnostico; la reduccion
+espacial puede ocultar movimientos y no garantiza que toda maquina tenga RAM
+suficiente. No sustituye la validacion del video original.
+
+## Interfaz grafica (Windows)
+
+Hacer doble clic en `Abrir_generador.bat`. Busca primero el Python incluido
+con Codex y, si no existe, utiliza `py -3`.
+Elegir frecuencia, duracion, amplitud digital y canal; pulsar **Play**.
+**Detener**, Escape o cerrar la ventana detienen la salida. La interfaz no
+reproduce nada al abrirse. Empieza en 40 Hz, 15 s y 5 % de amplitud.
+Los WAV se conservan en `Data/Audio/Interfaz`. La generacion ocurre en segundo
+plano; puede tardar unos segundos para tonos largos. Los cambios se aplican
+al siguiente Play. La salida utilizada es la predeterminada de Windows.
+Para registros JSON y secuencias de repeticiones, usar el script de consola.
+
+Desde esta misma carpeta tambien se puede ejecutar:
+
+```powershell
+py -3 .\interfaz_tonos.py
+```
+
 Requiere Python 3.9 o posterior. Usa solo la biblioteca estandar.
 Ejecutar desde la raiz del proyecto en PowerShell:
 

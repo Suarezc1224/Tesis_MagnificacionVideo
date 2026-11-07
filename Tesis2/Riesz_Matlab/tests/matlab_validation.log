@@ -1,0 +1,12 @@
+       reconstructionRMSE: 0.0021
+             motionGainXY: [3.5769 3.5771]
+             expectedGain: 3.9743
+    relativeGainTolerance: 0.1500
+                mp4Frames: 12
+              videoFrames: 40
+                   matlab: '24.1.0.2537033 (R2024a)'
+                 testedAt: '22-Oct-2026 05:55:11'
+                   status: 'PASS'
+
+All Riesz tests passed.
+Code Analyzer: PASS
