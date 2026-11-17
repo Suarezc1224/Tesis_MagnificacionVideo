@@ -68,19 +68,22 @@
 \contentsline {section}{\numberline {4.2}Selección y clasificación de los algoritmos}{86}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Configuración Experimental}{87}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Configuración de los operadores temporales}{88}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Evaluación subjetiva de la magnificación de video}{90}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Metodología de evaluación subjetiva}{91}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Selección de los estímulos de evaluación}{91}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Criterios de evaluación}{92}{subsection.4.5.3}%
-\contentsline {subsection}{\numberline {4.5.4}Comparación por pares de los algoritmos}{92}{subsection.4.5.4}%
-\contentsline {subsection}{\numberline {4.5.5}Evaluación de estímulo simple}{93}{subsection.4.5.5}%
-\contentsline {subsection}{\numberline {4.5.6}Selección de los observadores}{93}{subsection.4.5.6}%
-\contentsline {subsection}{\numberline {4.5.7}Procedimiento de evaluación}{94}{subsection.4.5.7}%
-\contentsline {subsection}{\numberline {4.5.8}Análisis de los resultados subjetivos}{94}{subsection.4.5.8}%
-\contentsline {section}{\numberline {4.6}Desarrollo}{95}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Conclusiones}{95}{section.4.7}%
-\contentsline {chapter}{\numberline {5}Resultados}{96}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones y recomendaciones}{97}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Conclusiones}{97}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Recomendaciones}{97}{section.6.2}%
-\contentsline {chapter}{Referencias}{98}{chapter*.22}%
+\contentsline {section}{\numberline {4.5}Metodología para la evaluación subjetiva de la magnificación de video}{90}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Evaluación subjetiva de los resultados de magnificación}{90}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Diseño experimental y selección de los estímulos}{91}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Selección de los participantes}{92}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}Modalidad remota y condiciones de visualización}{93}{subsection.4.5.4}%
+\contentsline {subsection}{\numberline {4.5.5}Evaluación mediante el método ACR}{94}{subsection.4.5.5}%
+\contentsline {subsection}{\numberline {4.5.6}Evaluación mediante el método DSIS}{95}{subsection.4.5.6}%
+\contentsline {subsection}{\numberline {4.5.7}Evaluación mediante el método PC}{96}{subsection.4.5.7}%
+\contentsline {subsection}{\numberline {4.5.8}Procedimiento de aplicación de las encuestas}{97}{subsection.4.5.8}%
+\contentsline {subsection}{\numberline {4.5.9}Registro de las condiciones de visualización}{98}{subsection.4.5.9}%
+\contentsline {subsection}{\numberline {4.5.10}Distribución de las evaluaciones por participante}{99}{subsection.4.5.10}%
+\contentsline {subsection}{\numberline {4.5.11}Análisis de los resultados subjetivos}{100}{subsection.4.5.11}%
+\contentsline {section}{\numberline {4.6}Desarrollo}{101}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Conclusiones}{101}{section.4.7}%
+\contentsline {chapter}{\numberline {5}Resultados}{102}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones y recomendaciones}{103}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Conclusiones}{103}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Recomendaciones}{103}{section.6.2}%
+\contentsline {chapter}{Referencias}{104}{chapter*.26}%

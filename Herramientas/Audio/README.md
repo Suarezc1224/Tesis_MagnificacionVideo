@@ -4,13 +4,18 @@
 
 Para una prueba pequena, ejecutar `preparar_video_ligero` en MATLAB desde
 esta carpeta y seleccionar el original. Genera una copia de ancho maximo
-480 pixeles y hasta 500 fotogramas consecutivos, leyendo y escribiendo uno
+480 pixeles y hasta 10 segundos de reproduccion por defecto, leyendo y escribiendo uno
 por uno. Necesita Image Processing Toolbox (`imresize`). No modifica el original.
-La salida se guarda en `Data/Audio/VideoLigero` y su ruta aparece en consola.
-Para elegir otro tramo:
+La salida MP4/H.264 se guarda en `Data/Audio/VideoLigero` y su ruta aparece
+en consola. Para obtener este formato, volver a generar las copias AVI anteriores.
+El nombre conserva el original y agrega `_reducido`: `Par_400.MP4` genera
+`Par_400_reducido.mp4`. Si se procesa de nuevo el mismo nombre, se reemplaza esa copia.
+El quinto argumento, `duracionSegundos`, permite cambiar el limite temporal; por defecto vale 10. El tercer argumento limita los cuadros: usar `Inf` para limitar solo por duracion. Si el original termina antes, se exporta el tramo disponible. El tiempo se mide desde `primerFotograma` usando los FPS de reproduccion del archivo, no los de captura HFR.
+
+Para elegir otro tramo de 5 segundos:
 
 ```matlab
-salida = preparar_video_ligero('F:\PRIVATE\M4ROOT\CLIP\Par_400.MP4',480,500,201);
+salida = preparar_video_ligero('F:\PRIVATE\M4ROOT\CLIP\Par_400.MP4',480,Inf,201,5);
 ```
 
 Usar esa copia en la interfaz. Para el experimento de captura 1000 fps y
@@ -18,7 +23,7 @@ excitacion 400 Hz: Fs=1000, f1=380, f2=420, alpha=5, sigma=3 y octave.
 Conservar los FPS originales de captura al configurar Fs: la copia mantiene
 los FPS de reproduccion del archivo. No reduce temporalmente el muestreo.
 500 fotogramas representan 0.5 segundos fisicos a 1000 fps.
-La copia Motion JPEG es con perdida y sirve para diagnostico; la reduccion
+La copia H.264 es con perdida y sirve para diagnostico; la reduccion
 espacial puede ocultar movimientos y no garantiza que toda maquina tenga RAM
 suficiente. No sustituye la validacion del video original.
 

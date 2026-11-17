@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.10.20)  5 NOV 2026 01:38
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.10.20)  17 NOV 2026 13:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2024,9 +2024,13 @@ File: logos/Logo UCUENCA.png Graphic file (type bmp)
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
  [90]
+
+Package natbib Warning: Citation `P9102026' on page 91 undefined on input line 
+132.
+
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
- [91]
+[91]
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
  [92]
@@ -2035,61 +2039,87 @@ File: logos/Logo UCUENCA.png Graphic file (type bmp)
  [93]
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
- [94])
-(sections/04_Capitulo4_Resultados.tex
+ [94]
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
  [95]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [96]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [97]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [98]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [99]
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [100])
+(sections/04_Capitulo4_Resultados.tex
+File: logos/Logo UCUENCA.png Graphic file (type bmp)
+<logos/Logo UCUENCA.png>
+ [101]
 Capítulo 5.
 ) (sections/05_Capitulo5_Conclusiones.tex
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
- [96
+ [102
 
 ]
 Capítulo 6.
 Excluding 'comment' comment.)
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
- [97
+ [103
 
 ] (main.bbl
 File: logos/dspace.png Graphic file (type bmp)
 <logos/dspace.png>
- [98
+ [104
 
 
 ]
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
- [99]
+ [105]
 Invalid UTF-8 byte or sequence at line 185 replaced by U+FFFD.
 
 Missing character: There is no � in font Arial/OT:script=latn;language=dflt;map
 ping=tex-text;!
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
-[100])
+[106])
+
+Package natbib Warning: There were undefined citations.
+
 File: logos/Logo UCUENCA.png Graphic file (type bmp)
 <logos/Logo UCUENCA.png>
- [101] (main.aux
+[107] (main.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
+
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
 )
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 30982ADE0F466E7B2E2AC5285952DCFA;20034.
+(rerunfilecheck)             Checksum: 79ABED813CACD99F271EB5E0FEA83DFE;21391.
  ) 
 Here is how much of TeX's memory you used:
- 46349 strings out of 402987
- 921731 string characters out of 5448523
- 1531526 words of memory out of 5000000
- 74395 multiletter control sequences out of 15000+600000
+ 46494 strings out of 402987
+ 923917 string characters out of 5448523
+ 1534486 words of memory out of 5000000
+ 74540 multiletter control sequences out of 15000+600000
  639079 words of font info for 124 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  88i,13n,120p,2495b,966s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (101 pages).
+Output written on main.pdf (107 pages).

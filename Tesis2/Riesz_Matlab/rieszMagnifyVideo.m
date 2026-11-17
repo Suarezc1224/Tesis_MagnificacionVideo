@@ -2,11 +2,14 @@ function info = rieszMagnifyVideo(inputFile,outputFile,alpha,lowHz,highHz,vararg
 %RIESZMAGNIFYVIDEO Read, magnify and write a video using the MIT Riesz method.
 % info = rieszMagnifyVideo('input.mp4','output.avi',10,0.8,1.2)
 % Options: Sigma (2), Levels ([] = all), Overwrite (false), Verbose (true).
+% SamplingRate sets the temporal filter rate in Hz ([] = input frame rate).
 % Output .avi uses Motion JPEG AVI; .mp4/.m4v uses MPEG-4 (even dimensions).
 % Color: process NTSC/YIQ luminance only, preserve input chrominance. No audio.
 p = inputParser;
 addParameter(p,'Sigma',2);
 addParameter(p,'Levels',[]);
+addParameter(p,'SamplingRate',[],@(v) isempty(v)|| ...
+    (isnumeric(v)&&isscalar(v)&&isreal(v)&&isfinite(v)&&v>0));
 addParameter(p,'Overwrite',false,@(v) islogical(v)&&isscalar(v));
 addParameter(p,'Verbose',true,@(v) islogical(v)&&isscalar(v));
 addParameter(p,'ProgressFcn',[],@(v) isempty(v)||isa(v,'function_handle'));
@@ -21,10 +24,14 @@ assert(~strcmpi(inPath,outPath),'Riesz:SameFile','Input and output must differ.'
 [folder,~,extension] = fileparts(outputFile);
 assert(isempty(folder)||isfolder(folder),'Riesz:Folder','Output folder does not exist.');
 reader = VideoReader(inputFile);
+samplingRate = p.Results.SamplingRate;
+if isempty(samplingRate)
+    samplingRate = reader.FrameRate;
+end
 assert(hasFrame(reader),'Riesz:EmptyVideo','Input video contains no frames.');
 first = readFrame(reader);
 [luminance,chroma] = splitFrame(first);
-state = rieszInitialize(luminance,reader.FrameRate,alpha,lowHz,highHz, ...
+state = rieszInitialize(luminance,samplingRate,alpha,lowHz,highHz, ...
     'Sigma',p.Results.Sigma,'Levels',p.Results.Levels);
 switch lower(extension)
     case '.avi'
@@ -62,7 +69,7 @@ while hasFrame(reader)
 end
 clear cleanup; % Close before returning; the callback also runs on errors.
 info = struct('inputFile',inPath,'outputFile',outPath, ...
-    'frames',count,'fps',reader.FrameRate,'alpha',alpha, ...
+    'frames',count,'fps',reader.FrameRate,'samplingRate',samplingRate,'alpha',alpha, ...
     'bandHz',[lowHz highHz],'sigma',p.Results.Sigma,'levels',state.levels, ...
     'elapsedSeconds',toc(timer),'profile',profile);
 if p.Results.Verbose

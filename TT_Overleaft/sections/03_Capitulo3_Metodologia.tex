@@ -121,79 +121,285 @@ Finalmente, los métodos que no emplean una derivada temporal explícita, sino u
 Para garantizar una comparación adecuada, todos los algoritmos serán evaluados utilizando las mismas secuencias de video, frecuencia de cuadros, resolución y condiciones generales de procesamiento. Los parámetros propios de cada método, como frecuencia de corte, orden de la derivada, ancho de la función gaussiana, longitud de la ventana temporal o parámetros de fase, se establecerán de acuerdo con la formulación propuesta originalmente por cada algoritmo. De esta manera, la comparación permitirá diferenciar entre el efecto producido por el operador temporal y las características particulares de cada método de magnificación.
 
 
-\section{Evaluación subjetiva de la magnificación de video}
+\section{Metodología para la evaluación subjetiva de la magnificación de video}
 
-La evaluación de los resultados obtenidos mediante los diferentes algoritmos de magnificación de video se realizará principalmente mediante una metodología subjetiva. Esta elección se debe a que el objetivo del procesamiento no consiste únicamente en reproducir una señal de referencia, sino en hacer perceptibles movimientos o variaciones que inicialmente pueden ser difíciles de observar. Por esta razón, la valoración de aspectos como la visibilidad del movimiento magnificado, la presencia de artefactos y la naturalidad del resultado requiere considerar la percepción de los observadores.\\
+\subsection{Evaluación subjetiva de los resultados de magnificación}
 
-Para establecer un procedimiento de evaluación uniforme, se tomarán como referencia las recomendaciones descritas en la norma ITU-R BT.500, que establece metodologías para la evaluación subjetiva de la calidad de imágenes y video. De manera complementaria, se considerarán los lineamientos establecidos en ITU-T P.910 e ITU-T P.913 para la organización de las pruebas y la valoración subjetiva de contenido de video. Estas recomendaciones permiten definir diferentes formas de presentar los estímulos y recopilar las valoraciones de los observadores.\\
+La evaluación subjetiva constituye una etapa del análisis comparativo orientada a determinar cómo perciben los observadores los resultados obtenidos mediante los algoritmos de magnificación de video. A diferencia de las mediciones computacionales, este procedimiento permite valorar características perceptuales que no necesariamente pueden describirse mediante una única métrica numérica, como la claridad del movimiento amplificado, la naturalidad de la imagen, la presencia de artefactos y la estabilidad temporal.
 
-\subsection{Metodología de evaluación subjetiva}
+Para el desarrollo de esta evaluación se tomarán como referencia las recomendaciones UIT-R BT.500-13, correspondiente a la metodología para la evaluación subjetiva de la calidad de las imágenes, y UIT-T P.913 (06/2021), que describe procedimientos de evaluación de calidad de video y sus respectivas escalas de calificación. En particular, se utilizarán los métodos \gls{DSIS}, \gls{PC} y \gls{ACR}, de acuerdo con las orientaciones proporcionadas por el docente y adaptando sus criterios al objetivo específico de evaluar la magnificación de movimientos y vibraciones sutiles \cite{BT50013,P9132021}.
 
-La evaluación subjetiva se plantea con el propósito de comparar la percepción de los resultados obtenidos mediante los diferentes algoritmos de magnificación. Para ello, los videos procesados serán presentados a un grupo de observadores bajo condiciones controladas y siguiendo un procedimiento común para todos los métodos.\\
+Asimismo, se incluye la Recomendación UIT-T P.910 (07/2026), titulada \textit{Subjective video quality assessment methods for multimedia applications}, entre las referencias normativas utilizadas para la evaluación subjetiva \cite{P9102026}.
 
-La evaluación considerará tres posibilidades de presentación de los estímulos: doble estímulo, comparación por pares y estímulo simple. Cada una de estas modalidades permite analizar diferentes aspectos de los resultados. La selección de la modalidad dependerá del objetivo específico de la prueba y de la forma en que se requiera comparar los algoritmos.\\
+La aplicación de estos métodos permitirá estudiar los resultados desde tres perspectivas complementarias: la valoración individual de cada video magnificado, la identificación de alteraciones visuales no deseadas y la comparación directa entre los algoritmos implementados. Debido a que la magnificación modifica intencionalmente el movimiento de la secuencia original, las instrucciones de evaluación distinguirán entre el incremento esperado del movimiento y los artefactos visuales producidos durante el procesamiento.
 
-En todos los casos se procurará mantener constantes las condiciones de visualización, duración de los estímulos y características de reproducción, de manera que las diferencias observadas en las valoraciones estén relacionadas principalmente con los resultados producidos por los algoritmos.\\
+\subsection{Diseño experimental y selección de los estímulos}
 
-\subsection{Selección de los estímulos de evaluación}
+La evaluación se realizará mediante un diseño experimental de medidas repetidas, en el que cada participante observará los resultados generados por los tres algoritmos a partir de las mismas secuencias originales. De esta manera, se evitará que las diferencias entre los contenidos de los videos influyan directamente en la comparación entre métodos.
 
-Los estímulos utilizados durante la evaluación estarán constituidos por los videos obtenidos mediante la aplicación de los algoritmos seleccionados. Para garantizar una comparación equivalente, los diferentes métodos serán aplicados sobre las mismas secuencias de entrada y, cuando sea posible, bajo condiciones de procesamiento similares.\\
+Considerando que la Recomendación UIT-T P.913 establece que entre cuatro y seis escenas pueden ser suficientes cuando se mantiene una variedad adecuada del contenido, se propone utilizar seis secuencias de video como material de evaluación. Estas estarán distribuidas en tres secuencias sintéticas y tres secuencias reales, de modo que se puedan estudiar tanto condiciones controladas como situaciones experimentales adquiridas mediante la cámara \cite{P9132021}.
 
-Los videos serán seleccionados de acuerdo con las características del movimiento que se desea magnificar. Se considerarán secuencias que contengan variaciones sutiles y situaciones en las que pueda existir movimiento global, de modo que sea posible analizar el comportamiento de los algoritmos frente a diferentes condiciones.\\
+Las secuencias sintéticas se generarán con características de movimiento conocidas, considerando diferentes amplitudes, frecuencias y condiciones de ruido. Las secuencias reales corresponderán a movimientos y vibraciones registrados experimentalmente en objetos o estructuras bajo condiciones de adquisición documentadas.
 
-Para cada secuencia se generarán los resultados correspondientes a los métodos evaluados. Estos resultados constituirán los estímulos que serán presentados a los observadores durante las pruebas subjetivas.\\
+Cada secuencia original será procesada individualmente mediante los tres algoritmos: Eulerian Video Magnification (EVM), magnificación basada en fase (Phase-Based) y pirámides de Riesz. Por consiguiente, se obtendrán dieciocho videos procesados, además de conservar las seis secuencias originales como referencia para las evaluaciones.
 
-\subsection{Criterios de evaluación}
+\begin{equation}
+N_{\mathrm{procesados}} =
+N_{\mathrm{originales}}\times N_{\mathrm{algoritmos}}
+\end{equation}
 
-Los criterios de evaluación estarán orientados a las características que son relevantes para la magnificación de movimientos sutiles. En lugar de solicitar únicamente una valoración general de calidad, se buscará determinar qué tan adecuado es cada resultado para hacer perceptible el movimiento de interés sin introducir alteraciones visuales excesivas.\\
+\begin{equation}
+N_{\mathrm{procesados}}=6\times3=18
+\end{equation}
 
-Entre los principales criterios se considerarán la magnificación perceptible del movimiento, la presencia de artefactos, la naturalidad del resultado y la estabilidad visual. La magnificación perceptible permitirá determinar si el movimiento de interés puede observarse con mayor facilidad después del procesamiento. La presencia de artefactos permitirá identificar alteraciones no deseadas, como deformaciones, halos, ruido o movimientos que no corresponden al fenómeno analizado.\\
+La selección de las secuencias procurará representar diferentes características espaciales y temporales. En particular, se considerarán movimientos de pequeña amplitud, variaciones periódicas y situaciones en las que exista ruido o movimiento interferente.
 
-La naturalidad permitirá valorar si el video magnificado mantiene una apariencia visual coherente, mientras que la estabilidad permitirá determinar si el resultado presenta variaciones o comportamientos no deseados a lo largo de la secuencia.\\
+Los estímulos tendrán una duración aproximada de 8 a 10 segundos, siguiendo las recomendaciones de duración indicadas en la UIT-T P.913. Asimismo, se procurará mantener una resolución, frecuencia de cuadros, duración y formato de reproducción equivalentes para las salidas de los tres algoritmos.
 
-Los criterios podrán utilizarse individualmente o de manera conjunta dependiendo de la modalidad de evaluación seleccionada.\\
+Los parámetros específicos de magnificación se establecerán previamente mediante pruebas de calibración. Se documentarán los factores de amplificación y las bandas temporales utilizadas por cada método, procurando que los resultados sean comparables en cuanto al movimiento que se desea destacar, sin imponer valores numéricos idénticos cuando los parámetros de los algoritmos no tengan el mismo significado físico.
 
-\subsection{Comparación por pares de los algoritmos}
+\subsection{Selección de los participantes}
 
-La comparación por pares se utilizará para determinar cuál de dos algoritmos produce un resultado preferible bajo un mismo escenario de prueba. En cada evaluación se presentarán dos resultados correspondientes a diferentes métodos aplicados sobre una misma secuencia de entrada.\\
+Debido a que la evaluación se desarrollará de forma remota, los participantes realizarán las pruebas desde sus propios dispositivos y ubicaciones. Por esta razón, se considerará una muestra de tipo no probabilístico por conveniencia, formada por personas que cumplan las condiciones básicas de participación y acepten voluntariamente realizar la evaluación.
 
-El observador deberá seleccionar el resultado que considere superior de acuerdo con el criterio establecido. Por ejemplo, podrá solicitarse identificar cuál de los dos videos presenta una mayor percepción del movimiento de interés, cuál presenta menor cantidad de artefactos o cuál proporciona una combinación más adecuada entre magnificación y calidad visual.\\
+Como referencia para establecer el tamaño de la muestra se considerarán las recomendaciones de la UIT-T P.913, que establece al menos 24 participantes para evaluaciones en ambientes controlados y 35 para ambientes públicos. Dado que la modalidad propuesta no garantiza condiciones uniformes de visualización, se plantea obtener al menos 35 evaluaciones válidas como objetivo inicial de la evaluación remota. Esta cantidad constituye una decisión de diseño basada en las orientaciones de la recomendación y no una exigencia universal para cualquier encuesta realizada por internet \cite{P9132021}.
 
-La comparación por pares permitirá establecer una relación directa entre los algoritmos y facilitará la identificación del método que obtiene una mayor preferencia por parte de los observadores.\\
+Se propone reclutar aproximadamente entre 40 y 45 personas, con el propósito de disponer de al menos 35 respuestas completas y válidas una vez revisados los registros. Los participantes deberán ser mayores de edad y contar con visión normal o corregida mediante lentes. No será necesario que posean conocimientos especializados sobre los algoritmos de magnificación, debido a que se busca obtener una valoración perceptual independiente del funcionamiento interno de cada método.
 
-\subsection{Evaluación de estímulo simple}
+Antes de iniciar la evaluación definitiva, se realizará una prueba piloto con aproximadamente 8 a 12 participantes, con el propósito de comprobar el funcionamiento de la plataforma, la reproducción correcta de los videos, la comprensión de las preguntas y la duración total del procedimiento. Si se realizan modificaciones importantes en el cuestionario o en la presentación de los estímulos, las respuestas del piloto no se incorporarán a la muestra definitiva \cite{P9132021}.
 
-La evaluación mediante estímulo simple permitirá analizar cada resultado de manera independiente. En este caso, el observador visualizará un único video procesado y asignará una valoración de acuerdo con los criterios definidos previamente.\\
+\subsection{Modalidad remota y condiciones de visualización}
 
-Esta modalidad permitirá obtener una valoración individual de cada algoritmo, sin que el resultado dependa directamente de la comparación inmediata con otro método. La escala de valoración será definida de acuerdo con las recomendaciones seleccionadas y se mantendrá constante durante toda la prueba.\\
+La evaluación subjetiva se llevará a cabo mediante una plataforma digital que permitirá acceder a los videos y registrar las respuestas de los participantes desde diferentes ubicaciones. Esta modalidad se adopta debido a las limitaciones logísticas para reunir a todos los observadores en un mismo espacio físico y mantener condiciones presenciales de evaluación.
 
-Los resultados obtenidos mediante esta modalidad permitirán complementar la comparación por pares y determinar la percepción general de los resultados generados por cada algoritmo.\\
+El procedimiento será considerado una evaluación remota en condiciones heterogéneas, debido a que los participantes utilizarán diferentes dispositivos y entornos de visualización. En consecuencia, no será posible garantizar que todos observen los estímulos bajo las mismas condiciones de tamaño de pantalla, iluminación ambiental, distancia de observación o características del monitor. Sin embargo, se establecerán instrucciones uniformes para reducir, en la medida de lo posible, las variaciones que puedan afectar la percepción de los resultados.
 
-\subsection{Selección de los observadores}
+Se recomendará a los participantes realizar la evaluación en interiores, en un lugar tranquilo y sin interrupciones. Los videos deberán visualizarse en orientación horizontal y a pantalla completa, manteniendo un nivel de brillo cómodo y constante. En el caso de teléfonos móviles, se recomendará utilizar un soporte para mantener una posición estable durante la reproducción.
 
-Los observadores serán seleccionados considerando que la evaluación busca representar la percepción humana de los resultados de magnificación. Antes de iniciar la prueba se proporcionarán instrucciones sobre el procedimiento y sobre los criterios que deberán considerar durante la visualización.\\
+Para evitar modificaciones en los estímulos, los videos se alojarán en una plataforma que permita reproducir los archivos originales sin aplicar procesos adicionales de compresión, recodificación o adaptación de resolución. Se evitará utilizar servicios de mensajería o redes sociales que puedan modificar automáticamente la calidad del material audiovisual.
 
-Los observadores no deberán conocer necesariamente el algoritmo utilizado para generar cada video, con el propósito de reducir posibles preferencias asociadas con el método empleado. Las instrucciones se centrarán en las características observables del resultado y no en la identificación del algoritmo.\\
+Se procurará que todos los participantes visualicen las mismas versiones de los videos, con iguales características de resolución, frecuencia de cuadros, duración y velocidad de reproducción. Además, se utilizarán identificadores neutrales para presentar los resultados, sin revelar si fueron generados por EVM, Phase-Based o Riesz, con el propósito de reducir posibles sesgos relacionados con el conocimiento previo de los métodos.
 
-\subsection{Procedimiento de evaluación}
+Durante la evaluación se recopilará información sobre el dispositivo utilizado, el tipo de pantalla, las condiciones generales de iluminación y posibles problemas de reproducción. También se registrará si el participante realizó la prueba desde un teléfono móvil, tableta o computadora. Estos datos permitirán describir las condiciones de visualización y reconocer posibles factores externos que puedan influir en las valoraciones obtenidas.
 
-La prueba se realizará bajo condiciones de visualización controladas. Antes de comenzar la evaluación se explicará a los observadores el procedimiento y los criterios que deberán utilizar. Posteriormente, los estímulos serán presentados siguiendo un orden establecido.\\
+Debido a que la evaluación se realiza a distancia, la comprobación de las condiciones visuales se basará principalmente en la información declarada por los participantes. Esta adaptación se reconocerá como una limitación frente a una prueba presencial con evaluación formal de agudeza visual y condiciones de observación controladas.
 
-Para evitar que el orden de presentación influya sobre las respuestas, los estímulos podrán organizarse de manera aleatoria o mediante una distribución previamente definida. De igual forma, se procurará evitar que los observadores conozcan qué algoritmo corresponde a cada resultado durante la prueba.\\
+\subsection{Evaluación mediante el método ACR}
 
-Cada observador registrará su valoración para los estímulos presentados. Las respuestas serán almacenadas para su posterior procesamiento y comparación entre los diferentes algoritmos.\\
+El método \gls{ACR} se utilizará para valorar individualmente los videos generados por los algoritmos. En este procedimiento, cada secuencia procesada se presentará de manera independiente y el participante asignará una calificación sin compararla directamente con otra versión del mismo video.
+
+Se utilizará una escala de cinco categorías, de acuerdo con la Recomendación UIT-T P.913: excelente, buena, regular, pobre y mala. Para adaptar la valoración al objetivo del proyecto, se considerarán tres aspectos perceptuales:
+
+\begin{enumerate}
+\item \textbf{Claridad del movimiento magnificado:} determina qué tan claramente puede identificarse el movimiento o vibración de interés.
+
+\item \textbf{Naturalidad y presencia de artefactos:} considera la conservación de la apariencia visual y la presencia de halos, ruido, desenfoque, bordes dobles o deformaciones.
+
+\item \textbf{Estabilidad temporal:} evalúa la continuidad del movimiento magnificado y la ausencia de fluctuaciones, parpadeos o inestabilidades durante la secuencia.
+
+\end{enumerate}
+
+Para cada video se registrará una valoración por cada uno de estos aspectos. La escala de calificación se presenta en la Tabla \ref{tab:escala_acr}.
+
+\begin{table}[H]
+\centering
+\caption{Escala de valoración utilizada en el método ACR.}
+\label{tab:escala_acr}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Valor} & \textbf{Categoría} \\ \hline
+5 & Excelente \\ \hline
+4 & Buena \\ \hline
+3 & Regular \\ \hline
+2 & Pobre \\  \hline
+1 & Mala \\ \hline
+\end{tabular}
+\end{table}
+
+Para facilitar la interpretación de las preguntas, se proporcionarán descripciones breves de cada categoría. Por ejemplo, una calificación excelente en claridad del movimiento representará que la vibración puede distinguirse de manera evidente, mientras que una calificación mala indicará que el movimiento no se logra identificar adecuadamente.
+
+En cuanto a la naturalidad, las puntuaciones más altas corresponderán a resultados con una apariencia visual conservada y sin artefactos importantes. Para la estabilidad temporal, una puntuación alta representará un movimiento continuo y estable durante la secuencia.
+
+La aplicación de este método permitirá obtener puntuaciones medias de opinión para cada algoritmo y cada aspecto evaluado, identificando cuál proporciona una mayor claridad del movimiento, una mejor conservación visual y una mayor estabilidad temporal.
+
+\subsection{Evaluación mediante el método DSIS}
+
+El método \gls{DSIS} se empleará para analizar las alteraciones visuales no deseadas introducidas por el procesamiento. En este procedimiento, el participante observará primero la secuencia original y posteriormente la versión magnificada generada por uno de los algoritmos.
+
+La valoración se realizará mediante una escala de cinco niveles de degradación, en la que una puntuación alta representa una alteración menos perceptible o menos molesta. Las categorías utilizadas se muestran en la Tabla \ref{tab:escala_dsis}.
+
+\begin{table}[H]
+\centering
+\caption{Escala de valoración del método DSIS.}
+\label{tab:escala_dsis}
+\begin{tabular}{|c|p{8cm}|}
+\hline
+\textbf{Valor} & \textbf{Categoría de alteración} \\ \hline
+5 & Imperceptible \\ \hline
+4 & Perceptible, pero no molesta \\ \hline
+3 & Ligeramente molesta \\ \hline
+2 & Molesta \\ \hline
+1 & Muy molesta \\ \hline
+\end{tabular}
+\end{table}
+
+Para su aplicación en magnificación de movimiento, se especificará a los participantes que no deben calificar como degradación el incremento intencional del movimiento. La valoración deberá concentrarse únicamente en las alteraciones no deseadas que puedan afectar la interpretación visual, como halos, bordes dobles, ruido amplificado, desenfoque, parpadeos o deformaciones.
+
+Por cada video original se realizarán tres comparaciones: original frente a EVM, original frente a Phase-Based y original frente a Riesz. De esta manera, se obtendrán dieciocho evaluaciones de doble estímulo.
+
+Debido a que esta aplicación se concentra en los artefactos introducidos por la magnificación y no en una degradación convencional de transmisión, la adaptación de las instrucciones se documentará como parte de las modificaciones del procedimiento de evaluación.
+
+\subsection{Evaluación mediante el método PC}
+
+El método \gls{PC} se utilizará para comparar directamente los resultados de dos algoritmos que hayan procesado la misma secuencia original. A diferencia de ACR, este procedimiento permitirá establecer una preferencia relativa entre dos versiones de un mismo contenido.
+
+Para cada video original se realizarán las siguientes comparaciones:
+
+\begin{enumerate}
+\item EVM frente a Phase-Based.
+\item EVM frente a Riesz.
+\item Phase-Based frente a Riesz.
+\end{enumerate}
+
+Considerando las seis secuencias originales, se obtendrán dieciocho comparaciones por pares. El orden de presentación de los dos resultados será aleatorizado, procurando equilibrar la presentación de cada algoritmo en primera y segunda posición entre los participantes.
+
+La pregunta planteada al observador será:
+
+\begin{quote}
+¿Cuál de los dos resultados permite observar de mejor manera el movimiento o vibración de interés, conservando la naturalidad de la imagen y evitando la presencia de artefactos visuales excesivos?
+\end{quote}
+
+Se utilizará la escala de siete niveles descrita en la Recomendación UIT-T P.913, presentada en la Tabla \ref{tab:escala_pc}.
+
+\begin{table}[H]
+\centering
+\caption{Escala de valoración del método PC.}
+\label{tab:escala_pc}
+\begin{tabular}{|c|p{8cm}|}
+\hline
+\textbf{Valor} & \textbf{Preferencia del segundo resultado respecto al primero} \\ \hline
+$-3$ & Mucho peor \\ \hline
+$-2$ & Peor \\ \hline
+$-1$ & Ligeramente peor \\ \hline
+$0$ & Igual \\ \hline
+$+1$ & Ligeramente mejor \\ \hline
+$+2$ & Mejor \\ \hline
+$+3$ & Mucho mejor \\ \hline
+\end{tabular}
+\end{table}
+
+Las respuestas se procesarán considerando el orden aleatorio de presentación, de manera que las puntuaciones finales representen correctamente la preferencia por cada algoritmo. De esta forma, será posible establecer comparaciones entre los tres métodos sin que la posición en la que aparece cada video influya sistemáticamente en los resultados.
+
+\subsection{Procedimiento de aplicación de las encuestas}
+
+La evaluación se realizará mediante una plataforma digital que permita presentar los estímulos audiovisuales y registrar las respuestas de manera organizada. El enlace de acceso será distribuido entre los participantes, quienes podrán realizar la prueba desde sus propios dispositivos.
+
+El procedimiento de participación comprenderá las siguientes etapas:
+
+\begin{enumerate}
+\item \textbf{Consentimiento e información inicial:} se explicará el objetivo general de la evaluación, la duración estimada, el carácter voluntario de la participación y la confidencialidad de las respuestas.
+
+\item \textbf{Registro de las condiciones de visualización:} se solicitará información sobre el dispositivo utilizado, el tipo de pantalla y el entorno desde el que se realizará la prueba.
+
+\item \textbf{Instrucciones y entrenamiento:} se explicará el funcionamiento de los métodos ACR, DSIS y PC, junto con los criterios de valoración. Se utilizarán secuencias de entrenamiento diferentes de las que forman parte de la evaluación definitiva.
+
+\item \textbf{Bloque ACR:} se presentarán individualmente los dieciocho videos procesados, registrando tres valoraciones por cada uno.
+
+\item \textbf{Bloque DSIS:} se presentarán las dieciocho parejas formadas por el video original y su correspondiente resultado magnificado.
+
+\item \textbf{Bloque PC:} se presentarán las dieciocho comparaciones por pares entre los algoritmos, con orden aleatorio de presentación.
+
+\item \textbf{Registro final:} se almacenarán las respuestas y se permitirá al participante comunicar cualquier problema presentado durante la reproducción o evaluación.
+
+\end{enumerate}
+
+Los tres bloques se organizarán de manera que se reduzca la fatiga y se mantenga la comprensión de las instrucciones. Se permitirá realizar pausas entre bloques y se procurará que la duración total de la participación no exceda el tiempo razonable establecido después de la prueba piloto.
+
+En todos los casos, se mantendrá el mismo procedimiento de presentación y las mismas instrucciones para los participantes. Los videos no se identificarán con los nombres de los algoritmos y las respuestas se almacenarán utilizando códigos anónimos.
+
+\subsection{Registro de las condiciones de visualización}
+
+Con el propósito de documentar las condiciones en las que se realiza la evaluación remota, se recopilará información complementaria sobre los dispositivos y ambientes utilizados. Esta información permitirá identificar posibles factores que influyan en las puntuaciones subjetivas y reconocer las limitaciones derivadas de la falta de control presencial.
+
+Entre los datos que se registrarán se consideran:
+
+\begin{itemize}
+\item Tipo de dispositivo utilizado: teléfono móvil, tableta, computadora portátil o computadora de escritorio.
+\item Tamaño aproximado de la pantalla, cuando el participante conozca este dato.
+\item Orientación de visualización del dispositivo.
+\item Lugar donde se realiza la evaluación.
+\item Condiciones generales de iluminación.
+\item Posibles interrupciones o problemas durante la reproducción.
+\item Confirmación de que los videos fueron observados completamente.
+\end{itemize}
+
+Estos datos se utilizarán para describir las condiciones de la muestra y complementar el análisis de las valoraciones. Cuando exista una cantidad suficiente de participantes por categoría de dispositivo, se podrá realizar un análisis exploratorio para identificar posibles diferencias relacionadas con las condiciones de visualización.
+
+\subsection{Distribución de las evaluaciones por participante}
+
+Considerando los seis videos originales y los tres algoritmos, la evaluación estará compuesta por las pruebas indicadas en la Tabla \ref{tab:estructura_subjetiva}.
+
+\begin{table}[H]
+\centering
+\caption{Distribución de las evaluaciones subjetivas por participante.}
+\label{tab:estructura_subjetiva}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Método} & \textbf{Pruebas} & \textbf{Respuestas} \\ \hline
+ACR & 18 videos & 54 \\ \hline
+DSIS & 18 pares & 18 \\ \hline
+PC & 18 pares & 18 \\ \hline
+\textbf{Total} & \textbf{54 pruebas} & \textbf{90 respuestas} \\ \hline
+\end{tabular}
+\end{table}
+
+En el método ACR se presentarán dieciocho videos procesados y se registrarán tres valoraciones por cada uno, correspondientes a claridad del movimiento, naturalidad y estabilidad temporal. En DSIS se realizarán dieciocho comparaciones entre el video original y cada uno de los resultados procesados. Finalmente, en PC se realizarán dieciocho comparaciones entre los diferentes algoritmos.
+
+Por consiguiente, cada participante completará cincuenta y cuatro pruebas y proporcionará noventa respuestas individuales. Si se obtienen treinta y cinco evaluaciones válidas, se dispondrá de un total de:
+
+\begin{equation}
+N_{\mathrm{respuestas}}=90\times35=3150
+\end{equation}
+
+Estas respuestas permitirán realizar un análisis comparativo de los resultados desde las tres perspectivas subjetivas definidas.
 
 \subsection{Análisis de los resultados subjetivos}
 
-Los resultados obtenidos serán agrupados de acuerdo con el algoritmo, la secuencia de video y el criterio de evaluación. Para cada método se calcularán los valores representativos de las respuestas obtenidas por los observadores.\\
+Los resultados obtenidos se organizarán por algoritmo, secuencia original y criterio perceptual. Para ACR se calculará la \gls{MOS} de cada video procesado, considerando las respuestas de los participantes para cada atributo evaluado:
 
-En el caso de la comparación por pares, se analizará la frecuencia con la que cada algoritmo es seleccionado como preferido frente a otro. Esto permitirá establecer un orden de preferencia entre los métodos evaluados.\\
+\begin{equation}
+MOS_{m,v,k}=
+\frac{1}{N}\sum_{i=1}^{N}r_{i,m,v,k}
+\end{equation}
 
-Para la evaluación mediante estímulo simple, se calcularán los valores promedio obtenidos por cada algoritmo en los diferentes criterios. Estos resultados permitirán identificar las características en las que cada método presenta un mejor o peor comportamiento desde el punto de vista perceptual.\\
+donde $m$ representa el algoritmo, $v$ la secuencia original, $k$ el criterio perceptual, $i$ el participante, $N$ el número de participantes válidos y $r$ la calificación individual.
 
-Finalmente, los resultados subjetivos serán comparados con las características observadas durante el análisis de los operadores temporales y con el tiempo de procesamiento de cada método. De esta manera, será posible establecer una relación entre el comportamiento computacional del operador, la calidad visual percibida y la capacidad de cada algoritmo para magnificar los movimientos de interés.\\
+Para DSIS se calculará el promedio de las calificaciones de alteración visual obtenidas en cada comparación entre el video original y el procesado:
 
+\begin{equation}
+DSIS_{m,v}=
+\frac{1}{N}\sum_{i=1}^{N}d_{i,m,v}
+\end{equation}
 
+donde $d_{i,m,v}$ corresponde a la valoración de las alteraciones visuales realizada por el participante $i$ para el algoritmo $m$ y el video $v$. En esta escala, las puntuaciones más elevadas representan una menor percepción de alteraciones no deseadas.
+
+Para PC se calculará la preferencia media de cada pareja de algoritmos, después de corregir el orden de presentación. Para una comparación entre los algoritmos A y B, la puntuación se orientará de forma que un valor positivo represente una preferencia por B frente a A:
+
+\begin{equation}
+PC_{i,v}^{(A,B)}=
+\begin{cases}
+q_{i,v}, & \text{si A se presenta primero},\\
+-q_{i,v}, & \text{si B se presenta primero}.
+\end{cases}
+\end{equation}
+
+donde $q_{i,v}$ representa la calificación registrada por el participante para el segundo resultado respecto al primero. Posteriormente, se calculará la puntuación media de preferencia y el porcentaje de valoraciones favorables para cada algoritmo.
+
+Los resultados se presentarán mediante tablas y gráficos comparativos, incluyendo medias, desviaciones estándar e intervalos de confianza del 95\,\%. Para analizar las diferencias entre los tres algoritmos en ACR y DSIS se considerará la naturaleza ordinal de las escalas y el diseño de medidas repetidas. Se podrá utilizar la prueba de Friedman para comparar las valoraciones relacionadas y, cuando corresponda, comparaciones posteriores mediante Wilcoxon con corrección de Holm. En PC, las puntuaciones se analizarán por pareja de algoritmos, manteniendo la corrección del orden de presentación.
+
+Adicionalmente, se examinarán las valoraciones en función del tipo de secuencia, diferenciando los resultados obtenidos con videos sintéticos y reales. El registro de los dispositivos y ambientes permitirá identificar posibles factores externos que deban considerarse en la interpretación de los datos.
+
+Finalmente, la evaluación subjetiva se interpretará conjuntamente con los resultados computacionales del proyecto, considerando la identificación de frecuencias dominantes, la precisión de las variaciones periódicas, la estabilidad del procesamiento y el tiempo de ejecución. De esta manera, será posible determinar no solo qué algoritmo produce una magnificación visualmente más satisfactoria, sino también las condiciones en las que cada método ofrece un comportamiento más adecuado para el análisis de movimientos y vibraciones sutiles.
 
 \section{Desarrollo}
 

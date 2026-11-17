@@ -29,21 +29,23 @@ function gui_magnification()
     fig = uifigure( ...
         'Name', 'Magnificación de Video Euleriana - Universidad de Cuenca', ...
         'Position', [100 80 1280 820], ...
+        'WindowState', 'maximized', ...
+        'AutoResizeChildren', 'off', ...
         'Color', [0.96 0.97 0.98], ...
         'CloseRequestFcn', @closeApplication);
 
     mainGrid = uigridlayout(fig, [2 1]);
-    mainGrid.RowHeight = {104, '1x'};
-    mainGrid.Padding = [12 12 12 12];
-    mainGrid.RowSpacing = 10;
+    mainGrid.RowHeight = {48, '1x'};
+    mainGrid.Padding = [6 6 6 6];
+    mainGrid.RowSpacing = 4;
 
     headerPanel = uipanel(mainGrid, ...
         'BackgroundColor', [0.04 0.22 0.38], ...
         'BorderType', 'none');
     headerPanel.Layout.Row = 1;
     headerGrid = uigridlayout(headerPanel, [1 2]);
-    headerGrid.ColumnWidth = {110, '1x'};
-    headerGrid.Padding = [12 8 12 8];
+    headerGrid.ColumnWidth = {65, '1x'};
+    headerGrid.Padding = [6 3 6 3];
     headerGrid.ColumnSpacing = 16;
 
     logoContainer = uipanel(headerGrid, ...
@@ -58,7 +60,7 @@ function gui_magnification()
         uiimage(logoContainer, ...
             'ImageSource', logoPath, ...
             'ScaleMethod', 'fit', ...
-            'Position', [5 5 100 78]);
+            'Position', [2 2 60 36]);
     catch
         uilabel(logoContainer, ...
             'Text', 'Logo UCuenca', ...
@@ -66,12 +68,12 @@ function gui_magnification()
             'VerticalAlignment', 'center', ...
             'FontWeight', 'bold', ...
             'FontColor', [0.04 0.22 0.38], ...
-            'Position', [5 5 100 78]);
+            'Position', [2 2 60 36]);
     end
 
     uilabel(headerGrid, ...
         'Text', 'Universidad de Cuenca - Magnificación de Video Euleriana', ...
-        'FontSize', 23, ...
+        'FontSize', 16, ...
         'FontWeight', 'bold', ...
         'FontColor', [1 1 1], ...
         'HorizontalAlignment', 'left', ...
@@ -87,12 +89,53 @@ function gui_magnification()
     tabData{1} = buildEvmTab(evmTab);
     tabData{2} = buildPhaseTab(phaseTab);
     tabData{3} = buildRieszTab(rieszTab);
+    fig.SizeChangedFcn = @resizeInterface;
+    resizeInterface();
+
+    function resizeInterface(~, ~)
+        narrow = fig.Position(3) < 900;
+        for n = 1:numel(tabData)
+            data = tabData{n};
+            if isempty(data), continue; end
+            params = findall(data.parameterPanel, 'Type', 'uigridlayout');
+            params.Scrollable = 'on';
+            if n == 1, parameterHeight = 112; else, parameterHeight = 84; end
+            if narrow
+                data.actionGrid.ColumnWidth = {'1x', '1x', 18, 100, '1x'};
+                data.previewGrid.ColumnWidth = {'1x'};
+                data.previewGrid.RowHeight = {'1x', '1x'};
+                data.inputPanel.Layout.Row = 1;
+                data.inputPanel.Layout.Column = 1;
+                data.outputPanel.Layout.Row = 2;
+                data.outputPanel.Layout.Column = 1;
+                if n == 3
+                    params.ColumnWidth = {90, 90, 90, 90, 90, 90};
+                else
+                    params.ColumnWidth = {105, 140, 92, 100, 92, 100, 100, 100};
+                end
+            else
+                data.actionGrid.ColumnWidth = {145, 165, 18, 100, 135};
+                data.previewGrid.RowHeight = {'1x'};
+                data.previewGrid.ColumnWidth = {'1x', '1x'};
+                data.inputPanel.Layout.Row = 1;
+                data.inputPanel.Layout.Column = 1;
+                data.outputPanel.Layout.Row = 1;
+                data.outputPanel.Layout.Column = 2;
+                if n == 3
+                    params.ColumnWidth = {90, '1x', 90, '1x', 90, '1x'};
+                else
+                    params.ColumnWidth = {105, '1x', 92, '1x', 92, '1x', 100, '1x'};
+                end
+            end
+            data.tabGrid.RowHeight = {30, parameterHeight, 30, '1x'};
+        end
+    end
 
     function data = buildBaseTab(tab, algorithmName, runLabel, runCallback)
         tabGrid = uigridlayout(tab, [4 1]);
-        tabGrid.RowHeight = {48, 142, 42, '1x'};
-        tabGrid.Padding = [12 12 12 12];
-        tabGrid.RowSpacing = 8;
+        tabGrid.RowHeight = {30, 112, 30, '1x'};
+        tabGrid.Padding = [6 6 6 6];
+        tabGrid.RowSpacing = 4;
 
         fileGrid = uigridlayout(tabGrid, [1 2]);
         fileGrid.Layout.Row = 1;
@@ -113,9 +156,9 @@ function gui_magnification()
             'BackgroundColor', [1 1 1]);
         parameterPanel.Layout.Row = 2;
 
-        actionGrid = uigridlayout(tabGrid, [1 2]);
+        actionGrid = uigridlayout(tabGrid, [1 5]);
         actionGrid.Layout.Row = 3;
-        actionGrid.ColumnWidth = {'1x', '1x'};
+        actionGrid.ColumnWidth = {145, 165, 18, 100, 135};
         actionGrid.Padding = [0 0 0 0];
         actionGrid.ColumnSpacing = 8;
         runButton = uibutton(actionGrid, 'push', ...
@@ -130,6 +173,10 @@ function gui_magnification()
             'Enable', 'off', ...
             'ButtonPushedFcn', @(~, ~) playPreview(algorithmIndex(algorithmName)));
         playButton.Layout.Column = 2;
+        playbackLamp = uilamp(actionGrid, 'Color', [0.8 0.1 0.1]);
+        playbackLamp.Layout.Column = 3;
+        playbackLabel = uilabel(actionGrid, 'Text', 'En pausa');
+        playbackLabel.Layout.Column = 4;
 
         previewGrid = uigridlayout(tabGrid, [1 2]);
         previewGrid.Layout.Row = 4;
@@ -144,9 +191,16 @@ function gui_magnification()
         inputAxesGrid = uigridlayout(inputPanel, [1 1]);
         inputAxesGrid.Padding = [4 4 4 4];
         outputAxesGrid = uigridlayout(outputPanel, [1 1]);
+
         outputAxesGrid.Padding = [4 4 4 4];
         inputAxes = uiaxes(inputAxesGrid);
         outputAxes = uiaxes(outputAxesGrid);
+        outputAxes.Layout.Row = 1;
+        exportButton = uibutton(actionGrid, 'push', ...
+            'Text', 'Guardar video...', ...
+            'Enable', 'off', ...
+            'ButtonPushedFcn', @(~, ~) exportProcessedVideo(algorithmIndex(algorithmName)));
+        exportButton.Layout.Column = 5;
         inputAxes.XTick = [];
         inputAxes.YTick = [];
         outputAxes.XTick = [];
@@ -157,15 +211,18 @@ function gui_magnification()
         data = struct('inputPath', '', 'outputPath', '', ...
             'pathField', pathField, 'playButton', playButton, ...
             'parameterPanel', parameterPanel, 'inputAxes', inputAxes, ...
-            'outputAxes', outputAxes);
+            'outputAxes', outputAxes, 'exportButton', exportButton, ...
+            'playbackLamp', playbackLamp, 'playbackLabel', playbackLabel, ...
+            'tabGrid', tabGrid, 'actionGrid', actionGrid, 'previewGrid', previewGrid, ...
+            'inputPanel', inputPanel, 'outputPanel', outputPanel);
     end
 
     function data = buildEvmTab(tab)
         data = buildBaseTab(tab, 'EVM', 'Ejecutar EVM', @runEvm);
         pGrid = uigridlayout(data.parameterPanel, [3 8]);
         pGrid.ColumnWidth = {105, '1x', 88, '1x', 88, '1x', 90, '1x'};
-        pGrid.RowHeight = {32, 32, 32};
-        pGrid.Padding = [8 8 8 8];
+        pGrid.RowHeight = {24, 24, 24};
+        pGrid.Padding = [6 4 6 4];
         pGrid.RowSpacing = 4;
         pGrid.ColumnSpacing = 5;
 
@@ -201,9 +258,9 @@ function gui_magnification()
         data = buildBaseTab(tab, 'Phase-Based', 'Ejecutar Fase', @runPhase);
         pGrid = uigridlayout(data.parameterPanel, [2 8]);
         pGrid.ColumnWidth = {110, '1x', 92, '1x', 92, '1x', 110, '1x'};
-        pGrid.RowHeight = {38, 38};
-        pGrid.Padding = [8 8 8 8];
-        pGrid.RowSpacing = 8;
+        pGrid.RowHeight = {24, 24};
+        pGrid.Padding = [6 4 6 4];
+        pGrid.RowSpacing = 4;
         pGrid.ColumnSpacing = 5;
 
         data.filter = addDropDown(pGrid, 1, 2, 'Filtro temporal', ...
@@ -225,14 +282,17 @@ function gui_magnification()
 
     function data = buildRieszTab(tab)
         data = buildBaseTab(tab, 'Riesz', 'Ejecutar Riesz', @runRiesz);
-        pGrid = uigridlayout(data.parameterPanel, [1 6]);
+        pGrid = uigridlayout(data.parameterPanel, [2 6]);
         pGrid.ColumnWidth = {110, '1x', 110, '1x', 110, '1x'};
-        pGrid.RowHeight = {40};
-        pGrid.Padding = [8 8 8 8];
+        pGrid.RowHeight = {24, 24};
+        pGrid.Padding = [6 4 6 4];
         pGrid.ColumnSpacing = 6;
         data.alpha = addNumberField(pGrid, 1, 2, 'Alpha', 10);
         data.low = addNumberField(pGrid, 1, 4, 'f_low (Hz)', 0.8);
         data.high = addNumberField(pGrid, 1, 6, 'f_high (Hz)', 1.2);
+        data.fs = addNumberField(pGrid, 2, 2, 'F_s (Hz)', 30);
+        data.fs.Tooltip = ...
+            'Se carga el FPS del archivo. Edite F_s si conoce la tasa de captura de los fotogramas.';
     end
 
     function selectInputVideo(algorithmName)
@@ -247,7 +307,10 @@ function gui_magnification()
         tabData{index}.inputPath = fullfile(folderName, fileName);
         tabData{index}.pathField.Value = tabData{index}.inputPath;
         try
-            displayFrame(tabData{index}.inputAxes, tabData{index}.inputPath, 1);
+            videoFps = displayFrame(tabData{index}.inputAxes, tabData{index}.inputPath, 1);
+            if index == 3
+                tabData{index}.fs.Value = videoFps;
+            end
         catch exception
             uialert(fig, exception.message, 'No se pudo previsualizar el video');
         end
@@ -285,7 +348,7 @@ function gui_magnification()
             resultsFolder = fullfile(pwd, 'EVM_results');
             ensureResultsFolder(resultsFolder);
             [~, stem] = fileparts(data.inputPath);
-            outputPath = uniqueOutputPath(resultsFolder, stem, 'EVM');
+            outputPath = uniqueOutputPath(resultsFolder, stem, resultTag(data, 'EVM'));
             clearProcessedPreview(1);
             tempFolder = createTemporaryOutputFolder(resultsFolder);
             progress = uiprogressdlg(fig, ...
@@ -365,7 +428,7 @@ function gui_magnification()
             resultsFolder = fullfile(pwd, 'Phase_results');
             ensureResultsFolder(resultsFolder);
             [~, stem] = fileparts(data.inputPath);
-            outputPath = uniqueOutputPath(resultsFolder, stem, 'Phase');
+            outputPath = uniqueOutputPath(resultsFolder, stem, resultTag(data, 'PVM'));
             clearProcessedPreview(2);
             tempFolder = createTemporaryOutputFolder(resultsFolder);
             progress = uiprogressdlg(fig, ...
@@ -406,19 +469,23 @@ function gui_magnification()
             alpha = fieldValue(data.alpha, 'Alpha');
             lowHz = fieldValue(data.low, 'f_low');
             highHz = fieldValue(data.high, 'f_high');
+            fs = fieldValue(data.fs, 'F_s');
             if alpha < 0
                 error('GUI:InvalidAlpha', 'Alpha debe ser mayor o igual que cero.');
             end
-            reader = VideoReader(data.inputPath);
-            if ~(lowHz > 0 && highHz > lowHz && highHz < reader.FrameRate/2)
+            if fs <= 0
+                error('GUI:InvalidSamplingRate', 'F_s debe ser mayor que cero.');
+            end
+            if ~(lowHz > 0 && highHz > lowHz && highHz < fs/2)
                 error('GUI:InvalidBand', ...
-                    'Requiere 0 < f_low < f_high < F_s/2; F_s se obtiene del video.');
+                    'Requiere 0 < f_low < f_high < F_s/2. Con F_s = %g Hz, f_high debe ser menor que %g Hz.', ...
+                    fs, fs/2);
             end
 
             resultsFolder = fullfile(pwd, 'Riesz_results');
             ensureResultsFolder(resultsFolder);
             [~, stem] = fileparts(data.inputPath);
-            outputPath = uniqueOutputPath(resultsFolder, stem, 'Riesz');
+            outputPath = uniqueOutputPath(resultsFolder, stem, resultTag(data, 'Riesz'));
             clearProcessedPreview(3);
             tempFolder = createTemporaryOutputFolder(resultsFolder);
             tempOutput = fullfile(tempFolder, 'riesz_output.avi');
@@ -429,7 +496,7 @@ function gui_magnification()
             drawnow;
             try
                 rieszMagnifyVideo(data.inputPath, tempOutput, alpha, ...
-                    lowHz, highHz, 'Overwrite', true, 'Verbose', false, ...
+                    lowHz, highHz, 'SamplingRate', fs, 'Overwrite', true, 'Verbose', false, ...
                     'ProgressFcn', ...
                     @(fraction, message) updateProgress(progress, fraction, message));
                 moveProcessedFile(tempOutput, outputPath);
@@ -449,11 +516,64 @@ function gui_magnification()
         end
     end
 
+    function exportProcessedVideo(index)
+        data = tabData{index};
+        try
+            if isempty(data.outputPath) || ~isfile(data.outputPath)
+                error('GUI:MissingOutput', 'Primero genere un video procesado.');
+            end
+            [~, nombre, extension] = fileparts(data.outputPath);
+            [archivo, carpeta] = uiputfile( ...
+                {['*' extension], ['Video procesado (' extension ')']}, ...
+                'Guardar video procesado', [nombre extension]);
+            if isequal(archivo, 0), return; end
+            [~, ~, extensionElegida] = fileparts(archivo);
+            if isempty(extensionElegida)
+                archivo = [archivo extension];
+            elseif ~strcmpi(extensionElegida, extension)
+                error('GUI:ExportExtension', ...
+                    'Conserve la extension %s del video procesado.', extension);
+            end
+            destino = fullfile(carpeta, archivo);
+            if strcmpi(destino, data.outputPath)
+                uialert(fig, 'El video ya esta guardado en esa ubicacion.', ...
+                    'Video guardado', 'Icon', 'success');
+                return;
+            end
+            [correcto, mensaje] = copyfile(data.outputPath, destino);
+            if ~correcto, error('GUI:ExportFailed', '%s', mensaje); end
+            uialert(fig, ['Video guardado en:' newline destino], ...
+                'Exportacion completada', 'Icon', 'success');
+        catch exception
+            reportFailure('Error al exportar el video', exception);
+        end
+    end
+
+    function tag = resultTag(data, algorithm)
+        tag = [algorithm '_alpha' num2str(data.alpha.Value, 12)];
+        if strcmp(algorithm, 'EVM') && strcmp(data.filter.Value, 'IIR')
+            reader = VideoReader(data.inputPath);
+            tag = [tag '_r1' num2str(data.r1.Value, 12) ...
+                '_r2' num2str(data.r2.Value, 12) '_fs' num2str(reader.FrameRate, 12)];
+        else
+            tag = [tag '_flow' num2str(data.low.Value, 12) ...
+                '_fhigh' num2str(data.high.Value, 12) '_fs' num2str(data.fs.Value, 12)];
+        end
+        if isfield(data, 'filter'), tag = [tag '_filter' data.filter.Value]; end
+        if strcmp(algorithm, 'EVM')
+            tag = [tag '_lambda' num2str(data.lambda.Value, 12) ...
+                '_chroma' num2str(data.chroma.Value, 12)];
+        elseif strcmp(algorithm, 'PVM')
+            tag = [tag '_pyr' data.pyramid.Value '_sigma' num2str(data.sigma.Value, 12) '_ori4'];
+        end
+    end
+
     function preparePreview(index, inputPath, outputPath)
         stopPreview(index);
         data = tabData{index};
         data.outputPath = outputPath;
         data.playButton.Enable = 'on';
+        data.exportButton.Enable = 'on';
         tabData{index} = data;
         displayFrame(data.inputAxes, inputPath, 1);
         displayFrame(data.outputAxes, outputPath, 1);
@@ -464,12 +584,41 @@ function gui_magnification()
         data = tabData{index};
         data.outputPath = '';
         data.playButton.Enable = 'off';
+        data.exportButton.Enable = 'off';
         cla(data.outputAxes);
         data.outputAxes.Visible = 'off';
         tabData{index} = data;
     end
 
+    function setPlaybackStatus(index, playing)
+        if isempty(tabData{index}), return; end
+        data = tabData{index};
+        if playing
+            data.playbackLamp.Color = [0.1 0.75 0.2];
+            data.playbackLabel.Text = 'Reproduciendo';
+            data.playButton.Text = 'Pausar ambos videos';
+        else
+            data.playbackLamp.Color = [0.8 0.1 0.1];
+            data.playbackLabel.Text = 'En pausa';
+            data.playButton.Text = 'Reproducir ambos videos';
+        end
+    end
+
     function playPreview(index)
+        activeTimer = previewTimers{index};
+        if ~isempty(activeTimer) && isvalid(activeTimer)
+            if strcmp(activeTimer.Running, 'on')
+                stop(activeTimer);
+                setPlaybackStatus(index, false);
+            else
+                for j = 1:numel(previewTimers)
+                    if j ~= index, stopPreview(j); end
+                end
+                start(activeTimer);
+                setPlaybackStatus(index, true);
+            end
+            return;
+        end
         data = tabData{index};
         if isempty(data.outputPath) || ~isfile(data.outputPath)
             uialert(fig, 'Primero procese un video para habilitar la reproducción.', ...
@@ -514,6 +663,7 @@ function gui_magnification()
             'TimerFcn', @(~, ~) tickPreview(index));
         previewTimers{index} = playbackTimer;
         start(playbackTimer);
+        setPlaybackStatus(index, true);
     end
 
     function tickPreview(index)
@@ -545,10 +695,12 @@ function gui_magnification()
         end
         previewTimers{index} = [];
         previewStates{index} = [];
+        setPlaybackStatus(index, false);
     end
 
-    function displayFrame(ax, videoPath, frameIndex)
+    function videoFps = displayFrame(ax, videoPath, frameIndex)
         reader = VideoReader(videoPath);
+        videoFps = reader.FrameRate;
         frame = read(reader, frameIndex);
         cla(ax);
         image(ax, frame);
@@ -706,8 +858,8 @@ function removeTemporaryOutputFolder(tempFolder)
 end
 
 function outputPath = uniqueOutputPath(folder, videoStem, algorithmTag)
-    timeTag = char(datetime('now', 'Format', 'yyyyMMdd_HHmmss_SSS'));
-    baseName = [videoStem '_' algorithmTag '_' timeTag];
+
+    baseName = [videoStem '_' algorithmTag];
     outputPath = fullfile(folder, [baseName '.avi']);
     suffix = 1;
     while isfile(outputPath)

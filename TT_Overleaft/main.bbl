@@ -234,4 +234,29 @@ V.~Mattioli, D.~Alinovi, G.~Ferrari, F.~Pisani, y R.~Raheli, ``Motion
   \url{https://www.sciencedirect.com/science/article/pii/S1746809423005815}
 \BIBentrySTDinterwordspacing
 
+\bibitem{BT50013}
+\BIBentryALTinterwordspacing
+{UIT-R}, ``Metodología para la evaluación subjetiva de la calidad de las
+  imágenes de televisión,'' {Unión Internacional de Telecomunicaciones},
+  Recomendación UIT-R BT.500-13, Ene. 2012. [En l\'inea]. Disponible:
+  \url{https://www.itu.int/rec/R-REC-BT.500-13-201201-S/es}
+\BIBentrySTDinterwordspacing
+
+\bibitem{P9132021}
+\BIBentryALTinterwordspacing
+{UIT-T}, ``Methods for the subjective assessment of video quality, audio
+  quality and audiovisual quality of internet video and distribution quality
+  television in any environment,'' {Unión Internacional de
+  Telecomunicaciones}, Recomendación UIT-T P.913, Jun. 2021. [En l\'inea].
+  Disponible: \url{https://handle.itu.int/11.1002/1000/14704}
+\BIBentrySTDinterwordspacing
+
+\bibitem{P9102026}
+\BIBentryALTinterwordspacing
+{UIT-T}, ``Subjective video quality assessment methods for multimedia
+  applications,'' {Unión Internacional de Telecomunicaciones}, Recomendación
+  UIT-T P.910, Jul. 2026. [En l\'inea]. Disponible:
+  \url{https://www.itu.int/rec/T-REC-P.910-202607-I/en}
+\BIBentrySTDinterwordspacing
+
 \end{thebibliography}
